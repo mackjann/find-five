@@ -5,7 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./screens/Home";
 import JaneProfile from "./screens/JaneProfile";
-// import Register from "./screens/Register";
+import Register from "./screens/Register";
+import CreateProfile from "./screens/CreateProfile";
 
 const Stack = createStackNavigator();
 
@@ -14,8 +15,8 @@ export default function App(): any {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen name="Home" component={Home} />
-				{/* <Stack.Screen name="Register" component={Register} /> */}
-				<Stack.Screen name="Profile" component={JaneProfile} />
+				<Stack.Screen name="Register" component={Register} />
+				<Stack.Screen name="CreateProfile" component={CreateProfile} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

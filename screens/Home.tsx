@@ -37,12 +37,7 @@ const Home = ({ navigation }: any): JSX.Element => {
 					CYBER-DRIP
 				</Text>
 
-				<Button
-					title="Go to Jane's profile"
-					onPress={() => navigation.navigate("Profile", { name: "Jane" })}
-				/>
-
-				<Button title="GetEmail" onPress={getEmail} />
+				<Button title="TEST BUTTON" onPress={getEmail} />
 				<Button
 					title="Register"
 					onPress={() => navigation.navigate("Register")}
