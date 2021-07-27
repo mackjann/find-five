@@ -16,7 +16,7 @@ const ref = firebase.firestore().collection("users");
 const getEmail = () =>
 	ref.onSnapshot(({ docs }) => {
 		docs.forEach((doc) => {
-			console.log(doc.data());
+			console.log(doc.data().username);
 		});
 	});
 
@@ -43,6 +43,10 @@ const Home = ({ navigation }: any): JSX.Element => {
 				/>
 
 				<Button title="GetEmail" onPress={getEmail} />
+				<Button
+					title="Register"
+					onPress={() => navigation.navigate("Register")}
+				/>
 
 				<StatusBar />
 			</ScrollView>
