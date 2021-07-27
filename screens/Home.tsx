@@ -43,6 +43,15 @@ const Home = ({ navigation }: any): JSX.Element => {
 					onPress={() => navigation.navigate("Register")}
 				/>
 
+				<Button
+					style={{
+						marginTop: 30,
+						marginBottom: 30,
+					}}
+					title="MyProfile"
+					onPress={() => navigation.navigate("MyProfile")}
+				/>
+
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>
