@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+import { addPlayer } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
 const getEmail = () =>
@@ -37,7 +38,12 @@ const Home = ({ navigation }: any): JSX.Element => {
 					CYBER-DRIP
 				</Text>
 
-				<Button title="TEST BUTTON" onPress={getEmail} />
+				<Button
+					title="add player"
+					onPress={() => {
+						addPlayer("V3CvouPIpzo6ehGeYBF4", "JszP5Y9yytV6pfGSUGe9");
+					}}
+				/>
 				<Button
 					title="Register"
 					onPress={() => navigation.navigate("Register")}
