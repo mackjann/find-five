@@ -2,13 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "react-native-gesture-handler";
 import * as React from "react";
-import {
-	Text,
-	SafeAreaView,
-	StyleSheet,
-	TextInput,
-	Button,
-} from "react-native";
+import { SafeAreaView, TextInput, Button } from "react-native";
 import styles from "../styles";
 
 const Register = ({ navigation }: any): JSX.Element => {

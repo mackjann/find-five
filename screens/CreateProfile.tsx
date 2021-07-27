@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "react-native-gesture-handler";
 import * as React from "react";
-import { SafeAreaView, TextInput, Button, Text, View } from "react-native";
+import { SafeAreaView, TextInput, Button, Text } from "react-native";
 import styles from "../styles";
 
 const CreateProfile = ({ navigation }: any): JSX.Element => {
