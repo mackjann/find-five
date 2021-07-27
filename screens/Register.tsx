@@ -8,6 +8,7 @@ import styles from "../styles";
 const Register = ({ navigation }: any): JSX.Element => {
 	const [text, onChangeText] = React.useState("");
 	const [email, onChangeEmail] = React.useState("");
+	const [password, onChangePassword] = React.useState("");
 
 	return (
 		<SafeAreaView>
@@ -15,13 +16,19 @@ const Register = ({ navigation }: any): JSX.Element => {
 				style={styles.input}
 				onChangeText={onChangeText}
 				value={text}
-				placeholder="Your name"
+				placeholder="Full Name"
 			/>
 			<TextInput
 				style={styles.input}
 				onChangeText={onChangeEmail}
 				value={email}
-				placeholder="Your email address"
+				placeholder="Email Address"
+			/>
+			<TextInput
+				style={styles.input}
+				onChangeText={onChangePassword}
+				value={password}
+				placeholder="Password"
 			/>
 			<Button
 				title="Submit"
