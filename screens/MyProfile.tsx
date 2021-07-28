@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { LogBox } from "react-native";
 import "react-native-gesture-handler";
+// import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {
 	Text,
 	View,
@@ -15,6 +17,11 @@ import {
 import styles from "../styles.js";
 import firebase from "../config.js";
 import { useState, useEffect } from "react";
+import SelectMultiple from "react-native-select-multiple";
+
+LogBox.ignoreLogs(["Setting a timer for a long period"]);
+LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
 
 const ref = firebase.firestore().collection("users");
 // const getEmail = () =>
@@ -61,8 +68,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	useEffect(
 		() =>
 			ref.onSnapshot(({ docs }) => {
-				setUser(docs[2].data());
-				console.log(docs[2].data());
+				setUser(docs[5].data());
+				// console.log(docs[3].data());
 			}),
 		[]
 	);
@@ -73,7 +80,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 		if (user.availability[key]) {
 			availability.push(key);
 		}
-		console.log(availability);
+		// console.log(availability);
 	}
 
 	// const Item = ({ item }) => (
@@ -83,6 +90,9 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	// );
 
 	// const renderItem = (item: string) => <Item title={item} />;
+
+	const timeSlots = ["Monday AM", "Monday PM", "Tuesday AM", "Tuesday PM"];
+	const [selectedTimes, setSelectedTimes] = useState([]);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -99,7 +109,6 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 				>
 					{`Hi ${user.firstName} (${user.username})`}
 				</Text>
-
 				<Image
 					style={{
 						marginBottom: 0,
@@ -115,10 +124,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						uri: "https://picsum.photos/160/160",
 					}}
 				/>
-
 				<Text style={styles.info}>{`About me: "${user.bio}"`}</Text>
 				<Text style={styles.info}>{`My location: ${user.location}`}</Text>
-
 				<Text style={styles.info}>
 					{`Preferred position: ${
 						user.position && user.position.DEF
@@ -134,11 +141,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 											: "any"
 					}`}
 				</Text>
-
 				<Text style={styles.info}>{`Skill level: ${user.skill}`}</Text>
-
 				<Text style={styles.info}>{"My availability:"}</Text>
-
 				<View style={styles.container}>
 					<FlatList
 						data={availability}
@@ -152,25 +156,45 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						)}
 					/>
 				</View>
-
+				{/* <BouncyCheckbox
+					size={25}
+					fillColor="green"
+					unfillColor="#FFFFFF"
+					text="Monday AM"
+					iconStyle={{ borderColor: "green" }}
+					// textStyle={{ fontFamily: "Arial" }}
+					onPress={(isChecked: boolean) => {
+						console.log("checkbox working");
+						isChecked ? setAvailableMondayAM(true) : null;
+						console.log(availableMondayAM, "<< available?");
+					}}
+				/> */}
 				{/* <FlatList
 					data={availability}
 					renderItem={renderItem}
 					keyExtractor={(item) => item}
 				/> */}
-
 				{/* {availability.map((entry)=>{
                     <FlatList
                 })
 } */}
-
 				{/* <Button title="TEST BUTTON" onPress={getEmail} /> */}
+
+				<View>
+					<SelectMultiple
+						items={timeSlots}
+						selectedItems={selectedTimes}
+						onSelectionsChange={(selectedTimes) => {
+							setSelectedTimes(selectedTimes);
+							console.log(selectedTimes);
+						}}
+					/>
+				</View>
 
 				<Button
 					title="Edit my profile"
 					onPress={() => navigation.navigate("Register")}
 				/>
-
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>
