@@ -44,10 +44,6 @@ const Home = ({ navigation }: any): JSX.Element => {
 				/>
 
 				<Button
-					style={{
-						marginTop: 30,
-						marginBottom: 30,
-					}}
 					title="MyProfile"
 					onPress={() => navigation.navigate("MyProfile")}
 				/>

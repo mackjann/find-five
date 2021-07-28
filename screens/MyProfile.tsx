@@ -23,9 +23,40 @@ const ref = firebase.firestore().collection("users");
 // 			console.log(doc.data().username);
 // 		});
 // 	});
+interface User {
+	LastName: string;
+	ageGroup: string;
+	availability: any;
+	bio: string;
+	email: string;
+	firstName: string;
+	location: string;
+	position: {
+		DEF: boolean;
+		GK: boolean;
+		MID: boolean;
+		ST: boolean;
+		noPref: boolean;
+	};
+	profilePic?: boolean;
+	skill: string;
+	username: string;
+}
 
 const MyProfile = ({ navigation }: any): JSX.Element => {
-	const [user, setUser] = useState({});
+	const [user, setUser] = useState<User>({
+		LastName: "",
+		ageGroup: "",
+		availability: {},
+		bio: "",
+		email: "",
+		firstName: "",
+		location: "",
+		position: { DEF: false, GK: false, MID: false, ST: false, noPref: false },
+
+		skill: "",
+		username: "",
+	});
 
 	useEffect(
 		() =>
