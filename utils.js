@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import firebase from "./config";
 import "firebase/storage";
 
@@ -22,7 +24,7 @@ export const uploadImageToStorage = (path) => {
 };
 
 // /Users/khizariqbal/Desktop
-const createTeam = (
+export const createTeam = (
 	teamName,
 	venue,
 	venueLocation,
@@ -52,7 +54,7 @@ const createTeam = (
 		.catch((err) => console.log("BRUHH:", err));
 };
 
-const createUser = (
+export const createUser = (
 	firstName,
 	lastName,
 	email,

@@ -29,6 +29,7 @@ const Register = ({ navigation }: any): JSX.Element => {
 	const [firstName, setFirstName] = React.useState("");
 	const [lastName, setLastName] = React.useState("");
 	const [email, setEmail] = React.useState("");
+	const [username, setUsername] = React.useState("");
 	const [password, onChangePassword] = React.useState("");
 
 	return (
@@ -53,13 +54,28 @@ const Register = ({ navigation }: any): JSX.Element => {
 			/>
 			<TextInput
 				style={styles.input}
+				onChangeText={setUsername}
+				value={username}
+				placeholder="Username"
+			/>
+			<TextInput
+				style={styles.input}
 				onChangeText={onChangePassword}
 				value={password}
 				placeholder="Password"
 			/>
 			<Button
 				title="Submit"
-				onPress={() => navigation.navigate("CreateProfile")}
+				onPress={() => {
+					console.log(firstName);
+					navigation.navigate("CreateProfile", {
+						firstName: firstName,
+						lastName: lastName,
+						email: email,
+						username: username,
+						password: password,
+					});
+				}}
 			></Button>
 		</SafeAreaView>
 	);

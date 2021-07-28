@@ -15,34 +15,27 @@ import {
 import styles from "../styles";
 import { Picker } from "@react-native-picker/picker";
 import SelectMultiple from "react-native-select-multiple";
+import { createUser } from "../utils";
 
-// const ref = firebase.firestore().collection("users");
-// const getAVailability = () =>
-// 	ref.onSnapshot(({ docs }) => {
-// 		docs.forEach((doc) => {
-// 			console.log(doc.data().availability);
-// 		});
-// 	});
-
-interface User {
-	LastName: string;
-	ageGroup: string;
-	availability: any;
-	bio: string;
-	email: string;
-	firstName: string;
-	location: string;
-	position: {
-		DEF: boolean;
-		GK: boolean;
-		MID: boolean;
-		ST: boolean;
-		noPref: boolean;
-	};
-	profilePic?: boolean;
-	skill: string;
-	username: string;
-}
+// interface User {
+// 	LastName: string;
+// 	ageGroup: string;
+// 	availability: any;
+// 	bio: string;
+// 	email: string;
+// 	firstName: string;
+// 	location: string;
+// 	position: {
+// 		DEF: boolean;
+// 		GK: boolean;
+// 		MID: boolean;
+// 		ST: boolean;
+// 		noPref: boolean;
+// 	};
+// 	profilePic?: boolean;
+// 	skill: string;
+// 	username: string;
+// }
 
 const timeSlots = [
 	"Monday AM",
@@ -61,17 +54,19 @@ const timeSlots = [
 	"Sunday PM",
 ];
 
-const CreateProfile = ({ navigation }: any): JSX.Element => {
+const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 	const [bio, setBio] = React.useState("");
+	const [skill, setSkill] = React.useState("");
 	const [location, setLocation] = React.useState("");
+	const [ageGroup, setAgeGroup] = React.useState("");
+	const [availibility, setAvailibility] = React.useState([]);
 	const [position, setSelectedPosition] = React.useState({
-		noPref: false,
-		GK: false,
 		DEF: false,
+		GK: false,
 		MID: false,
-		FWD: false,
+		ST: false,
+		noPref: true,
 	});
-	const [selectedTimes, setSelectedTimes] = React.useState([]);
 
 	return (
 		<SafeAreaView>
@@ -112,10 +107,8 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 				<Text style={styles.title}>Skill Level</Text>
 				<Picker
 					style={styles.input}
-					selectedValue={position}
-					onValueChange={(itemValue, itemIndex) =>
-						setSelectedPosition(itemValue)
-					}
+					selectedValue={skill}
+					onValueChange={(itemValue, itemIndex) => setSkill(itemValue)}
 				>
 					<Picker.Item label="Beginner" value="Beginner" />
 					<Picker.Item label="Not played in a while" value="GK" />
@@ -124,16 +117,26 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 					<Picker.Item label="Pro" value="Pro" />
 				</Picker>
 
+				<Text style={styles.title}>Age Group:</Text>
+				<Picker
+					style={styles.input}
+					selectedValue={ageGroup}
+					onValueChange={(itemValue, itemIndex) => setAgeGroup(itemValue)}
+				>
+					<Picker.Item label="18-30" value="18-30" />
+					<Picker.Item label="31-50" value="31-50" />
+					<Picker.Item label="50+" value="50+" />
+				</Picker>
+
 				<Text style={styles.title}>Availability:</Text>
 				<View>
 					<SelectMultiple
 						items={timeSlots}
-						selectedItems={selectedTimes}
+						selectedItems={availibility}
 						onSelectionsChange={(
-							selectedTimes: React.SetStateAction<never[]>
+							availibility: React.SetStateAction<never[]>
 						) => {
-							setSelectedTimes(selectedTimes);
-							console.log(selectedTimes);
+							setAvailibility(availibility);
 						}}
 					/>
 				</View>
@@ -145,7 +148,30 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 				/>
 				<Button
 					title="Submit"
-					onPress={() => navigation.navigate("Create Profile")}
+					onPress={() => {
+						console.log(
+							route.params.firstName,
+							route.params.lastName,
+							route.params.email,
+							route.params.username,
+							location,
+							position,
+							skill,
+							ageGroup,
+							availibility
+						);
+						createUser(
+							route.params.firstName,
+							route.params.lastName,
+							route.params.email,
+							route.params.username,
+							location,
+							position,
+							skill,
+							ageGroup,
+							availibility
+						);
+					}}
 				/>
 			</ScrollView>
 		</SafeAreaView>
