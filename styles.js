@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+		margin: 12,
 	},
 	input: {
 		height: 40,
@@ -17,6 +18,24 @@ const styles = StyleSheet.create({
 		marginLeft: 12,
 		marginTop: 12,
 		fontSize: 14,
+	},
+
+	info: {
+		textAlign: "left",
+		fontSize: 12,
+		marginTop: 10,
+		marginBottom: 0,
+		width: 200,
+		//textTransform: "capitalize",
+	},
+
+	list: {
+		textAlign: "left",
+		fontSize: 12,
+		marginTop: 3,
+		marginBottom: 0,
+		width: 200,
+		textTransform: "capitalize",
 	},
 });
 
