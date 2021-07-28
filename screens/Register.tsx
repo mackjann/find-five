@@ -5,25 +5,25 @@ import * as React from "react";
 import { SafeAreaView, TextInput, Button } from "react-native";
 import styles from "../styles";
 
-interface User {
-	LastName: string;
-	ageGroup: string;
-	availability: any;
-	bio: string;
-	email: string;
-	firstName: string;
-	location: string;
-	position: {
-		DEF: boolean;
-		GK: boolean;
-		MID: boolean;
-		ST: boolean;
-		noPref: boolean;
-	};
-	profilePic?: boolean;
-	skill: string;
-	username: string;
-}
+// interface User {
+// 	LastName: string;
+// 	ageGroup: string;
+// 	availability: any;
+// 	bio: string;
+// 	email: string;
+// 	firstName: string;
+// 	location: string;
+// 	position: {
+// 		DEF: boolean;
+// 		GK: boolean;
+// 		MID: boolean;
+// 		ST: boolean;
+// 		noPref: boolean;
+// 	};
+// 	profilePic?: boolean;
+// 	skill: string;
+// 	username: string;
+// }
 
 const Register = ({ navigation }: any): JSX.Element => {
 	const [firstName, setFirstName] = React.useState("");
