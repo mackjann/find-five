@@ -1,14 +1,27 @@
 import firebase from "./config";
-
-//firebase.initializeApp(firebaseConfig);
+import "firebase/storage";
 
 // initialize cloud firestore via firebase
 const db = firebase.firestore();
 
-// const user_name = document.querySelector("#input_name");
-// const user_email = document.querySelector("#input_email");
-//const submitButton = document.querySelector("#submitButton");
+// get reference to storage service
+const storageRef = firebase.storage().ref();
 
+const khizRef = storageRef.child("khiz.jpg");
+
+const userImagesRef = storageRef.child("users_images/khiz.jpg");
+
+export const uploadImageToStorage = (path) => {
+	let task = khizRef.putFile(path);
+
+	task
+		.then(() => {
+			console.log("Image uploaded to the bucket!");
+		})
+		.catch((e) => console.log("uploading image error => ", e));
+};
+
+// /Users/khizariqbal/Desktop
 const createTeam = (
 	teamName,
 	venue,

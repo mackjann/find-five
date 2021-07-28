@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
-import { addPlayer } from "../utils.js";
+import { addPlayer, uploadImageToStorage } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
 const getEmail = () =>
@@ -41,7 +41,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 				<Button
 					title="add player"
 					onPress={() => {
-						addPlayer("V3CvouPIpzo6ehGeYBF4", "JszP5Y9yytV6pfGSUGe9");
+						uploadImageToStorage(
+							"/Users/khizariqbal/Desktop/northcoders/projects/find-five/khiz.jpg"
+						);
 					}}
 				/>
 				<Button
