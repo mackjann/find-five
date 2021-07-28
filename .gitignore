@@ -9,6 +9,6 @@ npm-debug.*
 *.orig.*
 web-build/
 config.js
-
+!types.d.ts
 # macOS
 .DS_Store
