@@ -10,21 +10,23 @@ import {
 	StatusBar,
 } from "react-native";
 import styles from "../styles.js";
-import firebase from "../config.js";
-import { addPlayer, uploadImageToStorage } from "../utils.js";
 
-const ref = firebase.firestore().collection("users");
-const getEmail = () =>
-	ref.onSnapshot(({ docs }) => {
-		docs.forEach((doc) => {
-			console.log(doc.data().username);
-		});
-	});
-
-const Home = ({ navigation }: any): JSX.Element => {
+const HomeScreen = ({ navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
+				<Text
+					onPress={() => navigation.navigate("MyProfile")}
+					style={{
+						textAlign: "right",
+						fontSize: 14,
+						marginTop: 5,
+						marginRight: 30,
+					}}
+				>
+					My Profile
+				</Text>
+
 				<Text
 					style={{
 						textAlign: "center",
@@ -32,32 +34,22 @@ const Home = ({ navigation }: any): JSX.Element => {
 						fontSize: 18,
 						marginTop: 30,
 						marginBottom: 30,
-						width: 200,
 					}}
 				>
-					CYBER-DRIP
+					findFive
 				</Text>
 
 				<Button
-					title="add player"
-					onPress={() => {
-						uploadImageToStorage(
-							"/Users/khizariqbal/Desktop/northcoders/projects/find-five/khiz.jpg"
-						);
-					}}
-				/>
-				<Button
-					title="Register"
+					title="My Teams"
 					onPress={() => navigation.navigate("Register")}
 				/>
-
 				<Button
-					title="MyProfile"
-					onPress={() => navigation.navigate("MyProfile")}
+					title="Search Teams"
+					onPress={() => navigation.navigate("Register")}
 				/>
 				<Button
-					title="HomeScreenTest"
-					onPress={() => navigation.navigate("HomeScreen")}
+					title="Search Players"
+					onPress={() => navigation.navigate("Register")}
 				/>
 
 				<StatusBar />
@@ -66,4 +58,4 @@ const Home = ({ navigation }: any): JSX.Element => {
 	);
 };
 
-export default Home;
+export default HomeScreen;

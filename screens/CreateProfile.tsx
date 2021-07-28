@@ -17,26 +17,6 @@ import { Picker } from "@react-native-picker/picker";
 import SelectMultiple from "react-native-select-multiple";
 import { createUser } from "../utils";
 
-// interface User {
-// 	LastName: string;
-// 	ageGroup: string;
-// 	availability: any;
-// 	bio: string;
-// 	email: string;
-// 	firstName: string;
-// 	location: string;
-// 	position: {
-// 		DEF: boolean;
-// 		GK: boolean;
-// 		MID: boolean;
-// 		ST: boolean;
-// 		noPref: boolean;
-// 	};
-// 	profilePic?: boolean;
-// 	skill: string;
-// 	username: string;
-// }
-
 const timeSlots = [
 	"Monday AM",
 	"Monday PM",
@@ -144,7 +124,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 				<Text style={styles.title}>Add a profile picture!</Text>
 				<Button
 					title="Upload"
-					onPress={() => navigation.navigate("Create Profile")}
+					onPress={() => navigation.navigate("CreateProfile")}
 				/>
 				<Button
 					title="Submit"

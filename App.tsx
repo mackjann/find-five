@@ -10,6 +10,7 @@ import Home from "./screens/Home";
 import Register from "./screens/Register";
 import CreateProfile from "./screens/CreateProfile";
 import MyProfile from "./screens/MyProfile";
+import HomeScreen from "./screens/HomeScreen";
 import { StackScreenProps } from "@react-navigation/stack";
 
 // type RootStackParamList = {
@@ -38,6 +39,7 @@ export default function App(): any {
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="CreateProfile" component={CreateProfile} />
 				<Stack.Screen name="MyProfile" component={MyProfile} />
+				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
