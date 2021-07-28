@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+import { addPlayer, uploadImageToStorage } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
 const getEmail = () =>
@@ -37,7 +38,14 @@ const Home = ({ navigation }: any): JSX.Element => {
 					CYBER-DRIP
 				</Text>
 
-				<Button title="TEST BUTTON" onPress={getEmail} />
+				<Button
+					title="add player"
+					onPress={() => {
+						uploadImageToStorage(
+							"/Users/khizariqbal/Desktop/northcoders/projects/find-five/khiz.jpg"
+						);
+					}}
+				/>
 				<Button
 					title="Register"
 					onPress={() => navigation.navigate("Register")}
