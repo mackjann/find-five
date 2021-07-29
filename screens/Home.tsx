@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import "react-native-gesture-handler";
+import { useState, useEffect } from "react";
 import {
 	Text,
 	SafeAreaView,
@@ -13,6 +14,9 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+
+import { uploadImageToStorage } from "../utils.js";
+
 
 import "firebase/auth";
 import {
@@ -25,15 +29,49 @@ import {
 } from "../utils.js";
 
 
+
 const ref = firebase.firestore().collection("users");
-const getEmail = () =>
-	ref.onSnapshot(({ docs }) => {
-		docs.forEach((doc) => {
-			console.log(doc.data().username);
-		});
-	});
+
+const ref2 = firebase.firestore().collection("teams");
+
+// const getEmail = () =>
+// 	ref.onSnapshot(({ docs }) => {
+// 		docs.forEach((doc) => {
+// 			console.log(doc.data().username);
+// 		});
+// 	});
 
 const Home = ({ navigation }: any): JSX.Element => {
+	const [users, setUsers] = useState([]);
+	const [teams, setTeams] = useState([]);
+	const usersFromDB = [];
+	const teamsFromDB = [];
+
+	useEffect(
+		() =>
+			ref.onSnapshot(({ docs }) => {
+				docs.forEach((doc) => {
+					usersFromDB.push(doc.data());
+					setUsers(usersFromDB);
+					// console.log(users);
+				});
+			}),
+		[]
+	);
+
+	useEffect(
+		() =>
+			ref2.onSnapshot(({ docs }) => {
+				// console.log(docs[0].data());
+				docs.forEach((doc) => {
+					teamsFromDB.push(doc.data());
+					setTeams(teamsFromDB);
+					console.log(teams.length);
+				});
+			}),
+		[]
+	);
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
@@ -63,7 +101,14 @@ const Home = ({ navigation }: any): JSX.Element => {
 
 				<Button
 					title="MyProfile"
-					onPress={() => navigation.navigate("MyProfile")}
+					onPress={() => navigation.navigate("MyProfile", { users: users })}
+				/>
+
+				<Button
+					title="Search for players"
+					onPress={() =>
+						navigation.navigate("Search", { users: users, teams: teams })
+					}
 				/>
 				<Button
 					title="HomeScreenTest"

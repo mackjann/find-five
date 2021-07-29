@@ -68,7 +68,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	useEffect(
 		() =>
 			ref.onSnapshot(({ docs }) => {
-				setUser(docs[5].data());
+				setUser(docs[6].data());
 				// console.log(docs[3].data());
 			}),
 		[]
@@ -184,7 +184,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 					<SelectMultiple
 						items={timeSlots}
 						selectedItems={selectedTimes}
-						onSelectionsChange={(selectedTimes) => {
+						onSelectionsChange={(selectedTimes: any) => {
 							setSelectedTimes(selectedTimes);
 							console.log(selectedTimes);
 						}}
