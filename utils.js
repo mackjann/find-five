@@ -96,7 +96,7 @@ export const addPlayer = async (teamId, userId) => {
 			.doc("membersArray")
 			.set(
 				{
-					members: [...members, { [id]: { player } }],
+					members: [...members, { [id]: { player }, hasAccepted: false }],
 				},
 				{ merge: true }
 			)
@@ -108,6 +108,17 @@ export const addPlayer = async (teamId, userId) => {
 			});
 	};
 	placePlayer(members, playerData, userId);
+
+	const userRequest = playerData.requests;
+
+	db.collection("users")
+		.doc(userId)
+		.set(
+			{
+				requests: [...userRequest, teamId],
+			},
+			{ merge: true }
+		);
 };
 
 // export const removePlayerFromTeam = async (teamID, playerID) => {};
@@ -236,6 +247,74 @@ export const editTeamInfo = async (teamId, field, input) => {
 	} catch (err) {
 		console.log(err);
 	}
+};
+
+export const acceptInvite = async (teamId, userId) => {
+	const membersArrRef = await db
+		.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.get();
+
+	const membersArray = membersArrRef.data().members;
+	let count = -1;
+	const acceptedPlayer = membersArray.filter((member, index) => {
+		count++;
+		if (member[userId]) {
+			return index;
+		}
+	});
+
+	membersArray[count].hasAccepted = true;
+
+	db.collection(`teams/${teamId}/members`).doc("membersArray").set(
+		{
+			members: membersArray,
+		},
+		{ merge: true }
+	);
+
+	const requestsArrRef = await db.collection("users").doc(userId).get();
+	const requestsArr = requestsArrRef.data().requests;
+	console.log(requestsArr);
+
+	const newRequestsArr = requestsArr.filter((request) => request !== teamId);
+
+	db.collection("users").doc(userId).set(
+		{
+			requests: newRequestsArr,
+		},
+		{ merge: true }
+	);
+};
+
+export const declineInvite = async (teamId, userId) => {
+	const memberArrRef = await db
+		.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.get();
+
+	const membersArray = memberArrRef.data().members;
+
+	const newMembersArr = membersArray.filter((member) => !member[userId]);
+
+	db.collection(`teams/${teamId}/members`).doc("membersArray").set(
+		{
+			members: newMembersArr,
+		},
+		{ merge: true }
+	);
+
+	const requestsArrRef = await db.collection("users").doc(userId).get();
+	const requestsArr = requestsArrRef.data().requests;
+
+	const newRequestsArr = requestsArr.filter((request) => request !== teamId);
+
+	db.collection("users").doc(userId).set(
+		{
+			requests: newRequestsArr,
+		},
+		{ merge: true }
+	);
 };
 
 // submitButton.addEventListener("click", () => {
