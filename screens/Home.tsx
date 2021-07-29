@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import "react-native-gesture-handler";
 import { useState, useEffect } from "react";
@@ -12,7 +14,21 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+
 import { uploadImageToStorage } from "../utils.js";
+
+
+import "firebase/auth";
+import {
+	addPlayer,
+	deleteTeam,
+	deleteUser,
+	editUserInfo,
+	removeTeamMember,
+	editTeamInfo,
+} from "../utils.js";
+
+
 
 const ref = firebase.firestore().collection("users");
 
@@ -73,11 +89,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 				</Text>
 
 				<Button
-					title="add player"
+					title="delete member from team"
 					onPress={() => {
-						uploadImageToStorage(
-							"/Users/khizariqbal/Desktop/northcoders/projects/find-five/khiz.jpg"
-						);
+						deleteTeam("icAfwe7iO5vPEfcaNCoJ");
 					}}
 				/>
 				<Button
@@ -95,6 +109,10 @@ const Home = ({ navigation }: any): JSX.Element => {
 					onPress={() =>
 						navigation.navigate("Search", { users: users, teams: teams })
 					}
+				/>
+				<Button
+					title="HomeScreenTest"
+					onPress={() => navigation.navigate("HomeScreen")}
 				/>
 
 				<StatusBar />

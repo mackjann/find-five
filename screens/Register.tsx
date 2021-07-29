@@ -4,31 +4,14 @@ import "react-native-gesture-handler";
 import * as React from "react";
 import { SafeAreaView, TextInput, Button } from "react-native";
 import styles from "../styles";
-
-// interface User {
-// 	LastName: string;
-// 	ageGroup: string;
-// 	availability: any;
-// 	bio: string;
-// 	email: string;
-// 	firstName: string;
-// 	location: string;
-// 	position: {
-// 		DEF: boolean;
-// 		GK: boolean;
-// 		MID: boolean;
-// 		ST: boolean;
-// 		noPref: boolean;
-// 	};
-// 	profilePic?: boolean;
-// 	skill: string;
-// 	username: string;
-// }
+import firebase from "../config";
+import "firebase/auth";
 
 const Register = ({ navigation }: any): JSX.Element => {
 	const [firstName, setFirstName] = React.useState("");
 	const [lastName, setLastName] = React.useState("");
 	const [email, setEmail] = React.useState("");
+	const [username, setUsername] = React.useState("");
 	const [password, onChangePassword] = React.useState("");
 
 	return (
@@ -53,13 +36,42 @@ const Register = ({ navigation }: any): JSX.Element => {
 			/>
 			<TextInput
 				style={styles.input}
+				onChangeText={setUsername}
+				value={username}
+				placeholder="Username"
+			/>
+			<TextInput
+				style={styles.input}
 				onChangeText={onChangePassword}
 				value={password}
 				placeholder="Password"
 			/>
 			<Button
 				title="Submit"
-				onPress={() => navigation.navigate("CreateProfile")}
+				onPress={() => {
+					console.log(firstName);
+					firebase
+						.auth()
+						.createUserWithEmailAndPassword(email, password)
+						.then((userCredential) => {
+							// Signed in
+							const user = userCredential.user;
+							console.log(user);
+							// ...
+						})
+						.catch((error) => {
+							console.log(error);
+							// ..
+						});
+
+					navigation.navigate("CreateProfile", {
+						firstName: firstName,
+						lastName: lastName,
+						email: email,
+						username: username,
+						password: password,
+					});
+				}}
 			></Button>
 		</SafeAreaView>
 	);
