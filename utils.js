@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import firebase from "./config";
 import "firebase/storage";
 
@@ -7,22 +10,8 @@ const db = firebase.firestore();
 // get reference to storage service
 const storageRef = firebase.storage().ref();
 
-const khizRef = storageRef.child("khiz.jpg");
-
-const userImagesRef = storageRef.child("users_images/khiz.jpg");
-
-export const uploadImageToStorage = (path) => {
-	let task = khizRef.putFile(path);
-
-	task
-		.then(() => {
-			console.log("Image uploaded to the bucket!");
-		})
-		.catch((e) => console.log("uploading image error => ", e));
-};
-
 // /Users/khizariqbal/Desktop
-const createTeam = (
+export const createTeam = (
 	teamName,
 	venue,
 	venueLocation,
@@ -52,7 +41,7 @@ const createTeam = (
 		.catch((err) => console.log("BRUHH:", err));
 };
 
-const createUser = (
+export const createUser = (
 	firstName,
 	lastName,
 	email,
@@ -98,12 +87,16 @@ export const addPlayer = async (teamId, userId) => {
 		.catch((err) => {
 			console.log(err);
 		});
-	const placePlayer = (members) => {
+
+	const playerDataRef = await db.collection("users").doc(userId).get();
+	const playerData = playerDataRef.data();
+
+	const placePlayer = (members, player, id) => {
 		db.collection(`teams/${teamId}/members`)
 			.doc("membersArray")
 			.set(
 				{
-					members: [...members, userId],
+					members: [...members, { [id]: { player } }],
 				},
 				{ merge: true }
 			)
@@ -114,7 +107,44 @@ export const addPlayer = async (teamId, userId) => {
 				console.log(err);
 			});
 	};
-	placePlayer(members);
+	placePlayer(members, playerData, userId);
+};
+
+// export const removePlayerFromTeam = async (teamID, playerID) => {};
+
+export const getUser = async (searchQuery) => {
+	const lcQuery = searchQuery.toLowerCase();
+	const usersRef = db.collection("users");
+	const data = await usersRef.where("username", "==", lcQuery).get();
+	if (data.empty) {
+		return null;
+	}
+	const userObj = {};
+	data.forEach((user) => {
+		userObj[user.id] = user.data();
+	});
+	return userObj;
+};
+
+// can be one or more team
+export const getTeam = async (searchTerm, field) => {
+	let cleanSearchTerm = "";
+	if (searchTerm.length > 3) {
+		cleanSearchTerm = searchTerm.toLowerCase();
+	} else {
+		cleanSearchTerm = searchTerm.toUpperCase();
+	}
+	const teamsRef = db.collection("teams");
+	const data = await teamsRef.where(field, "==", cleanSearchTerm).get();
+	if (data.empty) {
+		return null;
+	}
+	const teamsArr = [];
+	data.forEach((team) => {
+		const obj = { [team.id]: team.data() };
+		teamsArr.push(obj);
+	});
+	return teamsArr;
 };
 
 // submitButton.addEventListener("click", () => {
