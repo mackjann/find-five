@@ -3,6 +3,7 @@
 
 import firebase from "./config";
 import "firebase/storage";
+import "firebase/auth";
 
 // initialize cloud firestore via firebase
 const db = firebase.firestore();
@@ -41,7 +42,7 @@ export const createTeam = (
 		.catch((err) => console.log("BRUHH:", err));
 };
 
-export const createUser = (
+export const createUser = async (
 	firstName,
 	lastName,
 	email,
@@ -52,11 +53,14 @@ export const createUser = (
 	ageGroup,
 	availability
 ) => {
-	db.collection("users")
-		.add({
+	const userID = firebase.auth().currentUser.uid;
+	console.log(userID);
+	await db
+		.collection("users")
+		.doc(userID)
+		.set({
 			ageGroup: ageGroup,
 			availability: availability,
-
 			bio: "",
 			email: email,
 			firstName: firstName,

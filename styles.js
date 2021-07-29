@@ -38,9 +38,11 @@ const styles = StyleSheet.create({
 		textTransform: "capitalize",
 	},
 
+
 	map: {
 		width: Dimensions.get("window").width * 0.7,
 		height: Dimensions.get("window").height * 0.4,
+
 	},
 });
 

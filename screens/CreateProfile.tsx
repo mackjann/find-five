@@ -18,6 +18,7 @@ import styles from "../styles";
 import { Picker } from "@react-native-picker/picker";
 import SelectMultiple from "react-native-select-multiple";
 import { createUser } from "../utils";
+import HomeScreen from "./HomeScreen";
 
 const timeSlots = [
 	"Monday AM",
@@ -111,6 +112,8 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 				</Picker>
 
 				<Text style={styles.title}>Availability:</Text>
+
+				{/* We may need to re-jig this so that everything before and after the SelectMultiple are saved to components so that it displays correctly on iOS. */}
 				<View>
 					<SelectMultiple
 						items={timeSlots}
@@ -131,19 +134,6 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 				<Button
 					title="Submit"
 					onPress={() => {
-						console.log(
-							route.params.firstName,
-							route.params.lastName,
-							route.params.email,
-							route.params.username,
-							location,
-							position,
-							skill,
-							ageGroup,
-							availibility,
-							route.params.email,
-							route.params.password
-						);
 						createUser(
 							route.params.firstName,
 							route.params.lastName,
@@ -155,22 +145,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 							ageGroup,
 							availibility
 						);
-						// firebase
-						// 	.auth()
-						// 	.signInWithEmailAndPassword(
-						// 		route.params.email,
-						// 		route.params.password
-						// 	)
-						// 	.then((userCredential) => {
-						// 		// Signed in
-						// 		const user = userCredential.user;
-						// 		// ...
-						// 	})
-						// 	.catch((error) => {
-						// 		console.log(error);
-						// 		// const errorCode = error.code;
-						// 		// const errorMessage = error.message;
-						// 	});
+						navigation.navigate("HomeScreen");
 					}}
 				/>
 			</ScrollView>
