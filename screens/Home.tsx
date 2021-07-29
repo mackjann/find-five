@@ -12,7 +12,14 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
-import { addPlayer } from "../utils.js";
+import {
+	addPlayer,
+	deleteTeam,
+	deleteUser,
+	editUserInfo,
+	removeTeamMember,
+	editTeamInfo,
+} from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
 const getEmail = () =>
@@ -40,9 +47,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 				</Text>
 
 				<Button
-					title="Find a team"
+					title="delete member from team"
 					onPress={() => {
-						addPlayer("V3CvouPIpzo6ehGeYBF4", "YGBktzLWfdbJyWYswECb");
+						deleteTeam("icAfwe7iO5vPEfcaNCoJ");
 					}}
 				/>
 				<Button

@@ -147,6 +147,97 @@ export const getTeam = async (searchTerm, field) => {
 	return teamsArr;
 };
 
+export const deleteUser = (userId) => {
+	db.collection("users")
+		.doc(userId)
+		.delete()
+		.then(() => {
+			console.log("user deleted");
+		});
+};
+
+export const removeTeamMember = async (teamId, playerId) => {
+	const members = await db
+		.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.get()
+		.then((membersArr) => {
+			return membersArr.data().members;
+		})
+
+		.catch((err) => {
+			console.log(err);
+		});
+
+	const ammendedMembers = members.filter((member) => !member[playerId]);
+	console.log(ammendedMembers);
+
+	db.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.set(
+			{
+				members: [...ammendedMembers],
+			},
+			{ merge: true }
+		)
+		.then(() => {
+			console.log("player deleted");
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+export const deleteTeam = (teamId) => {
+	db.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.delete()
+		.then(() => {
+			console.log("memberArr deleted");
+		});
+	db.collection("teams")
+		.doc(teamId)
+		.delete()
+		.then(() => {
+			console.log("team deleted");
+		})
+		.catch((err) => {
+			console.log("BRUH -->", err);
+		});
+};
+
+export const editUserInfo = async (userId, field, input) => {
+	try {
+		const userData = await db
+			.collection("users")
+			.doc(userId)
+			.set(
+				{
+					[field]: input,
+				},
+				{ merge: true }
+			);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const editTeamInfo = async (teamId, field, input) => {
+	try {
+		const teamData = await db
+			.collection("teams")
+			.doc(teamId)
+			.set(
+				{
+					[field]: input,
+				},
+				{ merge: true }
+			);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 // submitButton.addEventListener("click", () => {
 // 	// createUser();
 // 	addPlayer("V3CvouPIpzo6ehGeYBF4", "4xcIcSCBpGp2v0VL606d");
