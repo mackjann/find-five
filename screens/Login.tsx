@@ -46,4 +46,6 @@ const Login = ({ navigation }: any): JSX.Element => {
 			/>
 		</SafeAreaView>
 	);
+
 };
+
