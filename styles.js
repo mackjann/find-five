@@ -38,11 +38,19 @@ const styles = StyleSheet.create({
 		textTransform: "capitalize",
 	},
 
+	callout: {
+		textAlign: "center",
+		fontSize: 8,
+		// marginTop: 3,
+		// marginBottom: 0,
+		width: 45,
+		height: 20,
+		textTransform: "capitalize",
+	},
 
 	map: {
 		width: Dimensions.get("window").width * 0.7,
 		height: Dimensions.get("window").height * 0.4,
-
 	},
 });
 
