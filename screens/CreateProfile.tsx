@@ -4,6 +4,8 @@
 import "react-native-gesture-handler";
 // import firebase from "../config.js";
 import * as React from "react";
+import firebase from "../config";
+import "firebase/auth";
 import {
 	SafeAreaView,
 	TextInput,
@@ -138,7 +140,9 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 							position,
 							skill,
 							ageGroup,
-							availibility
+							availibility,
+							route.params.email,
+							route.params.password
 						);
 						createUser(
 							route.params.firstName,
@@ -151,6 +155,22 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 							ageGroup,
 							availibility
 						);
+						// firebase
+						// 	.auth()
+						// 	.signInWithEmailAndPassword(
+						// 		route.params.email,
+						// 		route.params.password
+						// 	)
+						// 	.then((userCredential) => {
+						// 		// Signed in
+						// 		const user = userCredential.user;
+						// 		// ...
+						// 	})
+						// 	.catch((error) => {
+						// 		console.log(error);
+						// 		// const errorCode = error.code;
+						// 		// const errorMessage = error.message;
+						// 	});
 					}}
 				/>
 			</ScrollView>

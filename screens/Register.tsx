@@ -4,6 +4,8 @@ import "react-native-gesture-handler";
 import * as React from "react";
 import { SafeAreaView, TextInput, Button } from "react-native";
 import styles from "../styles";
+import firebase from "../config";
+import "firebase/auth";
 
 const Register = ({ navigation }: any): JSX.Element => {
 	const [firstName, setFirstName] = React.useState("");
@@ -48,6 +50,20 @@ const Register = ({ navigation }: any): JSX.Element => {
 				title="Submit"
 				onPress={() => {
 					console.log(firstName);
+					firebase
+						.auth()
+						.createUserWithEmailAndPassword(email, password)
+						.then((userCredential) => {
+							// Signed in
+							const user = userCredential.user;
+							console.log(user);
+							// ...
+						})
+						.catch((error) => {
+							console.log(error);
+							// ..
+						});
+
 					navigation.navigate("CreateProfile", {
 						firstName: firstName,
 						lastName: lastName,

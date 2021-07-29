@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
@@ -11,6 +12,7 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+import "firebase/auth";
 import { addPlayer, uploadImageToStorage } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
