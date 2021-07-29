@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
 		width: 200,
 		textTransform: "capitalize",
 	},
+	backgroundImage: {
+		flex: 1,
+		resizeMode: "cover", // or 'stretch'
+	},
 });
 
 export default styles;

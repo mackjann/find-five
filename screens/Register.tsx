@@ -48,11 +48,23 @@ const Register = ({ navigation }: any): JSX.Element => {
 			/>
 			<Button
 				title="Submit"
-				onPress={() => {
-					console.log(firstName);
-					firebase
+				onPress={async () => {
+					const createUserFunc = await firebase
 						.auth()
 						.createUserWithEmailAndPassword(email, password)
+						.then((userCredential) => {
+							// Signed in
+							const user = userCredential.user;
+							console.log(user, "<---");
+							// ...
+						})
+						.catch((error) => {
+							console.log(error);
+							// ..
+						});
+					firebase
+						.auth()
+						.signInWithEmailAndPassword(email, password)
 						.then((userCredential) => {
 							// Signed in
 							const user = userCredential.user;
@@ -61,7 +73,8 @@ const Register = ({ navigation }: any): JSX.Element => {
 						})
 						.catch((error) => {
 							console.log(error);
-							// ..
+							// const errorCode = error.code;
+							// const errorMessage = error.message;
 						});
 
 					navigation.navigate("CreateProfile", {

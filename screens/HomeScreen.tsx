@@ -10,23 +10,16 @@ import {
 	StatusBar,
 } from "react-native";
 import styles from "../styles.js";
+import firebase from "../config";
+import "firebase/auth";
+import { useDerivedValue } from "react-native-reanimated";
+
+const userID = firebase.auth().currentUser;
 
 const HomeScreen = ({ navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text
-					onPress={() => navigation.navigate("MyProfile")}
-					style={{
-						textAlign: "right",
-						fontSize: 14,
-						marginTop: 5,
-						marginRight: 30,
-					}}
-				>
-					My Profile
-				</Text>
-
 				<Text
 					style={{
 						textAlign: "center",
@@ -38,21 +31,50 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 				>
 					findFive
 				</Text>
-
+				<Button
+					title="My Profile"
+					onPress={() => navigation.navigate("MyProfile")}
+				/>
 				<Button
 					title="My Teams"
-					onPress={() => navigation.navigate("Register")}
+					onPress={() => navigation.navigate("MyTeamsList")}
 				/>
 				<Button
 					title="Search Teams"
-					onPress={() => navigation.navigate("Register")}
+					onPress={() => navigation.navigate("SearchTeams")}
 				/>
 				<Button
 					title="Search Players"
 					onPress={() => navigation.navigate("Register")}
 				/>
+				<Button
+					title="TESTAUTH"
+					onPress={() => {
+						firebase
+							.firestore()
+							.collection("users")
+							.doc(`${userID.uid}`)
+							.onSnapshot((user) => {
+								console.log(user.data().username);
+							});
+					}}
+				/>
 
-				<StatusBar />
+				<Button
+					title="Sign Out"
+					onPress={() => {
+						firebase
+							.auth()
+							.signOut()
+							.then(() => {
+								// Sign-out successful.
+							})
+							.catch((error) => {
+								// An error happened.
+							});
+						navigation.navigate("Home");
+					}}
+				/>
 			</ScrollView>
 		</SafeAreaView>
 	);
