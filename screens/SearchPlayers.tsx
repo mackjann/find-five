@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import * as postcodeData from "../data/outer-postcodes.json";
 import MapView, { Marker } from "react-native-maps";
