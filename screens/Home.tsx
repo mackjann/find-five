@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import "react-native-gesture-handler";
 import {
@@ -12,8 +13,17 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+
 import "firebase/auth";
-import { addPlayer, uploadImageToStorage } from "../utils.js";
+import {
+	addPlayer,
+	deleteTeam,
+	deleteUser,
+	editUserInfo,
+	removeTeamMember,
+	editTeamInfo,
+} from "../utils.js";
+
 
 const ref = firebase.firestore().collection("users");
 const getEmail = () =>
@@ -41,11 +51,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 				</Text>
 
 				<Button
-					title="add player"
+					title="delete member from team"
 					onPress={() => {
-						uploadImageToStorage(
-							"/Users/khizariqbal/Desktop/northcoders/projects/find-five/khiz.jpg"
-						);
+						deleteTeam("icAfwe7iO5vPEfcaNCoJ");
 					}}
 				/>
 				<Button
