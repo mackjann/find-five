@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import firebase from "./config";
 import "firebase/storage";
 
@@ -8,20 +9,6 @@ const db = firebase.firestore();
 
 // get reference to storage service
 const storageRef = firebase.storage().ref();
-
-const khizRef = storageRef.child("khiz.jpg");
-
-const userImagesRef = storageRef.child("users_images/khiz.jpg");
-
-export const uploadImageToStorage = (path) => {
-	let task = khizRef.putFile(path);
-
-	task
-		.then(() => {
-			console.log("Image uploaded to the bucket!");
-		})
-		.catch((e) => console.log("uploading image error => ", e));
-};
 
 // /Users/khizariqbal/Desktop
 export const createTeam = (
@@ -100,12 +87,16 @@ export const addPlayer = async (teamId, userId) => {
 		.catch((err) => {
 			console.log(err);
 		});
-	const placePlayer = (members) => {
+
+	const playerDataRef = await db.collection("users").doc(userId).get();
+	const playerData = playerDataRef.data();
+
+	const placePlayer = (members, player, id) => {
 		db.collection(`teams/${teamId}/members`)
 			.doc("membersArray")
 			.set(
 				{
-					members: [...members, userId],
+					members: [...members, { [id]: { player } }],
 				},
 				{ merge: true }
 			)
@@ -116,7 +107,135 @@ export const addPlayer = async (teamId, userId) => {
 				console.log(err);
 			});
 	};
-	placePlayer(members);
+	placePlayer(members, playerData, userId);
+};
+
+// export const removePlayerFromTeam = async (teamID, playerID) => {};
+
+export const getUser = async (searchQuery) => {
+	const lcQuery = searchQuery.toLowerCase();
+	const usersRef = db.collection("users");
+	const data = await usersRef.where("username", "==", lcQuery).get();
+	if (data.empty) {
+		return null;
+	}
+	const userObj = {};
+	data.forEach((user) => {
+		userObj[user.id] = user.data();
+	});
+	return userObj;
+};
+
+// can be one or more team
+export const getTeam = async (searchTerm, field) => {
+	let cleanSearchTerm = "";
+	if (searchTerm.length > 3) {
+		cleanSearchTerm = searchTerm.toLowerCase();
+	} else {
+		cleanSearchTerm = searchTerm.toUpperCase();
+	}
+	const teamsRef = db.collection("teams");
+	const data = await teamsRef.where(field, "==", cleanSearchTerm).get();
+	if (data.empty) {
+		return null;
+	}
+	const teamsArr = [];
+	data.forEach((team) => {
+		const obj = { [team.id]: team.data() };
+		teamsArr.push(obj);
+	});
+	return teamsArr;
+};
+
+export const deleteUser = (userId) => {
+	db.collection("users")
+		.doc(userId)
+		.delete()
+		.then(() => {
+			console.log("user deleted");
+		});
+};
+
+export const removeTeamMember = async (teamId, playerId) => {
+	const members = await db
+		.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.get()
+		.then((membersArr) => {
+			return membersArr.data().members;
+		})
+
+		.catch((err) => {
+			console.log(err);
+		});
+
+	const ammendedMembers = members.filter((member) => !member[playerId]);
+	console.log(ammendedMembers);
+
+	db.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.set(
+			{
+				members: [...ammendedMembers],
+			},
+			{ merge: true }
+		)
+		.then(() => {
+			console.log("player deleted");
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+export const deleteTeam = (teamId) => {
+	db.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.delete()
+		.then(() => {
+			console.log("memberArr deleted");
+		});
+	db.collection("teams")
+		.doc(teamId)
+		.delete()
+		.then(() => {
+			console.log("team deleted");
+		})
+		.catch((err) => {
+			console.log("BRUH -->", err);
+		});
+};
+
+export const editUserInfo = async (userId, field, input) => {
+	try {
+		const userData = await db
+			.collection("users")
+			.doc(userId)
+			.set(
+				{
+					[field]: input,
+				},
+				{ merge: true }
+			);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const editTeamInfo = async (teamId, field, input) => {
+	try {
+		const teamData = await db
+			.collection("teams")
+			.doc(teamId)
+			.set(
+				{
+					[field]: input,
+				},
+				{ merge: true }
+			);
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 // submitButton.addEventListener("click", () => {
