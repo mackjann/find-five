@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -12,6 +13,8 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+
+import "firebase/auth";
 import {
 	addPlayer,
 	deleteTeam,
@@ -20,6 +23,7 @@ import {
 	removeTeamMember,
 	editTeamInfo,
 } from "../utils.js";
+
 
 const ref = firebase.firestore().collection("users");
 const getEmail = () =>
@@ -60,6 +64,10 @@ const Home = ({ navigation }: any): JSX.Element => {
 				<Button
 					title="MyProfile"
 					onPress={() => navigation.navigate("MyProfile")}
+				/>
+				<Button
+					title="HomeScreenTest"
+					onPress={() => navigation.navigate("HomeScreen")}
 				/>
 
 				<StatusBar />
