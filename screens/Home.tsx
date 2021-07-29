@@ -26,6 +26,8 @@ import {
 	editUserInfo,
 	removeTeamMember,
 	editTeamInfo,
+	acceptInvite,
+	declineInvite,
 } from "../utils.js";
 
 
@@ -89,9 +91,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 				</Text>
 
 				<Button
-					title="delete member from team"
+					title="addplayer"
 					onPress={() => {
-						deleteTeam("icAfwe7iO5vPEfcaNCoJ");
+						declineInvite("V3CvouPIpzo6ehGeYBF4", "JszP5Y9yytV6pfGSUGe9");
 					}}
 				/>
 				<Button
