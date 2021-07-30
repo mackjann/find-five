@@ -42,6 +42,7 @@ const Register = ({ navigation }: any): JSX.Element => {
 				placeholder="Username"
 			/>
 			<TextInput
+				secureTextEntry={true}
 				style={styles.input}
 				onChangeText={onChangePassword}
 				value={password}

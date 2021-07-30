@@ -139,6 +139,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 							route.params.lastName,
 							route.params.email,
 							route.params.username,
+							bio,
 							location,
 							position,
 							skill,

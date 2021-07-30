@@ -20,6 +20,7 @@ const Login = ({ navigation }: any): JSX.Element => {
 				placeholder="First Name"
 			/>
 			<TextInput
+				secureTextEntry={true}
 				style={styles.input}
 				onChangeText={onChangePassword}
 				value={password}
@@ -42,10 +43,11 @@ const Login = ({ navigation }: any): JSX.Element => {
 							// const errorCode = error.code;
 							// const errorMessage = error.message;
 						});
+					navigation.navigate("HomeScreen");
 				}}
 			/>
 		</SafeAreaView>
 	);
-
 };
 
+export default Login;
