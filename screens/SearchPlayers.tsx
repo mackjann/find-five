@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useState, useEffect } from "react";
+import { LogBox } from "react-native";
 import "react-native-gesture-handler";
 import * as postcodeData from "../data/outer-postcodes.json";
 import MapView, { Marker, Callout } from "react-native-maps";
@@ -19,9 +20,13 @@ import styles from "../styles.js";
 
 import SelectMultiple from "react-native-select-multiple";
 
+LogBox.ignoreLogs(["componentWillReceiveProps has been renamed"]);
+
 const Search = ({ route, navigation }: any): JSX.Element => {
 	const { users } = route.params;
 	const { teams } = route.params;
+
+	console.log(users[6]);
 
 	//postcode data
 	const allOuterPostcodes = postcodeData.default;
@@ -143,7 +148,16 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 										style={{ width: 20, height: 20 }}
 										resizeMode="center"
 									/>
-									<Callout>
+									<Callout
+										tooltip={true}
+										style={styles.customView}
+										onPress={() =>
+											navigation.navigate("PlayerProfile", {
+												username: user.username,
+												users: users,
+											})
+										}
+									>
 										<View>
 											<Text style={styles.callout}>
 												{"Name:\n"} {user.username}
@@ -172,11 +186,14 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 										style={{ width: 20, height: 20 }}
 										resizeMode="center"
 									/>
-									<Callout>
+									<Callout tooltip={false}>
 										<View>
-											<Text style={styles.callout}>Name: {team.teamName}</Text>
 											<Text style={styles.callout}>
-												Venue: {team.venueLocation}{" "}
+												{"Name:\n"}
+												{team.teamName}
+											</Text>
+											<Text style={styles.callout}>
+												Venue: {team.venueLocation}
 											</Text>
 											<Text style={styles.callout}>
 												{"Looking for:\n"}
