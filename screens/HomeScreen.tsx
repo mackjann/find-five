@@ -9,6 +9,8 @@ import {
 	ScrollView,
 	Button,
 	StatusBar,
+	TouchableOpacity,
+	View,
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config";
@@ -21,59 +23,69 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text
-					style={{
-						textAlign: "center",
-						fontWeight: "bold",
-						fontSize: 18,
-						marginTop: 30,
-						marginBottom: 30,
-					}}
-				>
-					findFive
-				</Text>
-				<Button
-					title="My Profile"
-					onPress={() => navigation.navigate("MyProfile")}
-				/>
-				<Button
-					title="My Teams"
-					onPress={() => navigation.navigate("MyTeamsList")}
-				/>
-				<Button
-					title="Search teams/players"
-					onPress={() => navigation.navigate("Search")}
-				/>
-				{/* <Button
-					title="TESTAUTH"
-					onPress={() => {
-						firebase
-							.firestore()
-							.collection("users")
-							.doc(`${userID.uid}`)
-							.onSnapshot((user) => {
-								console.log(user.data().username);
-							});
-					}}
-				/> */}
+				<Text style={styles.appHeader}>⚽ findFive ⚽</Text>
+				<View style={{ flex: 1 }}>
+					<View
+						style={[styles.inner_container, { flex: 5, flexDirection: "row" }]}
+					>
+						<TouchableOpacity
+							style={styles.button}
+							onPress={() => navigation.navigate("MyProfile")}
+						>
+							<Text style={styles.button_text}>My Profile</Text>
+						</TouchableOpacity>
 
-				<Button
-					title="Sign Out"
-					onPress={() => {
-						firebase
-							.auth()
-							.signOut()
-							.then(() => {
-								console.log("Sign out successful");
-								// Sign-out successful.
-							})
-							.catch((error) => {
-								// An error happened.
-								console.log(error);
-							});
-						navigation.navigate("Home");
-					}}
-				/>
+						<TouchableOpacity
+							style={styles.button}
+							onPress={() => navigation.navigate("MyProfile")}
+						>
+							<Text style={styles.button_text}>My Teams</Text>
+						</TouchableOpacity>
+					</View>
+					<View style={[styles.inner_container, { flex: 2 }]}>
+						<Text>Looking for teams or players?</Text>
+
+						<TouchableOpacity
+							style={styles.small_button}
+							onPress={() => navigation.navigate("Search")}
+						>
+							<Text style={styles.button_text}>Search</Text>
+						</TouchableOpacity>
+					</View>
+					<View
+						style={[
+							styles.inner_container,
+							{
+								flexDirection: "row",
+
+								justifyContent: "flex-end",
+								alignItems: "flex-end",
+								alignContent: "flex-end",
+							},
+						]}
+					>
+						<View></View>
+						<TouchableOpacity
+							style={styles.small_button}
+							onPress={() => {
+								firebase
+									.auth()
+									.signOut()
+									.then(() => {
+										console.log("Sign out successful");
+										// Sign-out successful.
+									})
+									.catch((error) => {
+										// An error happened.
+										console.log(error);
+									});
+								navigation.navigate("Home");
+							}}
+						>
+							<Text style={styles.button_text}>Sign out</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
 			</ScrollView>
 		</SafeAreaView>
 	);
