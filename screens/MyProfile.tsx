@@ -16,14 +16,16 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
+import "firebase/auth";
 import { useState, useEffect } from "react";
 import SelectMultiple from "react-native-select-multiple";
+import { useCardAnimation } from "@react-navigation/stack";
+import getUser from "../utils";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
 
-const ref = firebase.firestore().collection("users");
 // const getEmail = () =>
 // 	ref.onSnapshot(({ docs }) => {
 // 		docs.forEach((doc) => {
@@ -38,61 +40,39 @@ interface User {
 	email: string;
 	firstName: string;
 	location: string;
-	position: {
-		DEF: boolean;
-		GK: boolean;
-		MID: boolean;
-		ST: boolean;
-		noPref: boolean;
-	};
+	position: string;
 	profilePic?: boolean;
 	skill: string;
 	username: string;
 }
 
 const MyProfile = ({ navigation }: any): JSX.Element => {
-	const [user, setUser] = useState<User>({
-		LastName: "",
-		ageGroup: "",
-		availability: {},
-		bio: "",
-		email: "",
-		firstName: "",
-		location: "",
-		position: { DEF: false, GK: false, MID: false, ST: false, noPref: false },
+	const userID = firebase.auth().currentUser.uid;
+	const ref = firebase.firestore().collection("users");
 
-		skill: "",
-		username: "",
+	const [userState, setUserState] = useState({
+		LastName: "string",
+		ageGroup: "string",
+		availability: [],
+		bio: "string",
+		email: "string",
+		firstName: "string",
+		location: "string",
+		position: "string",
+		profilePic: true,
+		skill: "string",
+		username: "string",
 	});
 
-	useEffect(
-		() =>
-			ref.onSnapshot(({ docs }) => {
-				setUser(docs[3].data());
-				// console.log(docs[3].data());
-			}),
-		[]
-	);
+	const user = async () => {
+		const userData = await ref.doc(userID).get();
+		const userProfile = userData.data();
+		return userProfile;
+	};
 
-	const availability = [];
-
-	for (const key in user.availability) {
-		if (user.availability[key]) {
-			availability.push(key);
-		}
-		// console.log(availability);
-	}
-
-	// const Item = ({ item }) => (
-	// 	<View>
-	// 		<Text style={styles.info}>{item.title}</Text>
-	// 	</View>
-	// );
-
-	// const renderItem = (item: string) => <Item title={item} />;
-
-	const timeSlots = ["Monday AM", "Monday PM", "Tuesday AM", "Tuesday PM"];
-	const [selectedTimes, setSelectedTimes] = useState([]);
+	user().then((results) => {
+		setUserState(results);
+	});
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -107,7 +87,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						width: 200,
 					}}
 				>
-					{`Hi ${user.firstName} (${user.username})`}
+					{`Hi ${userState.firstName} (${userState.username})`}
 				</Text>
 				<Image
 					style={{
@@ -124,28 +104,16 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						uri: "https://picsum.photos/160/160",
 					}}
 				/>
-				<Text style={styles.info}>{`About me: "${user.bio}"`}</Text>
-				<Text style={styles.info}>{`My location: ${user.location}`}</Text>
+				<Text style={styles.info}>{`About me: "${userState.bio}"`}</Text>
+				<Text style={styles.info}>{`My location: ${userState.location}`}</Text>
 				<Text style={styles.info}>
-					{`Preferred position: ${
-						user.position && user.position.DEF
-							? "Defender"
-							: user.position && user.position.GK
-								? "Goalkeeper"
-								: user.position && user.position.MID
-									? "Midfielder"
-									: user.position && user.position.ST
-										? "Striker"
-										: user.position && user.position.noPref
-											? "No preference"
-											: "any"
-					}`}
+					{`Preferred position: ${userState.position}`}
 				</Text>
-				<Text style={styles.info}>{`Skill level: ${user.skill}`}</Text>
+				<Text style={styles.info}>{`Skill level: ${userState.skill}`}</Text>
 				<Text style={styles.info}>{"My availability:"}</Text>
 				<View style={styles.container}>
-					<FlatList
-						data={availability}
+					{/* <FlatList
+						data={userState.availability}
 						numColumns={2}
 						renderItem={({ item }) => (
 							<Text style={styles.list} key={item}>
@@ -154,7 +122,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 								{item.slice(item.length - 1)}
 							</Text>
 						)}
-					/>
+					/>*/}
 				</View>
 				{/* <BouncyCheckbox
 					size={25}
@@ -180,7 +148,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 } */}
 				{/* <Button title="TEST BUTTON" onPress={getEmail} /> */}
 
-				<View>
+				{/* <View>
 					<SelectMultiple
 						items={timeSlots}
 						selectedItems={selectedTimes}
@@ -189,7 +157,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 							console.log(selectedTimes);
 						}}
 					/>
-				</View>
+				</View> */}
 
 				<Button
 					title="Edit my profile"
