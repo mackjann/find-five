@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		marginBottom: 12,
-		borderRadius: 15,
+		borderRadius: 20,
 		borderColor: "black",
 		borderWidth: 4,
-		width: Dimensions.get("window").width * 0.35,
+		width: Dimensions.get("window").width * 0.44,
 	},
 
 	small_button: {
@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		marginBottom: 12,
-		borderRadius: 15,
+		borderRadius: 20,
 		borderColor: "black",
 		borderWidth: 4,
-		width: 100,
+		width: 140,
 	},
 	container: {
 		flex: 1,
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
 	},
 
 	inner_container: {
-		width: Dimensions.get("window").width * 0.8,
-		height: Dimensions.get("window").height * 0.2,
+		width: Dimensions.get("window").width * 0.9,
+		height: Dimensions.get("window").height * 0.22,
 		justifyContent: "space-around",
 	},
 	input: {
@@ -74,6 +74,17 @@ const styles = StyleSheet.create({
 		marginLeft: 12,
 		marginTop: 12,
 		fontSize: 14,
+	},
+
+	question: {
+		textAlign: "left",
+		fontSize: 18,
+		padding: 15,
+		marginTop: 10,
+		marginBottom: 10,
+		// width: 160,
+		color: "darkgreen",
+		//textTransform: "capitalize",
 	},
 
 	info: {

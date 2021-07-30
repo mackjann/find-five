@@ -32,30 +32,47 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 							style={styles.button}
 							onPress={() => navigation.navigate("MyProfile")}
 						>
-							<Text style={styles.button_text}>My Profile</Text>
+							<Text style={styles.button_text}>👤 My Profile</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							style={styles.button}
 							onPress={() => navigation.navigate("MyProfile")}
 						>
-							<Text style={styles.button_text}>My Teams</Text>
+							<Text style={styles.button_text}> 👥 My Teams</Text>
 						</TouchableOpacity>
 					</View>
-					<View style={[styles.inner_container, { flex: 2 }]}>
-						<Text>Looking for teams or players?</Text>
+					<View
+						style={[
+							styles.inner_container,
+							{ flex: 4, flexDirection: "column" },
+						]}
+					>
+						<View
+							style={{
+								width: 300,
+								backgroundColor: "rgba(250,250,250, 0.5)",
+								borderRadius: 15,
+								alignSelf: "center",
+							}}
+						>
+							<Text style={styles.question}>
+								Looking to connect with teams or players in your area?
+							</Text>
+						</View>
 
 						<TouchableOpacity
 							style={styles.small_button}
 							onPress={() => navigation.navigate("Search")}
 						>
-							<Text style={styles.button_text}>Search</Text>
+							<Text style={styles.button_text}>Search now</Text>
 						</TouchableOpacity>
 					</View>
 					<View
 						style={[
 							styles.inner_container,
 							{
+								flex: 1,
 								flexDirection: "row",
 
 								justifyContent: "flex-end",
@@ -66,7 +83,7 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 					>
 						<View></View>
 						<TouchableOpacity
-							style={styles.small_button}
+							style={[styles.small_button, { position: "absolute", bottom: 1 }]}
 							onPress={() => {
 								firebase
 									.auth()
