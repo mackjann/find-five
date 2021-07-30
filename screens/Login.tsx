@@ -17,14 +17,14 @@ const Login = ({ navigation }: any): JSX.Element => {
 				style={styles.input}
 				onChangeText={setEmail}
 				value={email}
-				placeholder="First Name"
+				placeholder="Email address"
 			/>
 			<TextInput
 				secureTextEntry={true}
 				style={styles.input}
 				onChangeText={onChangePassword}
 				value={password}
-				placeholder="Last Name"
+				placeholder="Password"
 			/>
 			<Button
 				title="Log in"

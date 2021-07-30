@@ -43,13 +43,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 	const [location, setLocation] = React.useState("");
 	const [ageGroup, setAgeGroup] = React.useState("");
 	const [availibility, setAvailibility] = React.useState([]);
-	const [position, setSelectedPosition] = React.useState({
-		DEF: false,
-		GK: false,
-		MID: false,
-		ST: false,
-		noPref: true,
-	});
+	const [position, setSelectedPosition] = React.useState("");
 
 	return (
 		<SafeAreaView>
@@ -139,12 +133,12 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 							route.params.lastName,
 							route.params.email,
 							route.params.username,
-							bio,
 							location,
 							position,
 							skill,
 							ageGroup,
-							availibility
+							availibility,
+							bio
 						);
 						navigation.navigate("HomeScreen");
 					}}
