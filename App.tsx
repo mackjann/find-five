@@ -13,10 +13,10 @@ import CreateProfile from "./screens/CreateProfile";
 import MyProfile from "./screens/MyProfile";
 
 import Search from "./screens/SearchPlayers";
+import Login from "./screens/Login";
 
 import HomeScreen from "./screens/HomeScreen";
 import { StackScreenProps } from "@react-navigation/stack";
-
 
 // type RootStackParamList = {
 // 	Home: undefined;
@@ -41,6 +41,7 @@ export default function App(): any {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen name="Home" component={Home} />
+				<Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="CreateProfile" component={CreateProfile} />
 				<Stack.Screen name="MyProfile" component={MyProfile} />
@@ -48,7 +49,6 @@ export default function App(): any {
 				<Stack.Screen name="Search" component={Search} />
 
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
-
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

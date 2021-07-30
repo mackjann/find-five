@@ -51,7 +51,8 @@ export const createUser = async (
 	position,
 	skill,
 	ageGroup,
-	availability
+	availability,
+	bio
 ) => {
 	const userID = firebase.auth().currentUser.uid;
 	console.log(userID);
@@ -61,7 +62,7 @@ export const createUser = async (
 		.set({
 			ageGroup: ageGroup,
 			availability: availability,
-			bio: "",
+			bio: bio,
 			email: email,
 			firstName: firstName,
 			LastName: lastName,

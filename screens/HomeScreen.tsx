@@ -41,14 +41,10 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 					onPress={() => navigation.navigate("MyTeamsList")}
 				/>
 				<Button
-					title="Search Teams"
-					onPress={() => navigation.navigate("SearchTeams")}
+					title="Search teams/players"
+					onPress={() => navigation.navigate("Search")}
 				/>
-				<Button
-					title="Search Players"
-					onPress={() => navigation.navigate("Register")}
-				/>
-				<Button
+				{/* <Button
 					title="TESTAUTH"
 					onPress={() => {
 						firebase
@@ -59,7 +55,7 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 								console.log(user.data().username);
 							});
 					}}
-				/>
+				/> */}
 
 				<Button
 					title="Sign Out"
@@ -68,10 +64,12 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 							.auth()
 							.signOut()
 							.then(() => {
+								console.log("Sign out successful");
 								// Sign-out successful.
 							})
 							.catch((error) => {
 								// An error happened.
+								console.log(error);
 							});
 						navigation.navigate("Home");
 					}}
