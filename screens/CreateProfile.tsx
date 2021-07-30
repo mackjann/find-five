@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "react-native-gesture-handler";
-// import firebase from "../config.js";
 import * as React from "react";
 import firebase from "../config";
 import "firebase/auth";
@@ -68,6 +67,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 
 				<Text style={styles.title}>Position Preference</Text>
 				<Picker
+					mode="dialog"
 					style={styles.input}
 					selectedValue={position}
 					onValueChange={(itemValue, itemIndex) =>

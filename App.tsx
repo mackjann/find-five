@@ -8,13 +8,13 @@ import { RouteProp } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Home from "./screens/Home";
+import Login from "./screens/Login";
 import Register from "./screens/Register";
 import CreateProfile from "./screens/CreateProfile";
 import MyProfile from "./screens/MyProfile";
 import PlayerProfile from "./screens/PlayerProfile";
 import ExternalTeam from "./screens/ExternalTeam";
 import Search from "./screens/SearchPlayers";
-import Login from "./screens/Login";
 
 import HomeScreen from "./screens/HomeScreen";
 import { StackScreenProps } from "@react-navigation/stack";
