@@ -174,6 +174,17 @@ export const getUser = async (searchQuery) => {
 	return userObj;
 };
 
+// export const getUserById = async (userId) => {
+// 	const user = await db
+// 		.collection("users")
+// 		.doc(userId)
+// 		.get()
+// 		.then((res) => {
+// 			return res.data();
+// 		});
+// 	return user;
+// };
+
 // can be one or more teams
 // can search by any field/key in teams object
 export const getTeam = async (searchTerm, field) => {
