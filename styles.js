@@ -1,13 +1,68 @@
 import { StyleSheet, Dimensions } from "react-native";
+// import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 
 const styles = StyleSheet.create({
+	appHeader: {
+		textAlign: "center",
+		fontWeight: "bold",
+		fontSize: 30,
+		color: "darkgreen",
+		marginTop: 30,
+		marginBottom: 30,
+		textShadowColor: "white",
+		textShadowRadius: 10,
+	},
+
+	button_text: {
+		textAlign: "center",
+		fontWeight: "bold",
+		fontSize: 22,
+		color: "darkgreen",
+		marginTop: 30,
+		marginBottom: 30,
+	},
+
+	button: {
+		// flex: 1,
+		height: 50,
+		// backgroundColor: "#fff",
+		backgroundColor: "white",
+		alignItems: "center",
+		justifyContent: "center",
+		marginBottom: 12,
+		borderRadius: 15,
+		borderColor: "black",
+		borderWidth: 4,
+		width: Dimensions.get("window").width * 0.35,
+	},
+
+	small_button: {
+		// flex: 1,
+		height: 50,
+		alignSelf: "center",
+		backgroundColor: "white",
+		alignItems: "center",
+		justifyContent: "center",
+		marginBottom: 12,
+		borderRadius: 15,
+		borderColor: "black",
+		borderWidth: 4,
+		width: 100,
+	},
 	container: {
 		flex: 1,
 		// backgroundColor: "#fff",
-		backgroundColor: "rgba(120, 184, 51,0.8)",
+		backgroundColor: "rgb(120, 184, 51)",
 		alignItems: "center",
 		justifyContent: "center",
 		margin: 12,
+		borderRadius: 15,
+	},
+
+	inner_container: {
+		width: Dimensions.get("window").width * 0.8,
+		height: Dimensions.get("window").height * 0.2,
+		justifyContent: "space-around",
 	},
 	input: {
 		height: 40,
