@@ -93,11 +93,11 @@ export const addPlayer = async (teamId, userId) => {
 			console.log(err);
 		});
 
-// 2. Grabs user doc of user we want to add to members array
+	// 2. Grabs user doc of user we want to add to members array
 	const playerDataRef = await db.collection("users").doc(userId).get();
 	const playerData = playerDataRef.data();
 
-// 3. Places grabbed user into members array with new key of "hasAccepted"
+	// 3. Places grabbed user into members array with new key of "hasAccepted"
 	const placePlayer = (members, player, id) => {
 		db.collection(`teams/${teamId}/members`)
 			.doc("membersArray")
@@ -118,7 +118,7 @@ export const addPlayer = async (teamId, userId) => {
 
 	const userRequest = playerData.requests;
 
-// 4. Adds new key of "requests" (or spreads in new requests) to user that was placed in members array
+	// 4. Adds new key of "requests" (or spreads in new requests) to user that was placed in members array
 	db.collection("users")
 		.doc(userId)
 		.set(
