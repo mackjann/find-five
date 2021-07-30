@@ -5,6 +5,30 @@ import firebase from "./config";
 import "firebase/storage";
 import "firebase/auth";
 
+// createTeam(
+// 	"testTeam",
+// 	"Media city",
+// 	"M50",
+// 	{ DEF: false, FWD: false, GK: true, MID: false },
+// 	"bOSaJWcrAvPqJFvv4mAM3anQ5Wb2",
+// 	{
+// 		fridayAM: true,
+// 		fridayPM: true,
+// 		mondayAM: true,
+// 		mondayPM: true,
+// 		saturdayAM: true,
+// 		saturdayPM: true,
+// 		sundayAM: true,
+// 		sundayPM: true,
+// 		thursdayAM: true,
+// 		thursdayPM: true,
+// 		tuesdayAM: true,
+// 		tuesdayPM: true,
+// 		wednesdayAM: true,
+// 		wednesdayPM: true,
+// 	}
+// );
+
 // initialize cloud firestore via firebase
 const db = firebase.firestore();
 
@@ -20,6 +44,7 @@ export const createTeam = (
 	admin,
 	availability
 ) => {
+	console.log("hi");
 	// in dev pls add user state as param to this func
 	db.collection("teams")
 		.add({
@@ -55,7 +80,7 @@ export const createUser = async (
 	bio
 ) => {
 	const userID = firebase.auth().currentUser.uid;
-	console.log(userID);
+
 	await db
 		.collection("users")
 		.doc(userID)
@@ -65,7 +90,7 @@ export const createUser = async (
 			bio: bio,
 			email: email,
 			firstName: firstName,
-			LastName: lastName,
+			lastName: lastName,
 			location: location,
 			position: position,
 			profilePic: true,
@@ -133,10 +158,11 @@ export const addPlayer = async (teamId, userId) => {
 // export const removePlayerFromTeam = async (teamID, playerID) => {};
 
 // Search users by username only (all usernames must be lowercase in order for this to work)
+// This is an async function, will return a promise of userObj, not userObj itself. Use a .then
 export const getUser = async (searchQuery) => {
-	const lcQuery = searchQuery.toLowerCase();
-	const usersRef = db.collection("users");
-	const data = await usersRef.where("username", "==", lcQuery).get();
+	//const lcQuery = searchQuery.toLowerCase();
+	const usersRef = await db.collection("users");
+	const data = await usersRef.where("username", "==", searchQuery).get();
 	if (data.empty) {
 		return null;
 	}
@@ -144,6 +170,7 @@ export const getUser = async (searchQuery) => {
 	data.forEach((user) => {
 		userObj[user.id] = user.data();
 	});
+
 	return userObj;
 };
 
@@ -287,7 +314,6 @@ export const acceptInvite = async (teamId, userId) => {
 
 	const requestsArrRef = await db.collection("users").doc(userId).get();
 	const requestsArr = requestsArrRef.data().requests;
-	console.log(requestsArr);
 
 	const newRequestsArr = requestsArr.filter((request) => request !== teamId);
 
