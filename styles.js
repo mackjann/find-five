@@ -3,7 +3,8 @@ import { StyleSheet, Dimensions } from "react-native";
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
+		// backgroundColor: "#fff",
+		backgroundColor: "rgba(120, 184, 51,0.8)",
 		alignItems: "center",
 		justifyContent: "center",
 		margin: 12,
@@ -38,11 +39,31 @@ const styles = StyleSheet.create({
 		textTransform: "capitalize",
 	},
 
+	callout: {
+		textAlign: "center",
+		fontSize: 8,
+		// marginTop: 3,
+		// marginBottom: 0,
+		width: 50,
+		height: 20,
+		textTransform: "capitalize",
+		margin: 0,
+		padding: 0,
+		fontWeight: "700",
+	},
 
 	map: {
 		width: Dimensions.get("window").width * 0.7,
 		height: Dimensions.get("window").height * 0.4,
+	},
 
+	customView: {
+		backgroundColor: "rgba(86,125,70,0.4)",
+		borderRadius: 20,
+		width: 50,
+		height: 40,
+		// margin: 0,
+		// padding: 0,
 	},
 });
 

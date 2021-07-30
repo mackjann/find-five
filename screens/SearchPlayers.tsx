@@ -2,9 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useState, useEffect } from "react";
+import { LogBox } from "react-native";
 import "react-native-gesture-handler";
 import * as postcodeData from "../data/outer-postcodes.json";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import {
 	Text,
 	SafeAreaView,
@@ -19,9 +20,13 @@ import styles from "../styles.js";
 
 import SelectMultiple from "react-native-select-multiple";
 
+LogBox.ignoreLogs(["componentWillReceiveProps has been renamed"]);
+
 const Search = ({ route, navigation }: any): JSX.Element => {
 	const { users } = route.params;
 	const { teams } = route.params;
+
+	console.log(users[6]);
 
 	//postcode data
 	const allOuterPostcodes = postcodeData.default;
@@ -47,6 +52,7 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 		return team;
 	});
 
+	console.log(teamsWithCoords);
 	//location is the postcode that user types in
 	const [location, setLocation] = useState("");
 
@@ -142,6 +148,25 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 										style={{ width: 20, height: 20 }}
 										resizeMode="center"
 									/>
+									<Callout
+										tooltip={false}
+										// style={styles.customView}
+										onPress={() =>
+											navigation.navigate("PlayerProfile", {
+												username: user.username,
+												users: users,
+											})
+										}
+									>
+										<View>
+											<Text style={styles.callout}>
+												{"Name:\n"} {user.username}
+											</Text>
+											<Text style={styles.callout}>
+												{"Skill level:\n"} {user.skill}
+											</Text>
+										</View>
+									</Callout>
 								</Marker>
 							);
 						})}
@@ -161,6 +186,37 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 										style={{ width: 20, height: 20 }}
 										resizeMode="center"
 									/>
+									<Callout
+										tooltip={false}
+										onPress={() =>
+											navigation.navigate("ExternalTeam", {
+												teamName: team.teamName,
+												teams: teams,
+											})
+										}
+									>
+										<View>
+											<Text style={styles.callout}>
+												{"Name:\n"}
+												{team.teamName}
+											</Text>
+											<Text style={styles.callout}>
+												Venue: {team.venueLocation}
+											</Text>
+											<Text style={styles.callout}>
+												{"Looking for:\n"}
+												{team.lookingFor.DEF
+													? "Defender"
+													: team.lookingFor.GK
+														? "Goalkeeper"
+														: team.lookingFor.MID
+															? "Midfielder"
+															: team.lookingFor.ST
+																? "Striker"
+																: "Not currently looking"}
+											</Text>
+										</View>
+									</Callout>
 								</Marker>
 							);
 						})}
