@@ -146,6 +146,7 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 						)}
 					/>
 				</View>
+				<Text style={styles.info}>{`Contact details: ${user.email} \n`}</Text>
 
 				<Button
 					title="Connect?"

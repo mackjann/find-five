@@ -149,8 +149,8 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 										resizeMode="center"
 									/>
 									<Callout
-										tooltip={true}
-										style={styles.customView}
+										tooltip={false}
+										// style={styles.customView}
 										onPress={() =>
 											navigation.navigate("PlayerProfile", {
 												username: user.username,
@@ -186,7 +186,15 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 										style={{ width: 20, height: 20 }}
 										resizeMode="center"
 									/>
-									<Callout tooltip={false}>
+									<Callout
+										tooltip={false}
+										onPress={() =>
+											navigation.navigate("ExternalTeam", {
+												teamName: team.teamName,
+												teams: teams,
+											})
+										}
+									>
 										<View>
 											<Text style={styles.callout}>
 												{"Name:\n"}
