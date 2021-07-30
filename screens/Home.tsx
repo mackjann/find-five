@@ -15,10 +15,9 @@ import {
 import styles from "../styles.js";
 import firebase from "../config.js";
 
-import { uploadImageToStorage } from "../utils.js";
-
 import "firebase/auth";
 import {
+	createTeam,
 	addPlayer,
 	deleteTeam,
 	deleteUser,
@@ -27,6 +26,10 @@ import {
 	editTeamInfo,
 	acceptInvite,
 	declineInvite,
+	createUser,
+	getUser,
+	getTeam,
+	getUserById,
 } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
@@ -65,7 +68,7 @@ const Home = ({ navigation }: any): JSX.Element => {
 				docs.forEach((doc) => {
 					teamsFromDB.push(doc.data());
 					setTeams(teamsFromDB);
-					console.log(teams.length);
+					//console.log(teams.length);
 				});
 			}),
 		[]
@@ -88,9 +91,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 				</Text>
 
 				<Button
-					title="addplayer"
+					title="db test button"
 					onPress={() => {
-						acceptInvite("V3CvouPIpzo6ehGeYBF4", "8S5DTo8rbrb2aog1kLG9");
+						console.log(getUserById("fTj2fxnRVjcdzYu6OZpO3gBXWYI3"));
 					}}
 				/>
 				<Button title="Login" onPress={() => navigation.navigate("Login")} />
