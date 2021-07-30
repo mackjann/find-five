@@ -17,7 +17,6 @@ import firebase from "../config.js";
 
 import { uploadImageToStorage } from "../utils.js";
 
-
 import "firebase/auth";
 import {
 	addPlayer,
@@ -29,8 +28,6 @@ import {
 	acceptInvite,
 	declineInvite,
 } from "../utils.js";
-
-
 
 const ref = firebase.firestore().collection("users");
 
@@ -93,7 +90,7 @@ const Home = ({ navigation }: any): JSX.Element => {
 				<Button
 					title="addplayer"
 					onPress={() => {
-						declineInvite("V3CvouPIpzo6ehGeYBF4", "JszP5Y9yytV6pfGSUGe9");
+						acceptInvite("V3CvouPIpzo6ehGeYBF4", "8S5DTo8rbrb2aog1kLG9");
 					}}
 				/>
 				<Button
