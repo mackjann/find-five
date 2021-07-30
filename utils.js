@@ -80,6 +80,7 @@ export const createUser = async (
 		});
 };
 
+// 1. Grabs members array from team to add too
 export const addPlayer = async (teamId, userId) => {
 	const members = await db
 		.collection(`teams/${teamId}/members`)
@@ -93,9 +94,11 @@ export const addPlayer = async (teamId, userId) => {
 			console.log(err);
 		});
 
+	// 2. Grabs user doc of user we want to add to members array
 	const playerDataRef = await db.collection("users").doc(userId).get();
 	const playerData = playerDataRef.data();
 
+	// 3. Places grabbed user into members array with new key of "hasAccepted"
 	const placePlayer = (members, player, id) => {
 		db.collection(`teams/${teamId}/members`)
 			.doc("membersArray")
@@ -112,10 +115,11 @@ export const addPlayer = async (teamId, userId) => {
 				console.log(err);
 			});
 	};
-	placePlayer(members, playerData, userId);
+	placePlayer(members, playerData, userId); // (Step 3 invoked here after user and members array have been grabbed)
 
 	const userRequest = playerData.requests;
 
+	// 4. Adds new key of "requests" (or spreads in new requests) to user that was placed in members array
 	db.collection("users")
 		.doc(userId)
 		.set(
@@ -128,6 +132,7 @@ export const addPlayer = async (teamId, userId) => {
 
 // export const removePlayerFromTeam = async (teamID, playerID) => {};
 
+// Search users by username only (all usernames must be lowercase in order for this to work)
 export const getUser = async (searchQuery) => {
 	const lcQuery = searchQuery.toLowerCase();
 	const usersRef = db.collection("users");
@@ -142,7 +147,8 @@ export const getUser = async (searchQuery) => {
 	return userObj;
 };
 
-// can be one or more team
+// can be one or more teams
+// can search by any field/key in teams object
 export const getTeam = async (searchTerm, field) => {
 	let cleanSearchTerm = "";
 	if (searchTerm.length > 3) {
@@ -163,6 +169,7 @@ export const getTeam = async (searchTerm, field) => {
 	return teamsArr;
 };
 
+// Removes user doc from db
 export const deleteUser = (userId) => {
 	db.collection("users")
 		.doc(userId)

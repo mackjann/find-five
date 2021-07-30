@@ -90,7 +90,7 @@ const Home = ({ navigation }: any): JSX.Element => {
 				<Button
 					title="addplayer"
 					onPress={() => {
-						declineInvite("V3CvouPIpzo6ehGeYBF4", "JszP5Y9yytV6pfGSUGe9");
+						acceptInvite("V3CvouPIpzo6ehGeYBF4", "8S5DTo8rbrb2aog1kLG9");
 					}}
 				/>
 				<Button title="Login" onPress={() => navigation.navigate("Login")} />
