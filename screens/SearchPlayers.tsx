@@ -86,7 +86,7 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 	}, [location]);
 
 	//this is if we want to specify looking for teams or players only and not both like we are doing atm
-	const searchOptions = ["Teams", "Players"];
+	const searchOptions = ["Players", "Teams"];
 	const [selectedOptions, setSelectedOptions] = useState([
 		{
 			label: "",
@@ -110,8 +110,8 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 						marginBottom: 10,
 					}}
 				>
-					<Text style={[styles.title, { width: 160 }]}>
-						{"Please enter first part of postcode for search area:"}
+					<Text style={[styles.title, { width: 140 }]}>
+						{"Search area postcode:"}
 					</Text>
 					<TextInput
 						style={styles.input}
