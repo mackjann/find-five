@@ -129,9 +129,8 @@ const styles = StyleSheet.create({
 	map: {
 		width: Dimensions.get("window").width * 0.8,
 		height: Dimensions.get("window").height * 0.41,
-
 		borderColor: "black",
-		borderWidth: 4,
+		borderWidth: 2,
 	},
 
 	customView: {

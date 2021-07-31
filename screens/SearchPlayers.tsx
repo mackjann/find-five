@@ -140,7 +140,15 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 					title="Search"
 					onPress={() => navigation.navigate("Register")}
 				/> */}
-				<View style={[styles.container]}>
+				<View
+					style={[
+						styles.container,
+						{
+							overflow: "hidden",
+						},
+						styles.map,
+					]}
+				>
 					<MapView style={styles.map} region={coords}>
 						{(selectedOptions[2] && selectedOptions[2].value === "Players") ||
 						(selectedOptions[3] && selectedOptions[3].value === "Players")
@@ -247,7 +255,7 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 							borderColor: "black",
 							borderWidth: 2,
 							height: 35,
-							borderRadius: 15,
+							borderRadius: 12,
 						},
 					]}
 					onPress={() =>
