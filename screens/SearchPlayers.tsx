@@ -10,11 +10,11 @@ import {
 	Text,
 	SafeAreaView,
 	ScrollView,
-	Button,
 	StatusBar,
 	TextInput,
 	View,
 	Image,
+	TouchableOpacity,
 } from "react-native";
 import styles from "../styles.js";
 
@@ -26,7 +26,7 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 	const { users } = route.params;
 	const { teams } = route.params;
 
-	console.log(users[6]);
+	// console.log(users[6]);
 
 	//postcode data
 	const allOuterPostcodes = postcodeData.default;
@@ -52,7 +52,7 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 		return team;
 	});
 
-	console.log(teamsWithCoords);
+	// console.log(teamsWithCoords);
 	//location is the postcode that user types in
 	const [location, setLocation] = useState("");
 
@@ -61,8 +61,8 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 		latitude: 53.47734,
 		longitude: -2.23508,
 		//delta bit is the zoom level
-		latitudeDelta: 0.07,
-		longitudeDelta: 0.07,
+		latitudeDelta: 0.09,
+		longitudeDelta: 0.09,
 	});
 
 	let lat = 0;
@@ -87,42 +87,51 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 
 	//this is if we want to specify looking for teams or players only and not both like we are doing atm
 	const searchOptions = ["Teams", "Players"];
-	const [selectedOptions, setSelectedOptions] = useState([]);
+	const [selectedOptions, setSelectedOptions] = useState([
+		{
+			label: "",
+			value: "",
+		},
+		{
+			label: "",
+			value: "",
+		},
+	]);
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text
+				<Text style={styles.button_text}>⚽Search Teams & Players⚽</Text>
+				<View
 					style={{
-						textAlign: "center",
-						fontWeight: "bold",
-						fontSize: 18,
-						marginTop: 30,
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "space-between",
 						marginBottom: 10,
-						width: 300,
 					}}
 				>
-					Search for Teams & Players
-				</Text>
-				<Text style={styles.title}>
-					{"Please enter first part of postcode for search area:"}
-				</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={(text) => {
-						setLocation(text);
-					}}
-					value={location}
-					placeholder="   e.g. L17, M15, SW1"
-				/>
+					<Text style={[styles.title, { width: 160 }]}>
+						{"Please enter first part of postcode for search area:"}
+					</Text>
+					<TextInput
+						style={styles.input}
+						onChangeText={(text) => {
+							setLocation(text);
+						}}
+						value={location}
+						placeholder="e.g. L17, M15, SW1"
+					/>
+				</View>
 				{/* this is if we want to specify looking for teams or players only and
 				not both */}
 				<View>
 					<SelectMultiple
+						style={{ position: "relative", left: 20 }}
 						items={searchOptions}
 						selectedItems={selectedOptions}
 						onSelectionsChange={(selectedOptions: any) => {
 							setSelectedOptions(selectedOptions);
+							console.log(selectedOptions, "<< selected options");
 						}}
 					/>
 				</View>
@@ -131,101 +140,127 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 					title="Search"
 					onPress={() => navigation.navigate("Register")}
 				/> */}
-				<View style={styles.container}>
+				<View style={[styles.container]}>
 					<MapView style={styles.map} region={coords}>
-						{usersWithCoords.map((user) => {
-							return (
-								<Marker
-									key={user.username}
-									coordinate={{
-										latitude: user.lat,
-										longitude: user.lng,
-									}}
-									pinColor="green"
-								>
-									<Image
-										source={require("../assets/player-icon-1.png")}
-										style={{ width: 20, height: 20 }}
-										resizeMode="center"
-									/>
-									<Callout
-										tooltip={false}
-										// style={styles.customView}
-										onPress={() =>
-											navigation.navigate("PlayerProfile", {
-												username: user.username,
-												users: users,
-											})
-										}
+						{(selectedOptions[2] && selectedOptions[2].value === "Players") ||
+						(selectedOptions[3] && selectedOptions[3].value === "Players")
+							? usersWithCoords.map((user) => {
+								return (
+									<Marker
+										key={user.username}
+										coordinate={{
+											latitude: user.lat,
+											longitude: user.lng,
+										}}
+										pinColor="green"
 									>
-										<View>
-											<Text style={styles.callout}>
-												{"Name:\n"} {user.username}
-											</Text>
-											<Text style={styles.callout}>
-												{"Skill level:\n"} {user.skill}
-											</Text>
-										</View>
-									</Callout>
-								</Marker>
-							);
-						})}
-
-						{teamsWithCoords.map((team) => {
-							return (
-								<Marker
-									key={team.teamName}
-									coordinate={{
-										latitude: team.lat,
-										longitude: team.lng,
-									}}
-									pinColor="green"
-								>
-									<Image
-										source={require("../assets/emblem.png")}
-										style={{ width: 20, height: 20 }}
-										resizeMode="center"
-									/>
-									<Callout
-										tooltip={false}
-										onPress={() =>
-											navigation.navigate("ExternalTeam", {
-												teamName: team.teamName,
-												teams: teams,
-											})
-										}
+										<Image
+											source={require("../assets/player-icon-1.png")}
+											style={{ width: 20, height: 20 }}
+											resizeMode="center"
+										/>
+										<Callout
+											tooltip={false}
+											// style={styles.customView}
+											onPress={() =>
+												navigation.navigate("PlayerProfile", {
+													username: user.username,
+													users: users,
+												})
+											}
+										>
+											<View>
+												<Text style={styles.callout}>
+													{"Name:\n"} {user.username}
+												</Text>
+												<Text style={styles.callout}>
+													{"Skill level:\n"} {user.skill}
+												</Text>
+											</View>
+										</Callout>
+									</Marker>
+								);
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+							  })
+							: null}
+						{(selectedOptions[2] && selectedOptions[2].value === "Teams") ||
+						(selectedOptions[3] && selectedOptions[3].value === "Teams")
+							? teamsWithCoords.map((team) => {
+								return (
+									<Marker
+										key={team.teamName}
+										coordinate={{
+											latitude: team.lat,
+											longitude: team.lng,
+										}}
+										pinColor="green"
 									>
-										<View>
-											<Text style={styles.callout}>
-												{"Name:\n"}
-												{team.teamName}
-											</Text>
-											<Text style={styles.callout}>
-												Venue: {team.venueLocation}
-											</Text>
-											<Text style={styles.callout}>
-												{"Looking for:\n"}
-												{team.lookingFor.DEF
-													? "Defender"
-													: team.lookingFor.GK
-														? "Goalkeeper"
-														: team.lookingFor.MID
-															? "Midfielder"
-															: team.lookingFor.ST
-																? "Striker"
-																: "Not currently looking"}
-											</Text>
-										</View>
-									</Callout>
-								</Marker>
-							);
-						})}
+										<Image
+											source={require("../assets/emblem.png")}
+											style={{ width: 20, height: 20 }}
+											resizeMode="center"
+										/>
+										<Callout
+											tooltip={false}
+											onPress={() =>
+												navigation.navigate("ExternalTeam", {
+													teamName: team.teamName,
+													teams: teams,
+												})
+											}
+										>
+											<View>
+												<Text style={styles.callout}>
+													{"Name:\n"}
+													{team.teamName}
+												</Text>
+												<Text style={styles.callout}>
+														Venue: {team.venueLocation}
+												</Text>
+												<Text style={styles.callout}>
+													{"Looking for:\n"}
+													{team.lookingFor.DEF
+														? "Defender"
+														: team.lookingFor.GK
+															? "Goalkeeper"
+															: team.lookingFor.MID
+																? "Midfielder"
+																: team.lookingFor.ST
+																	? "Striker"
+																	: "Not currently looking"}
+												</Text>
+											</View>
+										</Callout>
+									</Marker>
+								);
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+							  })
+							: null}
 					</MapView>
 				</View>
-				<Button
-					title="My Profile (or back to home page?)"
-					onPress={() => navigation.navigate("MyProfile")}
-				/>
+
+				<TouchableOpacity
+					style={[
+						styles.button,
+						{
+							alignSelf: "center",
+							borderColor: "black",
+							borderWidth: 2,
+							height: 35,
+							borderRadius: 15,
+						},
+					]}
+					onPress={() =>
+						navigation.navigate("HomeScreen", { users: users, teams: teams })
+					}
+				>
+					<Text
+						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
+					>
+						Back to Home
+					</Text>
+				</TouchableOpacity>
+
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>

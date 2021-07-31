@@ -19,11 +19,13 @@ import { useDerivedValue } from "react-native-reanimated";
 
 const userID = firebase.auth().currentUser;
 
-const HomeScreen = ({ navigation }: any): JSX.Element => {
+const HomeScreen = ({ navigation, route }: any): JSX.Element => {
+	const { users } = route.params;
+	const { teams } = route.params;
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.appHeader}>⚽ findFive ⚽</Text>
+				<Text style={styles.appHeader}>⚽ FIND-FIVE ⚽</Text>
 				<View style={{ flex: 1 }}>
 					<View
 						style={[styles.inner_container, { flex: 5, flexDirection: "row" }]}
@@ -63,7 +65,9 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 
 						<TouchableOpacity
 							style={styles.small_button}
-							onPress={() => navigation.navigate("Search")}
+							onPress={() =>
+								navigation.navigate("Search", { users: users, teams: teams })
+							}
 						>
 							<Text style={styles.button_text}>Search now</Text>
 						</TouchableOpacity>

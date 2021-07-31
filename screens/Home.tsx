@@ -116,7 +116,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 				/>
 				<Button
 					title="HomeScreenTest"
-					onPress={() => navigation.navigate("HomeScreen")}
+					onPress={() =>
+						navigation.navigate("HomeScreen", { users: users, teams: teams })
+					}
 				/>
 
 				<StatusBar />

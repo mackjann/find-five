@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 		marginBottom: 30,
 		textShadowColor: "white",
-		textShadowRadius: 10,
+		textShadowRadius: 15,
 	},
 
 	button_text: {
@@ -18,8 +18,10 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 22,
 		color: "darkgreen",
-		marginTop: 30,
-		marginBottom: 30,
+		marginTop: 15,
+		marginBottom: 15,
+		textShadowColor: "white",
+		textShadowRadius: 15,
 	},
 
 	button: {
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgb(120, 184, 51)",
 		alignItems: "center",
 		justifyContent: "center",
-		margin: 12,
+		margin: 10,
 		borderRadius: 15,
 	},
 
@@ -65,10 +67,16 @@ const styles = StyleSheet.create({
 		justifyContent: "space-around",
 	},
 	input: {
-		height: 40,
-		margin: 12,
-		borderWidth: 1,
+		alignSelf: "center",
+		padding: 10,
+		height: 38,
+		width: 140,
+		margin: 6,
+		borderWidth: 2,
 		fontSize: 14,
+		borderRadius: 15,
+		backgroundColor: "rgba(255,255,255,0.6)",
+		// fontStyle: "italic",
 	},
 	title: {
 		marginLeft: 12,
@@ -119,8 +127,11 @@ const styles = StyleSheet.create({
 	},
 
 	map: {
-		width: Dimensions.get("window").width * 0.7,
-		height: Dimensions.get("window").height * 0.4,
+		width: Dimensions.get("window").width * 0.8,
+		height: Dimensions.get("window").height * 0.41,
+
+		borderColor: "black",
+		borderWidth: 4,
 	},
 
 	customView: {
