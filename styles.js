@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 	input: {
 		alignSelf: "center",
 		padding: 10,
-		height: 38,
+		height: 36,
 		width: 140,
 		margin: 6,
 		borderWidth: 2,
