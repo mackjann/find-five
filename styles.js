@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
 
 	inner_container: {
 		width: Dimensions.get("window").width * 0.9,
-		height: Dimensions.get("window").height * 0.22,
 		justifyContent: "space-around",
 	},
 	input: {
@@ -117,13 +116,54 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontSize: 8,
 		// marginTop: 3,
-		// marginBottom: 0,
-		width: 50,
-		height: 20,
+		marginBottom: 1,
+		// width: 50,
+
 		textTransform: "capitalize",
-		margin: 0,
-		padding: 0,
+
+		// padding: 0,
 		fontWeight: "700",
+		textShadowColor: "white",
+		textShadowRadius: 5,
+	},
+
+	bubble: {
+		flexDirection: "column",
+		// textAlign: "center",
+		backgroundColor: "rgba(120, 184, 51,0.9)",
+		borderRadius: 7,
+		// borderColor: "black",
+		fontSize: 8,
+		// borderWidth: 1,
+		padding: 2,
+		width: 55,
+		// height: 50,
+		// marginTop: 3,
+		// marginBottom: 0,
+		// height: 50,
+		// textTransform: "capitalize",
+		// margin: 0,
+		fontWeight: "700",
+	},
+
+	arrow: {
+		backgroundColor: "transparent",
+		borderColor: "transparent",
+		borderTopColor: "rgba(120, 184, 51,0.9)",
+		borderWidth: 8,
+		alignSelf: "center",
+		marginTop: -32,
+	},
+
+	arrowBorder: {
+		backgroundColor: "transparent",
+		borderColor: "transparent",
+		borderTopColor: "transparent",
+		// borderTopColor: "#007a87",
+
+		borderWidth: 16,
+		alignSelf: "center",
+		marginTop: -0.5,
 	},
 
 	map: {

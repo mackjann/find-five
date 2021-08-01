@@ -11,6 +11,7 @@ import {
 	StatusBar,
 	TouchableOpacity,
 	View,
+	Dimensions,
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config";
@@ -56,6 +57,7 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 								backgroundColor: "rgba(250,250,250, 0.5)",
 								borderRadius: 15,
 								alignSelf: "center",
+								// height: Dimensions.get("window").height * 0.15,
 							}}
 						>
 							<Text style={styles.question}>
@@ -64,21 +66,25 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 						</View>
 
 						<TouchableOpacity
-							style={styles.small_button}
+							style={[
+								styles.small_button,
+								{ position: "relative", bottom: 17 },
+							]}
 							onPress={() =>
 								navigation.navigate("Search", { users: users, teams: teams })
 							}
 						>
-							<Text style={styles.button_text}>Search now</Text>
+							<Text style={[styles.button_text]}>Search now</Text>
 						</TouchableOpacity>
 					</View>
 					<View
 						style={[
-							styles.inner_container,
+							styles.container,
 							{
-								flex: 1,
+								flex: 2,
 								flexDirection: "row",
 
+								height: Dimensions.get("window").height * 0.25,
 								justifyContent: "flex-end",
 								alignItems: "flex-end",
 								alignContent: "flex-end",
@@ -87,7 +93,10 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 					>
 						<View></View>
 						<TouchableOpacity
-							style={[styles.small_button, { position: "absolute", bottom: 1 }]}
+							style={[
+								styles.small_button,
+								{ position: "absolute", bottom: -5 },
+							]}
 							onPress={() => {
 								firebase
 									.auth()
