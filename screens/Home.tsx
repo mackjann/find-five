@@ -96,11 +96,18 @@ const Home = ({ navigation }: any): JSX.Element => {
 						console.log(getUserById("fTj2fxnRVjcdzYu6OZpO3gBXWYI3"));
 					}}
 				/>
-				<Button title="Login" onPress={() => navigation.navigate("Login")} />
+				<Button
+					title="Login"
+					onPress={() =>
+						navigation.navigate("Login", { users: users, teams: teams })
+					}
+				/>
 
 				<Button
 					title="Register"
-					onPress={() => navigation.navigate("Register")}
+					onPress={() =>
+						navigation.navigate("Register", { users: users, teams: teams })
+					}
 				/>
 
 				<Button

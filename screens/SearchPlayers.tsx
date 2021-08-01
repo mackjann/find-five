@@ -27,8 +27,6 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 	const { users } = route.params;
 	const { teams } = route.params;
 
-	// console.log(users[6]);
-
 	//postcode data
 	const allOuterPostcodes = postcodeData.default;
 
@@ -53,7 +51,6 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 		return team;
 	});
 
-	// console.log(teamsWithCoords);
 	//location is the postcode that user types in
 	const [location, setLocation] = useState("");
 
@@ -123,8 +120,9 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 						placeholder="e.g. L17, M15, SW1"
 					/>
 				</View>
-				{/* this is if we want to specify looking for teams or players only and
-				not both */}
+
+				{/* Options to specify looking for teams or players or both */}
+
 				<View>
 					<SelectMultiple
 						style={{ position: "relative", left: 20 }}
@@ -136,11 +134,30 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 						}}
 					/>
 				</View>
-				{/* currently a redundant button
-				<Button
-					title="Search"
-					onPress={() => navigation.navigate("Register")}
-				/> */}
+
+				{/* This is me trying to pre-load photos to make sure they appear on the callouts without a delay - can't make it work atm.
+							Both player and team avatars are hard-coded at the moment */}
+				<Svg width={0} height={0}>
+					<ImageSvg
+						width={"100%"}
+						height={"100%"}
+						preserveAspectRatio="xMidYMid slice"
+						href={{
+							uri: "https://logos-world.net/wp-content/uploads/2020/06/England-logo.png",
+						}}
+					/>
+				</Svg>
+				<Svg width={0} height={0}>
+					<ImageSvg
+						width={"100%"}
+						height={"100%"}
+						preserveAspectRatio="xMidYMid slice"
+						href={{
+							uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
+						}}
+					/>
+				</Svg>
+
 				<View
 					style={[
 						styles.container,
@@ -154,62 +171,93 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 						{(selectedOptions[2] && selectedOptions[2].value === "Players") ||
 						(selectedOptions[3] && selectedOptions[3].value === "Players")
 							? usersWithCoords.map((user) => {
-									return (
-										<Marker
-											key={user.username}
-											coordinate={{
-												latitude: user.lat,
-												longitude: user.lng,
+								return (
+									<Marker
+										key={user.username}
+										coordinate={{
+											latitude: user.lat,
+											longitude: user.lng,
+										}}
+										pinColor="green"
+									>
+										<Image
+											source={require("../assets/player-icon-1.png")}
+											style={{
+												marginTop: 0,
+												width: 25,
+												height: 25,
+												alignSelf: "flex-end",
 											}}
-											pinColor="green"
+											resizeMode="contain"
+										/>
+										<Callout
+											tooltip
+											onPress={() =>
+												navigation.navigate("PlayerProfile", {
+													username: user.username,
+													users: users,
+												})
+											}
 										>
-											<Image
-												source={require("../assets/player-icon-1.png")}
-												style={{
-													marginTop: 0,
-													width: 25,
-													height: 25,
-													alignSelf: "flex-end",
-												}}
-												resizeMode="contain"
-											/>
-											<Callout
-												tooltip
-												onPress={() =>
-													navigation.navigate("PlayerProfile", {
-														username: user.username,
-														users: users,
-													})
-												}
-											>
-												<View style={styles.bubble}>
-													<Text style={styles.callout}>{user.username}</Text>
+											<View style={styles.bubble}>
+												<Text style={styles.callout}>{user.username}</Text>
 
-													{/* <Text
-														style={{
-															height: 50,
-															position: "relative",
-															bottom: 10,
-															alignSelf: "center",
+												<Svg
+													width={40}
+													height={40}
+													style={{ alignSelf: "center" }}
+												>
+													<ImageSvg
+														width={"100%"}
+														height={"100%"}
+														preserveAspectRatio="xMidYMid slice"
+														href={{
+															uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
 														}}
-													> */}
-													{/* <Image
-															style={{
-																height: 40,
-																width: 40,
+													/>
+												</Svg>
 
-																alignSelf: "center",
-
-																margin: 0,
-															}}
-															resizeMode={"cover"}
-															source={{
-																width: 50,
-																height: 50,
-																uri: "https://picsum.photos/100/100",
-															}} */}
-													{/* />  */}
-
+												<Text style={styles.callout}>
+													{"Level:"} {user.skill}
+												</Text>
+											</View>
+											<View style={styles.arrowBorder} />
+											<View style={styles.arrow} />
+										</Callout>
+									</Marker>
+								);
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+							  })
+							: null}
+						{(selectedOptions[2] && selectedOptions[2].value === "Teams") ||
+						(selectedOptions[3] && selectedOptions[3].value === "Teams")
+							? teamsWithCoords.map((team) => {
+								return (
+									<Marker
+										key={team.teamName}
+										coordinate={{
+											latitude: team.lat,
+											longitude: team.lng,
+										}}
+										pinColor="green"
+									>
+										<Image
+											source={require("../assets/emblem.png")}
+											style={{ width: 25, height: 25 }}
+											resizeMode="center"
+										/>
+										<Callout
+											tooltip
+											onPress={() =>
+												navigation.navigate("ExternalTeam", {
+													teamName: team.teamName,
+													teams: teams,
+												})
+											}
+										>
+											<View>
+												<View style={styles.bubble}>
+													<Text style={styles.callout}>{team.teamName}</Text>
 													<Svg
 														width={40}
 														height={40}
@@ -220,91 +268,34 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 															height={"100%"}
 															preserveAspectRatio="xMidYMid slice"
 															href={{
-																uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
+																uri: "https://logos-world.net/wp-content/uploads/2020/06/England-logo.png",
 															}}
 														/>
 													</Svg>
-													{/* </Text> */}
-													{/* </Text> */}
 													<Text style={styles.callout}>
-														{"Level:"} {user.skill}
-													</Text>
-												</View>
-												<View style={styles.arrowBorder} />
-												<View style={styles.arrow} />
-											</Callout>
-										</Marker>
-									);
-									// eslint-disable-next-line no-mixed-spaces-and-tabs
-							  })
-							: null}
-						{(selectedOptions[2] && selectedOptions[2].value === "Teams") ||
-						(selectedOptions[3] && selectedOptions[3].value === "Teams")
-							? teamsWithCoords.map((team) => {
-									return (
-										<Marker
-											key={team.teamName}
-											coordinate={{
-												latitude: team.lat,
-												longitude: team.lng,
-											}}
-											pinColor="green"
-										>
-											<Image
-												source={require("../assets/emblem.png")}
-												style={{ width: 25, height: 25 }}
-												resizeMode="center"
-											/>
-											<Callout
-												tooltip
-												onPress={() =>
-													navigation.navigate("ExternalTeam", {
-														teamName: team.teamName,
-														teams: teams,
-													})
-												}
-											>
-												<View>
-													<View style={styles.bubble}>
-														<Text style={styles.callout}>{team.teamName}</Text>
-														<Svg
-															width={40}
-															height={40}
-															style={{ alignSelf: "center" }}
-														>
-															<ImageSvg
-																width={"100%"}
-																height={"100%"}
-																preserveAspectRatio="xMidYMid slice"
-																href={{
-																	uri: "https://logos-world.net/wp-content/uploads/2020/06/England-logo.png",
-																}}
-															/>
-														</Svg>
-														<Text style={styles.callout}>
 															Venue: {team.venueLocation}
-														</Text>
-														<Text style={styles.callout}>
-															{"Looking for:\n"}
-															{team.lookingFor.DEF
-																? "Defender"
-																: team.lookingFor.GK
+													</Text>
+													<Text style={styles.callout}>
+														{"Looking for:\n"}
+														{team.lookingFor.DEF
+															? "Defender"
+															: team.lookingFor.GK
 																? "Goalkeeper"
 																: team.lookingFor.MID
-																? "Midfielder"
-																: team.lookingFor.ST
-																? "Striker"
-																: "Not currently looking"}
-														</Text>
-													</View>
+																	? "Midfielder"
+																	: team.lookingFor.ST
+																		? "Striker"
+																		: "Not currently looking"}
+													</Text>
 												</View>
+											</View>
 
-												<View style={styles.arrowBorder} />
-												<View style={styles.arrow} />
-											</Callout>
-										</Marker>
-									);
-									// eslint-disable-next-line no-mixed-spaces-and-tabs
+											<View style={styles.arrowBorder} />
+											<View style={styles.arrow} />
+										</Callout>
+									</Marker>
+								);
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
 							  })
 							: null}
 					</MapView>
