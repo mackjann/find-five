@@ -158,7 +158,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 							userID,
 							availability
 						);
-						navigation.navigate("HomeScreen");
+						navigation.navigate("MyTeams");
 					}}
 				/>
 			</ScrollView>
