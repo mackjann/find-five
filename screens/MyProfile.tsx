@@ -11,6 +11,7 @@ import {
 	ScrollView,
 	Button,
 	StatusBar,
+	TouchableOpacity,
 	Image,
 	FlatList,
 } from "react-native";
@@ -77,92 +78,79 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text
-					style={{
-						alignSelf: "center",
-						fontWeight: "bold",
-						fontSize: 18,
-						marginTop: 20,
-						marginBottom: 20,
-						width: 200,
-					}}
-				>
-					{`Hi ${userState.firstName} (${userState.username})`}
+				<Text style={styles.button_text}>
+					{`⚽Hi ${userState.firstName} (${userState.username})⚽`}
 				</Text>
 				<Image
 					style={{
 						marginBottom: 0,
 						alignSelf: "center",
 					}}
-					fadeDuration={3000}
+					fadeDuration={1500}
 					resizeMode={"cover"}
-					loadingIndicatorSource={require("../assets/favicon.png")}
-					borderRadius={50}
+					borderRadius={20}
 					source={{
 						width: 140,
 						height: 140,
-						uri: "https://picsum.photos/160/160",
+						uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
 					}}
 				/>
-				<Text style={styles.info}>{`About me: "${userState.bio}"`}</Text>
-				<Text style={styles.info}>{`My location: ${userState.location}`}</Text>
-				<Text style={styles.info}>
-					{`Preferred position: ${userState.position}`}
-				</Text>
-				<Text style={styles.info}>{`Skill level: ${userState.skill}`}</Text>
-				<Text style={styles.info}>{"My availability:"}</Text>
-				<View style={styles.container}>
-					{/* <FlatList
-						data={userState.availability}
-						numColumns={2}
-						renderItem={({ item }) => (
-							<Text style={styles.list} key={item}>
-								- {item.slice(0, item.length - 2)}{" "}
-								{item.slice(item.length - 2, item.length - 1)}
-								{item.slice(item.length - 1)}
-							</Text>
-						)}
-					/>*/}
+				<View
+					style={{
+						width: 260,
+						backgroundColor: "rgba(250,250,250, 0.5)",
+						borderRadius: 20,
+						alignSelf: "center",
+						padding: 10,
+						margin: 15,
+
+						// height: Dimensions.get("window").height * 0.15,
+					}}
+				>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"About me:\n"}</Text>
+						{`"${userState.bio}"`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>My location:</Text>
+						{` ${userState.location}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>Preferred position:</Text>
+						{` ${userState.position}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>Skill level:</Text>
+						{` ${userState.skill}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
+						{`${userState.availability}`}
+					</Text>
 				</View>
-				{/* <BouncyCheckbox
-					size={25}
-					fillColor="green"
-					unfillColor="#FFFFFF"
-					text="Monday AM"
-					iconStyle={{ borderColor: "green" }}
-					// textStyle={{ fontFamily: "Arial" }}
-					onPress={(isChecked: boolean) => {
-						console.log("checkbox working");
-						isChecked ? setAvailableMondayAM(true) : null;
-						console.log(availableMondayAM, "<< available?");
-					}}
-				/> */}
-				{/* <FlatList
-					data={availability}
-					renderItem={renderItem}
-					keyExtractor={(item) => item}
-				/> */}
-				{/* {availability.map((entry)=>{
-                    <FlatList
-                })
-} */}
-				{/* <Button title="TEST BUTTON" onPress={getEmail} /> */}
 
-				{/* <View>
-					<SelectMultiple
-						items={timeSlots}
-						selectedItems={selectedTimes}
-						onSelectionsChange={(selectedTimes: any) => {
-							setSelectedTimes(selectedTimes);
-							console.log(selectedTimes);
-						}}
-					/>
-				</View> */}
-
-				<Button
-					title="Edit my profile"
+				<TouchableOpacity
+					style={[
+						styles.button,
+						{
+							alignSelf: "center",
+							borderColor: "black",
+							borderWidth: 2,
+							height: 35,
+							borderRadius: 12,
+							position: "relative",
+							bottom: -12,
+						},
+					]}
 					onPress={() => navigation.navigate("Register")}
-				/>
+				>
+					<Text
+						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
+					>
+						Edit my profile
+					</Text>
+				</TouchableOpacity>
+
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>

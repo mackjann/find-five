@@ -30,6 +30,7 @@ import {
 	getUser,
 	getTeam,
 	getUserById,
+	getMembersOfTeam,
 } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
@@ -90,20 +91,30 @@ const Home = ({ navigation }: any): JSX.Element => {
 					findFive
 				</Text>
 
-				<Button
+				{/* <Button
 					title="db test button"
 					onPress={() => {
-						console.log(getUserById("fTj2fxnRVjcdzYu6OZpO3gBXWYI3"));
+						declineInvite(
+							"V3CvouPIpzo6ehGeYBF4",
+							"fTj2fxnRVjcdzYu6OZpO3gBXWYI3"
+						);
 					}}
+				/> */}
+				<Button
+					title="Login"
+					onPress={() =>
+						navigation.navigate("Login", { users: users, teams: teams })
+					}
 				/>
-				<Button title="Login" onPress={() => navigation.navigate("Login")} />
 
 				<Button
 					title="Register"
-					onPress={() => navigation.navigate("Register")}
+					onPress={() =>
+						navigation.navigate("Register", { users: users, teams: teams })
+					}
 				/>
 
-				<Button
+				{/* <Button
 					title="MyProfile"
 					onPress={() => navigation.navigate("MyProfile", { users: users })}
 				/>
@@ -113,10 +124,12 @@ const Home = ({ navigation }: any): JSX.Element => {
 					onPress={() =>
 						navigation.navigate("Search", { users: users, teams: teams })
 					}
-				/>
+				/> */}
 				<Button
-					title="HomeScreenTest"
-					onPress={() => navigation.navigate("HomeScreen")}
+					title="DEV ACCESS HomeScreen"
+					onPress={() =>
+						navigation.navigate("HomeScreen", { users: users, teams: teams })
+					}
 				/>
 
 				<StatusBar />

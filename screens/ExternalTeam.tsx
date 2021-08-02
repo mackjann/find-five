@@ -8,9 +8,10 @@ import {
 	Text,
 	SafeAreaView,
 	ScrollView,
-	Button,
+	TouchableOpacity,
 	StatusBar,
 	Image,
+	View,
 } from "react-native";
 import styles from "../styles.js";
 import { useState, useEffect } from "react";
@@ -40,55 +41,114 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text
-					style={{
-						alignSelf: "center",
-						textAlign: "center",
-						fontWeight: "bold",
-						fontSize: 18,
-						marginTop: 20,
-						marginBottom: 20,
-						width: 200,
-					}}
-				>
-					{team.teamName}
-				</Text>
+				<Text style={styles.button_text}>⚽{team.teamName}⚽</Text>
 				<Image
 					style={{
 						marginBottom: 0,
 						alignSelf: "center",
 					}}
-					fadeDuration={3000}
+					fadeDuration={1500}
 					resizeMode={"cover"}
-					loadingIndicatorSource={require("../assets/favicon.png")}
-					borderRadius={50}
+					borderRadius={20}
 					source={{
 						width: 140,
 						height: 140,
-						uri: "https://picsum.photos/161/161",
+						uri: "https://logos-world.net/wp-content/uploads/2020/06/England-logo.png",
 					}}
 				/>
-				<Text
-					style={styles.info}
-				>{`About team ${team.teamName}: "${team.bio}"`}</Text>
-				<Text
-					style={styles.info}
-				>{`${team.teamName}'s pitch location: ${team.venueLocation}`}</Text>
-				<Text style={styles.info}>{"Looking for: TBC - array?"}</Text>
 
-				<Text
-					style={styles.info}
-				>{"Contact details: TBC - admin's email? \n"}</Text>
+				<View
+					style={{
+						width: 260,
+						backgroundColor: "rgba(250,250,250, 0.5)",
+						borderRadius: 20,
+						alignSelf: "center",
+						padding: 10,
+						margin: 10,
 
-				<Button
-					title="Connect?"
-					onPress={() => navigation.navigate("Register")}
-				/>
+						// height: Dimensions.get("window").height * 0.15,
+					}}
+				>
+					<Text style={{ margin: 5 }}>
+						<Text
+							style={{ fontWeight: "bold" }}
+						>{`About ${team.teamName}:`}</Text>
 
-				<Button
-					title="Message?"
-					onPress={() => navigation.navigate("Register")}
-				/>
+						{` "${team.bio}"`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text
+							style={{ fontWeight: "bold" }}
+						>{`${team.teamName}'s pitch location:`}</Text>
+						{` ${team.venueLocation}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"Looking for: "}</Text>
+						{"TBC - array?"}
+					</Text>
+
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"Playing schedule: "}</Text>
+						{"TBC - array?"}
+					</Text>
+
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"Contact details:\n "}</Text>
+						{`Admin's email address? ${team.admin}`}
+					</Text>
+				</View>
+
+				<View
+					style={[
+						styles.container,
+						{
+							flex: 1,
+							flexDirection: "row",
+							justifyContent: "space-evenly",
+						},
+					]}
+				>
+					<TouchableOpacity
+						style={[
+							styles.small_button,
+							{
+								borderWidth: 2,
+								height: 35,
+								borderRadius: 12,
+								width: 140,
+							},
+						]}
+					>
+						<Text
+							style={[
+								styles.button_text,
+								{ alignSelf: "center", fontSize: 18 },
+							]}
+						>
+							Request to Join
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={[
+							styles.small_button,
+							{
+								borderWidth: 2,
+								height: 35,
+								borderRadius: 12,
+								width: 100,
+							},
+						]}
+					>
+						<Text
+							style={[
+								styles.button_text,
+								{ alignSelf: "center", fontSize: 18 },
+							]}
+						>
+							Message
+						</Text>
+					</TouchableOpacity>
+				</View>
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>

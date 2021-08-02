@@ -37,6 +37,8 @@ const timeSlots = [
 ];
 
 const CreateProfile = ({ navigation, route }: any): JSX.Element => {
+	const { users } = route.params;
+	const { teams } = route.params;
 	const [bio, setBio] = React.useState("");
 	const [skill, setSkill] = React.useState("");
 	const [location, setLocation] = React.useState("");
@@ -140,7 +142,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 							availibility,
 							bio
 						);
-						navigation.navigate("HomeScreen");
+						navigation.navigate("HomeScreen", { users: users, teams: teams });
 					}}
 				/>
 			</ScrollView>
