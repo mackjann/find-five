@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "react-native-gesture-handler";
-// import firebase from "../config.js";
 import * as React from "react";
 import firebase from "../config";
 import "firebase/auth";
@@ -38,6 +37,8 @@ const timeSlots = [
 ];
 
 const CreateProfile = ({ navigation, route }: any): JSX.Element => {
+	const { users } = route.params;
+	const { teams } = route.params;
 	const [bio, setBio] = React.useState("");
 	const [skill, setSkill] = React.useState("");
 	const [location, setLocation] = React.useState("");
@@ -68,6 +69,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 
 				<Text style={styles.title}>Position Preference</Text>
 				<Picker
+					mode="dialog"
 					style={styles.input}
 					selectedValue={position}
 					onValueChange={(itemValue, itemIndex) =>
@@ -140,7 +142,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 							availibility,
 							bio
 						);
-						navigation.navigate("HomeScreen");
+						navigation.navigate("HomeScreen", { users: users, teams: teams });
 					}}
 				/>
 			</ScrollView>

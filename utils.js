@@ -38,6 +38,8 @@ const storageRef = firebase.storage().ref();
 // /Users/khizariqbal/Desktop
 export const createTeam = (
 	teamName,
+	bio,
+	purpose,
 	venue,
 	venueLocation,
 	lookingFor,
@@ -48,7 +50,8 @@ export const createTeam = (
 		.add({
 			admin: admin,
 			availability: availability,
-			bio: "",
+			bio: bio,
+			purpose: purpose,
 			lookingFor: lookingFor,
 			teamName: teamName,
 			teamPic: true,

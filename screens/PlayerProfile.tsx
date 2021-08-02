@@ -13,6 +13,8 @@ import {
 	StatusBar,
 	Image,
 	FlatList,
+	TouchableOpacity,
+	Dimensions,
 } from "react-native";
 import styles from "../styles.js";
 import { useState, useEffect } from "react";
@@ -82,81 +84,143 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text
-					style={{
-						alignSelf: "center",
-						textAlign: "center",
-						fontWeight: "bold",
-						fontSize: 18,
-						marginTop: 20,
-						marginBottom: 20,
-						width: 200,
-					}}
-				>
-					{user.username}
-				</Text>
+				<Text style={styles.button_text}>⚽{user.username}⚽</Text>
 				<Image
 					style={{
 						marginBottom: 0,
 						alignSelf: "center",
 					}}
-					fadeDuration={3000}
+					fadeDuration={1500}
 					resizeMode={"cover"}
-					loadingIndicatorSource={require("../assets/favicon.png")}
-					borderRadius={50}
+					borderRadius={20}
 					source={{
 						width: 140,
 						height: 140,
-						uri: "https://picsum.photos/160/160",
+						uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
 					}}
 				/>
-				<Text
-					style={styles.info}
-				>{`About ${user.username}: "${user.bio}"`}</Text>
-				<Text
-					style={styles.info}
-				>{`${user.username}'s location: ${user.location}`}</Text>
-				<Text style={styles.info}>
-					{`Preferred position: ${
-						user.position && user.position.DEF
-							? "Defender"
-							: user.position && user.position.GK
-								? "Goalkeeper"
-								: user.position && user.position.MID
-									? "Midfielder"
-									: user.position && user.position.ST
-										? "Striker"
-										: user.position && user.position.noPref
-											? "No preference"
-											: "any"
-					}`}
-				</Text>
-				<Text style={styles.info}>{`Skill level: ${user.skill}`}</Text>
-				<Text style={styles.info}>{`${user.username}'s availability:`}</Text>
-				<View style={styles.container}>
-					<FlatList
-						data={availability}
-						numColumns={2}
-						renderItem={({ item }) => (
-							<Text style={styles.list} key={item}>
-								- {item.slice(0, item.length - 2)}{" "}
-								{item.slice(item.length - 2, item.length - 1)}
-								{item.slice(item.length - 1)}
-							</Text>
-						)}
-					/>
+
+				<View
+					style={{
+						width: 260,
+						backgroundColor: "rgba(250,250,250, 0.5)",
+						borderRadius: 20,
+						alignSelf: "center",
+						padding: 10,
+						margin: 10,
+
+						// height: Dimensions.get("window").height * 0.15,
+					}}
+				>
+					<Text style={{ margin: 5 }}>
+						<Text
+							style={{ fontWeight: "bold" }}
+						>{`About ${user.username}:\n`}</Text>
+						{`"${user.bio}"`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>
+							{`${user.username}'s location:`}
+						</Text>
+						{` ${user.location}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>Preferred position: </Text>
+						{`${
+							user.position && user.position.DEF
+								? "Defender"
+								: user.position && user.position.GK
+									? "Goalkeeper"
+									: user.position && user.position.MID
+										? "Midfielder"
+										: user.position && user.position.ST
+											? "Striker"
+											: user.position && user.position.noPref
+												? "No preference"
+												: "any"
+						}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>Skill level:</Text>
+						{` ${user.skill}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text
+							style={{ fontWeight: "bold" }}
+						>{`${user.username}'s availability:`}</Text>
+					</Text>
+					<View>
+						<FlatList
+							data={availability}
+							numColumns={1}
+							renderItem={({ item }) => (
+								<Text style={styles.list} key={item}>
+									- {item.slice(0, item.length - 2)}{" "}
+									{item.slice(item.length - 2, item.length - 1)}
+									{item.slice(item.length - 1)}
+								</Text>
+							)}
+						/>
+					</View>
+					<Text style={{ margin: 5 }}>
+						<Text
+							style={{ fontWeight: "bold" }}
+						>{`${user.username}'s contact details:\n`}</Text>
+						{user.email}
+					</Text>
 				</View>
-				<Text style={styles.info}>{`Contact details: ${user.email} \n`}</Text>
+				<View
+					style={[
+						styles.container,
+						{
+							flex: 1,
+							flexDirection: "row",
+							justifyContent: "space-evenly",
+						},
+					]}
+				>
+					<TouchableOpacity
+						style={[
+							styles.small_button,
+							{
+								borderWidth: 2,
+								height: 35,
+								borderRadius: 12,
+								width: 100,
+							},
+						]}
+					>
+						<Text
+							style={[
+								styles.button_text,
+								{ alignSelf: "center", fontSize: 18 },
+							]}
+						>
+							Connect
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={[
+							styles.small_button,
+							{
+								borderWidth: 2,
+								height: 35,
+								borderRadius: 12,
+								width: 100,
+							},
+						]}
+					>
+						<Text
+							style={[
+								styles.button_text,
+								{ alignSelf: "center", fontSize: 18 },
+							]}
+						>
+							Message
+						</Text>
+					</TouchableOpacity>
+				</View>
 
-				<Button
-					title="Connect?"
-					onPress={() => navigation.navigate("Register")}
-				/>
-
-				<Button
-					title="Message?"
-					onPress={() => navigation.navigate("Register")}
-				/>
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>
