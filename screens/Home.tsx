@@ -30,6 +30,7 @@ import {
 	getUser,
 	getTeam,
 	getUserById,
+	getMembersOfTeam,
 } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
@@ -93,7 +94,10 @@ const Home = ({ navigation }: any): JSX.Element => {
 				<Button
 					title="db test button"
 					onPress={() => {
-						console.log(getUserById("fTj2fxnRVjcdzYu6OZpO3gBXWYI3"));
+						declineInvite(
+							"V3CvouPIpzo6ehGeYBF4",
+							"fTj2fxnRVjcdzYu6OZpO3gBXWYI3"
+						);
 					}}
 				/>
 				<Button
