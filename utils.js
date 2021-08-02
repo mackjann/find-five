@@ -60,7 +60,7 @@ export const createTeam = (
 		})
 		.then((docRef) => {
 			const data = {
-				members: [],
+				members: [{ id: admin, hasAccepted: true }],
 			};
 			db.collection(`teams/${docRef.id}/members`).doc("membersArray").set(data);
 		})
