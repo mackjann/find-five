@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.appHeader}>⚽ FIND-FIVE ⚽</Text>
+				<Text style={styles.appHeader}>⚽ find5 ⚽</Text>
 				<View style={{ flex: 1 }}>
 					<View
 						style={[styles.inner_container, { flex: 5, flexDirection: "row" }]}
@@ -40,7 +40,7 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() => navigation.navigate("MyProfile")}
+							onPress={() => navigation.navigate("MyTeams", { teams: teams })}
 						>
 							<Text style={styles.button_text}> 👥 My Teams</Text>
 						</TouchableOpacity>
@@ -75,6 +75,16 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 							}
 						>
 							<Text style={[styles.button_text]}>Search now</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity
+							style={[
+								styles.small_button,
+								{ position: "relative", bottom: 17 },
+							]}
+							onPress={() => navigation.navigate("CreateTeam")}
+						>
+							<Text style={[styles.button_text]}>Create Team Test</Text>
 						</TouchableOpacity>
 					</View>
 					<View

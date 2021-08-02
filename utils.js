@@ -38,19 +38,20 @@ const storageRef = firebase.storage().ref();
 // /Users/khizariqbal/Desktop
 export const createTeam = (
 	teamName,
+	bio,
+	purpose,
 	venue,
 	venueLocation,
 	lookingFor,
 	admin,
 	availability
 ) => {
-	console.log("hi");
-	// in dev pls add user state as param to this func
 	db.collection("teams")
 		.add({
 			admin: admin,
 			availability: availability,
-			bio: "",
+			bio: bio,
+			purpose: purpose,
 			lookingFor: lookingFor,
 			teamName: teamName,
 			teamPic: true,
