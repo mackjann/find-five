@@ -15,6 +15,7 @@ import MyProfile from "./screens/MyProfile";
 import PlayerProfile from "./screens/PlayerProfile";
 import ExternalTeam from "./screens/ExternalTeam";
 import Search from "./screens/SearchPlayers";
+import MyTeams from "./screens/MyTeamsList";
 import CreateTeam from "./screens/CreateTeam";
 
 import HomeScreen from "./screens/HomeScreen";
@@ -51,7 +52,7 @@ export default function App(): any {
 				<Stack.Screen name="PlayerProfile" component={PlayerProfile} />
 				<Stack.Screen name="Search" component={Search} />
 				<Stack.Screen name="ExternalTeam" component={ExternalTeam} />
-
+				<Stack.Screen name="MyTeams" component={MyTeams} />
 				<Stack.Screen name="HomeScreen" component={HomeScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
