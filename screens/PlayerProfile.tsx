@@ -130,14 +130,14 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 							user.position && user.position.DEF
 								? "Defender"
 								: user.position && user.position.GK
-								? "Goalkeeper"
-								: user.position && user.position.MID
-								? "Midfielder"
-								: user.position && user.position.ST
-								? "Striker"
-								: user.position && user.position.noPref
-								? "No preference"
-								: "any"
+									? "Goalkeeper"
+									: user.position && user.position.MID
+										? "Midfielder"
+										: user.position && user.position.ST
+											? "Striker"
+											: user.position && user.position.noPref
+												? "No preference"
+												: "any"
 						}`}
 					</Text>
 					<Text style={{ margin: 5 }}>
