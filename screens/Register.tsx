@@ -8,7 +8,9 @@ import styles from "../styles";
 import firebase from "../config";
 import "firebase/auth";
 
-const Register = ({ navigation }: any): JSX.Element => {
+const Register = ({ navigation, route }: any): JSX.Element => {
+	const { users } = route.params;
+	const { teams } = route.params;
 	const [firstName, setFirstName] = React.useState("");
 	const [lastName, setLastName] = React.useState("");
 	const [email, setEmail] = React.useState("");
@@ -85,6 +87,8 @@ const Register = ({ navigation }: any): JSX.Element => {
 						email: email,
 						username: username,
 						password: password,
+						users: users,
+						teams: teams,
 					});
 				}}
 			></Button>
