@@ -44,8 +44,6 @@ export const createTeam = (
 	admin,
 	availability
 ) => {
-	console.log("hi");
-	// in dev pls add user state as param to this func
 	db.collection("teams")
 		.add({
 			admin: admin,
