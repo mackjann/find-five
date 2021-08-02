@@ -90,12 +90,12 @@ const Home = ({ navigation }: any): JSX.Element => {
 					findFive
 				</Text>
 
-				<Button
+				{/* <Button
 					title="db test button"
 					onPress={() => {
 						console.log(getUserById("fTj2fxnRVjcdzYu6OZpO3gBXWYI3"));
 					}}
-				/>
+				/> */}
 				<Button
 					title="Login"
 					onPress={() =>
@@ -110,7 +110,7 @@ const Home = ({ navigation }: any): JSX.Element => {
 					}
 				/>
 
-				<Button
+				{/* <Button
 					title="MyProfile"
 					onPress={() => navigation.navigate("MyProfile", { users: users })}
 				/>
@@ -120,9 +120,9 @@ const Home = ({ navigation }: any): JSX.Element => {
 					onPress={() =>
 						navigation.navigate("Search", { users: users, teams: teams })
 					}
-				/>
+				/> */}
 				<Button
-					title="HomeScreenTest"
+					title="DEV ACCESS HomeScreen"
 					onPress={() =>
 						navigation.navigate("HomeScreen", { users: users, teams: teams })
 					}
