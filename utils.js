@@ -393,6 +393,28 @@ export const getMembersOfTeam = async (teamId) => {
 	return membersInfo;
 };
 
+export const getUsersTeams = async (userId) => {
+	const usersRef = await db.collection("users").doc(userId).get();
+	const userData = usersRef.data();
+
+	const memberOfArr = userData.memberOf;
+
+	const allTeams = await db.collection("teams").get();
+
+	const teamsInfo = [];
+
+	allTeams.forEach((team) => {
+		if (memberOfArr.includes(team.id)) {
+			teamsInfo.push({
+				id: team.id,
+				teamName: team.data().teamName,
+				location: team.data().venueLocation,
+			});
+		}
+	});
+	console.log(teamsInfo);
+	return teamsInfo;
+};
 // submitButton.addEventListener("click", () => {
 // 	// createUser();
 // 	addPlayer("V3CvouPIpzo6ehGeYBF4", "4xcIcSCBpGp2v0VL606d");
