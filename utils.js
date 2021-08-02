@@ -46,8 +46,6 @@ export const createTeam = (
 	admin,
 	availability
 ) => {
-	console.log("hi");
-	// in dev pls add user state as param to this func
 	db.collection("teams")
 		.add({
 			admin: admin,
@@ -99,6 +97,8 @@ export const createUser = async (
 			profilePic: true,
 			skill: skill,
 			username: username,
+			memberOf: [],
+			requests: [],
 		})
 		.then((newUser) => {
 			console.log(newUser);
@@ -122,17 +122,13 @@ export const addPlayer = async (teamId, userId) => {
 			console.log(err);
 		});
 
-	// 2. Grabs user doc of user we want to add to members array
-	const playerDataRef = await db.collection("users").doc(userId).get();
-	const playerData = playerDataRef.data();
-
-	// 3. Places grabbed user into members array with new key of "hasAccepted"
-	const placePlayer = (members, player, id) => {
+	// 2. Places grabbed user into members array with new key of "hasAccepted"
+	const placePlayer = (members) => {
 		db.collection(`teams/${teamId}/members`)
 			.doc("membersArray")
 			.set(
 				{
-					members: [...members, { [id]: { player }, hasAccepted: false }],
+					members: [...members, { id: userId, hasAccepted: false }],
 				},
 				{ merge: true }
 			)
@@ -143,8 +139,12 @@ export const addPlayer = async (teamId, userId) => {
 				console.log(err);
 			});
 	};
-	placePlayer(members, playerData, userId); // (Step 3 invoked here after user and members array have been grabbed)
+	placePlayer(members); // (Step 3 invoked here after user and members array have been grabbed)
 
+	// 3. Grabs user doc of user we want to add to members array
+
+	const playerDataRef = await db.collection("users").doc(userId).get();
+	const playerData = playerDataRef.data();
 	const userRequest = playerData.requests;
 
 	// 4. Adds new key of "requests" (or spreads in new requests) to user that was placed in members array
@@ -157,8 +157,6 @@ export const addPlayer = async (teamId, userId) => {
 			{ merge: true }
 		);
 };
-
-// export const removePlayerFromTeam = async (teamID, playerID) => {};
 
 // Search users by username only (all usernames must be lowercase in order for this to work)
 // This is an async function, will return a promise of userObj, not userObj itself. Use a .then
@@ -326,17 +324,22 @@ export const acceptInvite = async (teamId, userId) => {
 		{ merge: true }
 	);
 
-	const requestsArrRef = await db.collection("users").doc(userId).get();
-	const requestsArr = requestsArrRef.data().requests;
+	const userRef = await db.collection("users").doc(userId).get();
+	const requestsArr = userRef.data().requests;
 
 	const newRequestsArr = requestsArr.filter((request) => request !== teamId);
 
-	db.collection("users").doc(userId).set(
-		{
-			requests: newRequestsArr,
-		},
-		{ merge: true }
-	);
+	const memberOfArr = userRef.data().memberOf;
+
+	db.collection("users")
+		.doc(userId)
+		.set(
+			{
+				requests: newRequestsArr,
+				memberOf: [...memberOfArr, teamId],
+			},
+			{ merge: true }
+		);
 };
 
 export const declineInvite = async (teamId, userId) => {
@@ -347,7 +350,7 @@ export const declineInvite = async (teamId, userId) => {
 
 	const membersArray = memberArrRef.data().members;
 
-	const newMembersArr = membersArray.filter((member) => !member[userId]);
+	const newMembersArr = membersArray.filter((member) => member.id !== userId);
 
 	db.collection(`teams/${teamId}/members`).doc("membersArray").set(
 		{
@@ -367,6 +370,27 @@ export const declineInvite = async (teamId, userId) => {
 		},
 		{ merge: true }
 	);
+};
+
+export const getMembersOfTeam = async (teamId) => {
+	const membersRef = await db
+		.collection(`teams/${teamId}/members`)
+		.doc("membersArray")
+		.get();
+
+	// gets members array from teams sub-collection
+	const membersArr = await membersRef.data().members;
+	const membersId = membersArr.map((member) => member.id);
+	// console.log(membersId);
+
+	const allUsers = await db.collection("users").get();
+	const membersInfo = [];
+	allUsers.forEach((user) => {
+		if (membersId.includes(user.id)) {
+			membersInfo.push(user.data());
+		}
+	});
+	return membersInfo;
 };
 
 // submitButton.addEventListener("click", () => {
