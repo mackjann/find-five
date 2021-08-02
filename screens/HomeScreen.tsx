@@ -76,6 +76,16 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 						>
 							<Text style={[styles.button_text]}>Search now</Text>
 						</TouchableOpacity>
+
+						<TouchableOpacity
+							style={[
+								styles.small_button,
+								{ position: "relative", bottom: 17 },
+							]}
+							onPress={() => navigation.navigate("CreateTeam")}
+						>
+							<Text style={[styles.button_text]}>Create Team Test</Text>
+						</TouchableOpacity>
 					</View>
 					<View
 						style={[

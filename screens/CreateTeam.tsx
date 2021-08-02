@@ -73,6 +73,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 				/>
 
 				{/* Picker component to choose competitiveness */}
+				<Text style={styles.title}>How competetive are you?:</Text>
 				<Picker
 					mode="dialog"
 					style={styles.input}
@@ -84,6 +85,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 				</Picker>
 
 				{/* Picker component to choose skill level */}
+				<Text style={styles.title}>Skill level:</Text>
 				<Picker
 					mode="dialog"
 					style={styles.input}
@@ -131,7 +133,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 						items={timeSlots}
 						selectedItems={availability}
 						onSelectionsChange={(
-							availibility: React.SetStateAction<never[]>
+							availability: React.SetStateAction<never[]>
 						) => {
 							setAvailability(availability);
 						}}
@@ -156,7 +158,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 							userID,
 							availability
 						);
-						navigation.navigate("MyTeams");
+						navigation.navigate("HomeScreen");
 					}}
 				/>
 			</ScrollView>
