@@ -21,7 +21,7 @@ import "firebase/auth";
 import { useState, useEffect } from "react";
 import SelectMultiple from "react-native-select-multiple";
 import { useCardAnimation } from "@react-navigation/stack";
-import getUser from "../utils";
+import getUsersTeams from "../utils";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -74,6 +74,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	user().then((results) => {
 		setUserState(results);
 	});
+	const teamsArr = getUsersTeams(userID);
 
 	return (
 		<SafeAreaView style={styles.container}>
