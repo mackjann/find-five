@@ -22,7 +22,7 @@ LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
 
 const MyTeams = ({ navigation, route }: any): JSX.Element => {
 	// const { teamName } = route.params;
-	const { teams } = route.params;
+	// const { teams } = route.params;
 
 	// const [team, setTeam] = useState({});
 
