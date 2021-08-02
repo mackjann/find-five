@@ -109,7 +109,7 @@ const MyTeams = ({ navigation, route }: any): JSX.Element => {
 						>{`${team.teamName}`}</Text>
 					</Text>
 					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>{`Location\n`}</Text>
+						<Text style={{ fontWeight: "bold" }}>{"Location\n"}</Text>
 						{`${team.venueLocation}`}
 					</Text>
 					<View>
