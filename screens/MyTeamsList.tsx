@@ -183,6 +183,7 @@ const MyTeams = ({ navigation, route }: any): JSX.Element => {
 								width: 200,
 							},
 						]}
+						onPress={() => navigation.navigate("CreateTeam")}
 					>
 						<Text
 							style={[
