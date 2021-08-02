@@ -42,7 +42,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 	const [bio, setBio] = React.useState("");
 	const [skill, setSkill] = React.useState("");
 	const [location, setLocation] = React.useState("");
-	const [ageGroup, setAgeGroup] = React.useState("AGE");
+	const [ageGroup, setAgeGroup] = React.useState("18-30");
 	const [availibility, setAvailibility] = React.useState([]);
 	const [position, setSelectedPosition] = React.useState("");
 
@@ -104,7 +104,6 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 					selectedValue={ageGroup}
 					onValueChange={(itemValue, itemIndex) => {
 						setAgeGroup(itemValue);
-						console.log(ageGroup);
 					}}
 				>
 					<Picker.Item label="18-30" value="18-30" />
