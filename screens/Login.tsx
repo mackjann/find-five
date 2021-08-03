@@ -36,7 +36,7 @@ const Login = ({ navigation }: any): JSX.Element => {
 						top: -60,
 					}}
 					resizeMode={"contain"}
-					source={require("../images/find5-1.png")}
+					source={require("../images/find5-1-no-bg.png")}
 					// source={require("../images/find5-2.png")}
 				/>
 			</View>
