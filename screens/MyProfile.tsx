@@ -95,7 +95,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 					source={{
 						width: 140,
 						height: 140,
-						uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
+						uri: userState.profilePic,
 					}}
 				/>
 				<View
@@ -128,7 +128,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
-						{`${userState.availability}`}
+						{`${userState.availability[0].value}`}
 					</Text>
 				</View>
 
