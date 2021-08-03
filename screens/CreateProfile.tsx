@@ -13,6 +13,8 @@ import {
 	ScrollView,
 	View,
 	TouchableOpacity,
+	Dimensions,
+	Image,
 } from "react-native";
 import styles from "../styles";
 import { Picker } from "@react-native-picker/picker";
@@ -49,6 +51,24 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 
 	return (
 		<SafeAreaView style={styles.container}>
+			<View
+				style={{
+					justifyContent: "flex-start",
+
+					height: Dimensions.get("window").height * 0.12,
+				}}
+			>
+				<Image
+					style={{
+						margin: 0,
+						width: 50,
+						top: -10,
+					}}
+					resizeMode={"contain"}
+					source={require("../images/find5-icon-no-bg.png")}
+					// source={require("../images/find5-2.png")}
+				/>
+			</View>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View
 					style={{

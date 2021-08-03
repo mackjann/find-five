@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
 		// color: "black",
 		marginTop: 15,
 		marginBottom: 15,
-		textShadowColor: "white",
-		textShadowRadius: 15,
+		// textShadowColor: "white",
+		// textShadowRadius: 15,
 	},
 
 	button: {

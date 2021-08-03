@@ -99,7 +99,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 						marginBottom: 10,
 					}}
 				>
-					<Text style={[styles.button_text, { margin: 20 }]}>{`Bio:    `}</Text>
+					<Text style={[styles.button_text, { margin: 20 }]}>{"Bio:    "}</Text>
 
 					<TextInput
 						style={[styles.input, { width: 200 }]}
@@ -113,7 +113,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 
 				{/* Picker component to choose competitiveness */}
 				<Text style={[styles.button_text, { textAlign: "left" }]}>
-					{`    How competitive are you?`}
+					{"    How competitive are you?"}
 				</Text>
 				<Picker
 					mode="dialog"
@@ -134,7 +134,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 
 				{/* Picker component to choose skill level */}
 				<Text style={[styles.button_text, { textAlign: "left" }]}>
-					{`    Skill level:`}
+					{"    Skill level:"}
 				</Text>
 				<Picker
 					mode="dialog"
@@ -164,7 +164,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 						marginBottom: 10,
 					}}
 				>
-					<Text style={[styles.button_text, { margin: 20 }]}>{`Venue:`}</Text>
+					<Text style={[styles.button_text, { margin: 20 }]}>{"Venue:"}</Text>
 					<TextInput
 						style={[styles.input, { width: 180 }]}
 						onChangeText={setVenue}
@@ -182,7 +182,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 				>
 					<Text
 						style={[styles.button_text, { margin: 20 }]}
-					>{`Venue location:`}</Text>
+					>{"Venue location:"}</Text>
 					<TextInput
 						style={[styles.input, { width: 105 }]}
 						onChangeText={setVenueLocation}
@@ -191,7 +191,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 					/>
 				</View>
 				<Text style={[styles.button_text, { textAlign: "left" }]}>
-					{`    Looking for:`}
+					{"    Looking for:"}
 				</Text>
 
 				<View>
@@ -204,7 +204,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 					/>
 				</View>
 				<Text style={[styles.button_text, { textAlign: "left" }]}>
-					{`    Availability:`}
+					{"    Availability:"}
 				</Text>
 				<View>
 					<SelectMultiple
