@@ -47,9 +47,7 @@ interface User {
 	username: string;
 }
 
-const MyProfile = ({ navigation, route }: any): JSX.Element => {
-	const { users } = route.params;
-	const { teams } = route.params;
+const MyProfile = ({ navigation }: any): JSX.Element => {
 	const userID = firebase.auth().currentUser.uid;
 	const ref = firebase.firestore().collection("users");
 
@@ -70,6 +68,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
 		const userProfile = userData.data();
+		console.log(userProfile);
 		return userProfile;
 	};
 
@@ -146,9 +145,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 							bottom: -12,
 						},
 					]}
-					onPress={() =>
-						navigation.navigate("Register", { users: users, teams: teams })
-					}
+					onPress={() => navigation.navigate("Register")}
 				>
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
