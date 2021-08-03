@@ -32,7 +32,6 @@ import {
 	createUser,
 	getUser,
 	getTeam,
-	getUserById,
 	getMembersOfTeam,
 	getUsersTeams,
 } from "../utils.js";
