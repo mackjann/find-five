@@ -58,7 +58,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 
 		// backgroundColor: "rgb(120, 184, 51)",
-		backgroundColor: "#c4f0b9",
+
+		// backgroundColor: "#5dbb63",
+		// backgroundColor: "#3cb371",
+		// backgroundColor: "#8f9779",
+		// backgroundColor: "#b2beb5",
+		backgroundColor: "#c4d5a3",
+		// backgroundColor: "#c4f0b9",
+		// backgroundColor: "#a2ad9c",
 		// backgroundColor: "#6d7073",
 		alignItems: "center",
 		justifyContent: "center",

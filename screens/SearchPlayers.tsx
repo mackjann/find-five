@@ -149,7 +149,7 @@ const Search = ({ navigation }: any): JSX.Element => {
 							top: -12,
 						}}
 						resizeMode={"contain"}
-						source={require("../images/find5-icon.png")}
+						source={require("../images/find5-icon-no-bg.png")}
 						// source={require("../images/find5-2.png")}
 					/>
 					<Text style={styles.button_text}>Search Teams & Players</Text>
