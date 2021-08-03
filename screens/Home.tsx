@@ -11,6 +11,10 @@ import {
 	ScrollView,
 	Button,
 	StatusBar,
+	View,
+	Image,
+	Dimensions,
+	TouchableOpacity,
 } from "react-native";
 import styles from "../styles.js";
 import firebase from "../config.js";
@@ -31,6 +35,7 @@ import {
 	getTeam,
 	getUserById,
 	getMembersOfTeam,
+	getUsersTeams,
 } from "../utils.js";
 
 const ref = firebase.firestore().collection("users");
@@ -78,28 +83,64 @@ const Home = ({ navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text
+				<View
 					style={{
-						textAlign: "center",
-						fontWeight: "bold",
-						fontSize: 18,
-						marginTop: 30,
-						marginBottom: 30,
-						width: 200,
+						justifyContent: "flex-start",
+						height: Dimensions.get("window").height * 0.25,
 					}}
 				>
-					findFive
+					<Image
+						style={{
+							margin: 0,
+							alignSelf: "center",
+							width: 150,
+							top: -30,
+						}}
+						resizeMode={"contain"}
+						source={require("../images/find5-1.png")}
+						// source={require("../images/find5-2.png")}
+					/>
+				</View>
+				<Text
+					style={[
+						styles.button_text,
+						{
+							textAlign: "center",
+							fontWeight: "bold",
+							fontSize: 18,
+							marginTop: 30,
+							marginBottom: 30,
+							width: 260,
+						},
+					]}
+				>
+					Find your 5 right now!
 				</Text>
+
+				<TouchableOpacity
+					style={[styles.button, { alignSelf: "center" }]}
+					onPress={() =>
+						navigation.navigate("Login", { users: users, teams: teams })
+					}
+				>
+					<Text style={styles.button_text}>Log in</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					style={[styles.button, { alignSelf: "center" }]}
+					onPress={() =>
+						navigation.navigate("Register", { users: users, teams: teams })
+					}
+				>
+					<Text style={styles.button_text}>Register</Text>
+				</TouchableOpacity>
 
 				{/* <Button
 					title="db test button"
 					onPress={() => {
-						declineInvite(
-							"V3CvouPIpzo6ehGeYBF4",
-							"fTj2fxnRVjcdzYu6OZpO3gBXWYI3"
-						);
+						getUsersTeams("1aSoETiNejUYyr9PlNAhvD76Pzx1");
 					}}
-				/> */}
+				/>
 				<Button
 					title="Login"
 					onPress={() =>
@@ -112,7 +153,7 @@ const Home = ({ navigation }: any): JSX.Element => {
 					onPress={() =>
 						navigation.navigate("Register", { users: users, teams: teams })
 					}
-				/>
+				/> */}
 
 				{/* <Button
 					title="MyProfile"
@@ -125,12 +166,12 @@ const Home = ({ navigation }: any): JSX.Element => {
 						navigation.navigate("Search", { users: users, teams: teams })
 					}
 				/> */}
-				<Button
+				{/* <Button
 					title="DEV ACCESS HomeScreen"
 					onPress={() =>
 						navigation.navigate("HomeScreen", { users: users, teams: teams })
 					}
-				/>
+				/> */}
 
 				<StatusBar />
 			</ScrollView>

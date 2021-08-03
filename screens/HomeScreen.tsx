@@ -8,6 +8,7 @@ import {
 	SafeAreaView,
 	ScrollView,
 	Button,
+	Image,
 	StatusBar,
 	TouchableOpacity,
 	View,
@@ -26,23 +27,44 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.appHeader}>⚽ find5 ⚽</Text>
+				{/* <Text style={styles.appHeader}>⚽ find5 ⚽</Text> */}
+				<View
+					style={{
+						justifyContent: "flex-start",
+						height: Dimensions.get("window").height * 0.25,
+					}}
+				>
+					<Image
+						style={{
+							margin: 0,
+							alignSelf: "center",
+							width: 120,
+							top: -60,
+						}}
+						resizeMode={"contain"}
+						source={require("../images/find5-1.png")}
+						// source={require("../images/find5-2.png")}
+					/>
+				</View>
+
 				<View style={{ flex: 1 }}>
 					<View
 						style={[styles.inner_container, { flex: 5, flexDirection: "row" }]}
 					>
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() => navigation.navigate("MyProfile")}
+							onPress={() =>
+								navigation.navigate("MyProfile", { users: users, teams: teams })
+							}
 						>
-							<Text style={styles.button_text}>👤 My Profile</Text>
+							<Text style={styles.button_text}>My Profile</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							style={styles.button}
 							onPress={() => navigation.navigate("MyTeams", { teams: teams })}
 						>
-							<Text style={styles.button_text}> 👥 My Teams</Text>
+							<Text style={styles.button_text}>My Teams</Text>
 						</TouchableOpacity>
 					</View>
 					<View
@@ -77,7 +99,7 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 							<Text style={[styles.button_text]}>Search now</Text>
 						</TouchableOpacity>
 
-						<TouchableOpacity
+						{/* <TouchableOpacity
 							style={[
 								styles.small_button,
 								{ position: "relative", bottom: 17 },
@@ -85,7 +107,7 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 							onPress={() => navigation.navigate("CreateTeam")}
 						>
 							<Text style={[styles.button_text]}>Create Team Test</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 					</View>
 					<View
 						style={[
@@ -105,7 +127,7 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 						<TouchableOpacity
 							style={[
 								styles.small_button,
-								{ position: "absolute", bottom: -5 },
+								{ position: "absolute", bottom: 25 },
 							]}
 							onPress={() => {
 								firebase

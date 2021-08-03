@@ -12,6 +12,7 @@ import {
 	Text,
 	ScrollView,
 	View,
+	TouchableOpacity,
 } from "react-native";
 import styles from "../styles";
 import { Picker } from "@react-native-picker/picker";
@@ -42,35 +43,62 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 	const [bio, setBio] = React.useState("");
 	const [skill, setSkill] = React.useState("");
 	const [location, setLocation] = React.useState("");
-	const [ageGroup, setAgeGroup] = React.useState("");
+	const [ageGroup, setAgeGroup] = React.useState("18-30");
 	const [availibility, setAvailibility] = React.useState([]);
 	const [position, setSelectedPosition] = React.useState("");
 
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.title}>Bio:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={setBio}
-					multiline={true}
-					numberOfLines={4}
-					value={bio}
-					placeholder="   call me lionel"
-				/>
-
-				<Text style={styles.title}>Location:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={setLocation}
-					value={location}
-					placeholder="   e.g. L17, M15, SW1"
-				/>
-
-				<Text style={styles.title}>Position Preference</Text>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "flex-start",
+						marginBottom: 10,
+					}}
+				>
+					<Text style={[styles.button_text, { margin: 20 }]}>
+						{"Bio:         "}
+					</Text>
+					<TextInput
+						style={[styles.input]}
+						onChangeText={setBio}
+						multiline={true}
+						numberOfLines={4}
+						value={bio}
+						placeholder="  call me lionel"
+					/>
+				</View>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "flex-start",
+						marginBottom: 10,
+					}}
+				>
+					<Text style={[styles.button_text, { margin: 20 }]}>Location:</Text>
+					<TextInput
+						style={styles.input}
+						onChangeText={setLocation}
+						value={location}
+						placeholder="e.g. L17, M15, SW1"
+					/>
+				</View>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Position Preference"}
+				</Text>
 				<Picker
 					mode="dialog"
-					style={styles.input}
+					style={[
+						styles.button_text,
+						{
+							margin: 50,
+							borderWidth: 0.5,
+							borderColor: "black",
+						},
+					]}
 					selectedValue={position}
 					onValueChange={(itemValue, itemIndex) =>
 						setSelectedPosition(itemValue)
@@ -83,9 +111,14 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 					<Picker.Item label="FWD" value="FWD" />
 				</Picker>
 
-				<Text style={styles.title}>Skill Level</Text>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Skill level"}
+				</Text>
 				<Picker
-					style={styles.input}
+					style={[
+						styles.button_text,
+						{ margin: 50, borderWidth: 0.5, borderColor: "black" },
+					]}
 					selectedValue={skill}
 					onValueChange={(itemValue, itemIndex) => setSkill(itemValue)}
 				>
@@ -96,18 +129,27 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 					<Picker.Item label="Pro" value="Pro" />
 				</Picker>
 
-				<Text style={styles.title}>Age Group:</Text>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Age group:"}
+				</Text>
 				<Picker
-					style={styles.input}
+					style={[
+						styles.button_text,
+						{ margin: 50, borderWidth: 0.5, borderColor: "black" },
+					]}
 					selectedValue={ageGroup}
-					onValueChange={(itemValue, itemIndex) => setAgeGroup(itemValue)}
+					onValueChange={(itemValue, itemIndex) => {
+						setAgeGroup(itemValue);
+					}}
 				>
 					<Picker.Item label="18-30" value="18-30" />
 					<Picker.Item label="31-50" value="31-50" />
 					<Picker.Item label="50+" value="50+" />
 				</Picker>
 
-				<Text style={styles.title}>Availability:</Text>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"   Availability:"}
+				</Text>
 
 				{/* We may need to re-jig this so that everything before and after the SelectMultiple are saved to components so that it displays correctly on iOS. */}
 				<View>
@@ -121,13 +163,49 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 						}}
 					/>
 				</View>
-
-				<Text style={styles.title}>Add a profile picture!</Text>
-				<Button
+				{/* 
+				<Text style={styles.title}>Add a profile picture!</Text> */}
+				{/* <Button
 					title="Upload"
 					onPress={() => navigation.navigate("CreateProfile")}
-				/>
-				<Button
+				/> */}
+
+				<TouchableOpacity
+					style={[
+						styles.button,
+						{
+							alignSelf: "center",
+							borderColor: "black",
+							width: 120,
+							margin: 20,
+							height: 35,
+							borderRadius: 12,
+						},
+					]}
+					onPress={() => {
+						createUser(
+							route.params.firstName,
+							route.params.lastName,
+							route.params.email,
+							route.params.username,
+							location,
+							position,
+							skill,
+							ageGroup,
+							availibility,
+							bio
+						);
+						navigation.navigate("HomeScreen", { users: users, teams: teams });
+					}}
+				>
+					<Text
+						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
+					>
+						Submit
+					</Text>
+				</TouchableOpacity>
+
+				{/* <Button
 					title="Submit"
 					onPress={() => {
 						createUser(
@@ -144,7 +222,7 @@ const CreateProfile = ({ navigation, route }: any): JSX.Element => {
 						);
 						navigation.navigate("HomeScreen", { users: users, teams: teams });
 					}}
-				/>
+				/> */}
 			</ScrollView>
 		</SafeAreaView>
 	);

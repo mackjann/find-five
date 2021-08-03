@@ -41,7 +41,7 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.button_text}>⚽{team.teamName}⚽</Text>
+				<Text style={styles.button_text}>⚽ {team.teamName} ⚽</Text>
 				<Image
 					style={{
 						marginBottom: 0,
@@ -112,7 +112,7 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 						style={[
 							styles.small_button,
 							{
-								borderWidth: 2,
+								borderWidth: 0.5,
 								height: 35,
 								borderRadius: 12,
 								width: 140,
@@ -132,7 +132,7 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 						style={[
 							styles.small_button,
 							{
-								borderWidth: 2,
+								borderWidth: 0.5,
 								height: 35,
 								borderRadius: 12,
 								width: 100,
