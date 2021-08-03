@@ -21,7 +21,7 @@ import "firebase/auth";
 import { useState, useEffect } from "react";
 import SelectMultiple from "react-native-select-multiple";
 import { useCardAnimation } from "@react-navigation/stack";
-// import { getUsersTeams } from "../utils";
+import { getUsersTeams } from "../utils";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -47,7 +47,9 @@ interface User {
 	username: string;
 }
 
-const MyProfile = ({ navigation }: any): JSX.Element => {
+const MyProfile = ({ navigation, route }: any): JSX.Element => {
+	const { users } = route.params;
+	const { teams } = route.params;
 	const userID = firebase.auth().currentUser.uid;
 	const ref = firebase.firestore().collection("users");
 
@@ -80,7 +82,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Text style={styles.button_text}>
-					{`⚽Hi ${userState.firstName} (${userState.username})⚽`}
+					{`⚽ Hi ${userState.firstName} (${userState.username}) ⚽`}
 				</Text>
 				<Image
 					style={{
@@ -136,14 +138,17 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						{
 							alignSelf: "center",
 							borderColor: "black",
-							borderWidth: 2,
+							borderWidth: 0.5,
 							height: 35,
 							borderRadius: 12,
 							position: "relative",
+							width: 140,
 							bottom: -12,
 						},
 					]}
-					onPress={() => navigation.navigate("Register")}
+					onPress={() =>
+						navigation.navigate("Register", { users: users, teams: teams })
+					}
 				>
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}

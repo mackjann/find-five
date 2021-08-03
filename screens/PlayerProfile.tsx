@@ -84,7 +84,7 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.button_text}>⚽{user.username}⚽</Text>
+				<Text style={styles.button_text}>⚽ {user.username} ⚽</Text>
 				<Image
 					style={{
 						marginBottom: 0,
