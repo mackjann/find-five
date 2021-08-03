@@ -12,6 +12,9 @@ import {
 	Text,
 	ScrollView,
 	View,
+	TouchableOpacity,
+	Dimensions,
+	Image,
 } from "react-native";
 import styles from "../styles";
 import { Picker } from "@react-native-picker/picker";
@@ -50,45 +53,99 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 	const [availability, setAvailability] = React.useState([]);
 
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.title}>Team Name:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={setteamName}
-					multiline={true}
-					numberOfLines={4}
-					value={teamName}
-					placeholder="e.g. The Big Chungi"
-				/>
+				<View
+					style={{
+						justifyContent: "flex-start",
+						height: Dimensions.get("window").height * 0.2,
+					}}
+				>
+					<Image
+						style={{
+							margin: 0,
+							alignSelf: "center",
+							width: 80,
+							top: -60,
+						}}
+						resizeMode={"contain"}
+						source={require("../images/find5-1-no-bg.png")}
+						// source={require("../images/find5-2.png")}
+					/>
+				</View>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "flex-start",
+						marginBottom: 10,
+					}}
+				>
+					<Text style={[styles.button_text, { margin: 20 }]}>Team name:</Text>
+					<TextInput
+						style={styles.input}
+						onChangeText={setteamName}
+						multiline={true}
+						numberOfLines={4}
+						value={teamName}
+						placeholder="e.g. The Big Chungi"
+					/>
+				</View>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "flex-start",
+						marginBottom: 10,
+					}}
+				>
+					<Text style={[styles.button_text, { margin: 20 }]}>{"Bio:    "}</Text>
 
-				<Text style={styles.title}>Bio:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={setBio}
-					multiline={true}
-					numberOfLines={4}
-					value={bio}
-					placeholder="e.g. We gon have a good time"
-				/>
+					<TextInput
+						style={[styles.input, { width: 200 }]}
+						onChangeText={setBio}
+						multiline={true}
+						numberOfLines={4}
+						value={bio}
+						placeholder="e.g. We gon have a good time"
+					/>
+				</View>
 
 				{/* Picker component to choose competitiveness */}
-				<Text style={styles.title}>How competetive are you?:</Text>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    How competitive are you?"}
+				</Text>
 				<Picker
 					mode="dialog"
-					style={styles.input}
+					style={[
+						styles.button_text,
+						{
+							margin: 50,
+							borderWidth: 0.5,
+							borderColor: "black",
+						},
+					]}
 					selectedValue={purpose}
 					onValueChange={(itemValue, itemIndex) => setPurpose(itemValue)}
 				>
 					<Picker.Item label="Just for fun" value="Just for fun" />
-					<Picker.Item label="Competetive" value="Competetive" />
+					<Picker.Item label="Competitive" value="Competitive" />
 				</Picker>
 
 				{/* Picker component to choose skill level */}
-				<Text style={styles.title}>Skill level:</Text>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Skill level:"}
+				</Text>
 				<Picker
 					mode="dialog"
-					style={styles.input}
+					style={[
+						styles.button_text,
+						{
+							margin: 50,
+							borderWidth: 0.5,
+							borderColor: "black",
+						},
+					]}
 					selectedValue={skill}
 					onValueChange={(itemValue, itemIndex) => setSkill(itemValue)}
 				>
@@ -99,23 +156,43 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 					<Picker.Item label="Pro" value="Pro" />
 				</Picker>
 
-				<Text style={styles.title}>Venue:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={setVenue}
-					value={venue}
-					placeholder="e.g. Powerleague Ardwick"
-				/>
-
-				<Text style={styles.title}>Venue:</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={setVenueLocation}
-					value={venueLocation}
-					placeholder="e.g. M12"
-				/>
-
-				<Text style={styles.title}>Looking for:</Text>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "flex-start",
+						marginBottom: 10,
+					}}
+				>
+					<Text style={[styles.button_text, { margin: 20 }]}>{"Venue:"}</Text>
+					<TextInput
+						style={[styles.input, { width: 180 }]}
+						onChangeText={setVenue}
+						value={venue}
+						placeholder="e.g. Powerleague Ardwick"
+					/>
+				</View>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "flex-start",
+						marginBottom: 10,
+					}}
+				>
+					<Text
+						style={[styles.button_text, { margin: 20 }]}
+					>{"Venue location:"}</Text>
+					<TextInput
+						style={[styles.input, { width: 105 }]}
+						onChangeText={setVenueLocation}
+						value={venueLocation}
+						placeholder="e.g. M12"
+					/>
+				</View>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Looking for:"}
+				</Text>
 
 				<View>
 					<SelectMultiple
@@ -126,8 +203,9 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 						}}
 					/>
 				</View>
-
-				<Text style={styles.title}>Availability:</Text>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Availability:"}
+				</Text>
 				<View>
 					<SelectMultiple
 						items={timeSlots}
@@ -140,12 +218,40 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 					/>
 				</View>
 
-				<Text style={styles.title}>Add a profile picture!</Text>
-				<Button
-					title="Upload"
-					onPress={() => navigation.navigate("CreateProfile")}
-				/>
-				<Button
+				<TouchableOpacity
+					style={[
+						styles.button,
+						{
+							alignSelf: "center",
+							borderColor: "black",
+							width: 120,
+							margin: 20,
+							height: 35,
+							borderRadius: 12,
+						},
+					]}
+					onPress={() => {
+						createTeam(
+							teamName,
+							bio,
+							purpose,
+							venue,
+							venueLocation,
+							lookingFor,
+							userID,
+							availability
+						);
+						navigation.navigate("MyTeams");
+					}}
+				>
+					<Text
+						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
+					>
+						Submit
+					</Text>
+				</TouchableOpacity>
+
+				{/* <Button
 					title="Submit"
 					onPress={() => {
 						createTeam(
@@ -160,7 +266,7 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 						);
 						navigation.navigate("MyTeams");
 					}}
-				/>
+				/> */}
 			</ScrollView>
 		</SafeAreaView>
 	);

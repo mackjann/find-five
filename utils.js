@@ -94,7 +94,8 @@ export const createUser = async (
 			lastName: lastName,
 			location: location,
 			position: position,
-			profilePic: true,
+			profilePic:
+				"https://img.a.transfermarkt.technology/portrait/big/258923-1565603308.png?lm=1",
 			skill: skill,
 			username: username,
 			memberOf: [],
@@ -407,6 +408,7 @@ export const getUsersTeams = async (userId) => {
 		if (memberOfArr.includes(team.id)) {
 			teamsInfo.push({
 				id: team.id,
+				pic: team.data().teamPic,
 				teamName: team.data().teamName,
 				location: team.data().venueLocation,
 			});
