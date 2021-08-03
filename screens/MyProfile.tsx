@@ -49,7 +49,7 @@ interface User {
 }
 
 const MyProfile = ({ navigation }: any): JSX.Element => {
-	const userID = firebase.auth().currentUser.uid;
+	const userID: null | string = firebase.auth().currentUser.uid;
 	const ref = firebase.firestore().collection("users");
 	// console.log(userID);
 
