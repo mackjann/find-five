@@ -16,6 +16,7 @@ import {
 import styles from "../styles.js";
 import { useState, useEffect } from "react";
 import firebase from "../config";
+import { getMembersOfTeam } from "../utils.js";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -28,8 +29,14 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 
 	const eachPosition: Array<any> = [];
 	const eachDate: Array<any> = [];
+	const allMembers: Array<any> = [];
 
 	const [adminState, setAdminState] = React.useState({});
+	const [members, setMembers] = React.useState([]);
+
+	useEffect(() => {
+		getMembersOfTeam(team.id).then((members) => setMembers(members));
+	}, []);
 
 	const getAdmin = async () => {
 		const adminRef = await db.collection("users").doc(team.admin).get();
@@ -40,7 +47,7 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 		getAdmin();
 	}, []);
 
-	console.log(adminState);
+	//console.log(adminState);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -130,6 +137,22 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 						<Text style={{ fontWeight: "bold" }}>{"Contact details:\n "}</Text>
 						{`${adminState.firstName} ${adminState.lastName}`}
 						{`\n Email: ${adminState.email}`}
+					</Text>
+					<Text
+						style={{ margin: 5 }}
+						onPress={() => {
+							navigation.navigate("PlayerProfile", {
+								username: member.username,
+							});
+						}}
+					>
+						<Text style={{ fontWeight: "bold" }}>{"Members:\n "}</Text>
+						{members.forEach((member: Record<string, unknown>) => {
+							allMembers.push(
+								`\n ${member.firstName} ${member.lastName} (${member.username})`
+							);
+						})}
+						{allMembers}
 					</Text>
 				</View>
 

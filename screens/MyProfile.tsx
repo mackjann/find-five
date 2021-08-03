@@ -42,39 +42,53 @@ interface User {
 	firstName: string;
 	location: string;
 	position: string;
-	profilePic?: boolean;
+	profilePic: string;
 	skill: string;
 	username: string;
+	memberOf: any;
 }
 
 const MyProfile = ({ navigation }: any): JSX.Element => {
-	const userID = firebase.auth().currentUser.uid;
+	const userID: null | string = firebase.auth().currentUser.uid;
 	const ref = firebase.firestore().collection("users");
+	// console.log(userID);
 
 	const [userState, setUserState] = useState({
 		LastName: "string",
 		ageGroup: "string",
-		availability: [],
+		availability: [{ label: "day", value: "day" }],
 		bio: "string",
 		email: "string",
 		firstName: "string",
 		location: "string",
 		position: "string",
-		profilePic: true,
+		profilePic: "string",
 		skill: "string",
 		username: "string",
+		memberOf: [],
 	});
+
+	const [teamsList, setTeamsList] = React.useState([]);
 
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
 		const userProfile = userData.data();
-		console.log(userProfile);
+		// console.log(userProfile);
 		return userProfile;
 	};
 
-	user().then((results) => {
-		setUserState(results);
-	});
+	useEffect(() => {
+		user().then((results) => {
+			setUserState(results);
+
+			getUsersTeams(userID).then((res) => {
+				setTeamsList(res);
+			});
+		});
+	}, []);
+
+	// console.log(teamsList);
+
 	// const teamsArr = getUsersTeams(userID);
 
 	return (
@@ -127,7 +141,19 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
-						{`${userState.availability[0].value}`}
+						{userState.availability.map((day) => {
+							return <Text key={day.value}>{`${day.value}\n`}</Text>;
+						})}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"My teams:\n"}</Text>
+						{teamsList.map((team) => {
+							return (
+								<Text
+									key={team.teamName}
+								>{`Name: ${team.teamName}\n pic: ${team.pic}\n location: ${team.location}`}</Text>
+							);
+						})}
 					</Text>
 				</View>
 
