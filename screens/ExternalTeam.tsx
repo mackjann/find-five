@@ -26,6 +26,7 @@ const db = firebase.firestore();
 const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 	// const { teamName } = route.params;
 	const { team } = route.params;
+	const { users } = route.params;
 
 	const eachPosition: Array<any> = [];
 	const eachDate: Array<any> = [];
@@ -47,7 +48,7 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 		getAdmin();
 	}, []);
 
-	//console.log(adminState);
+	//console.log(members);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -141,13 +142,12 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 					<Text
 						style={{ margin: 5 }}
 						onPress={() => {
-							navigation.navigate("PlayerProfile", {
-								username: member.username,
-							});
+							navigation.navigate("HomeScreen");
 						}}
 					>
 						<Text style={{ fontWeight: "bold" }}>{"Members:\n "}</Text>
 						{members.forEach((member: Record<string, unknown>) => {
+							const memberId = member.username;
 							allMembers.push(
 								`\n ${member.firstName} ${member.lastName} (${member.username})`
 							);
