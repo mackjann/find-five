@@ -142,14 +142,16 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
 						{userState.availability.map((day) => {
-							return <Text>{`${day.value}\n`}</Text>;
+							return <Text key={day.value}>{`${day.value}\n`}</Text>;
 						})}
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"My teams:\n"}</Text>
 						{teamsList.map((team) => {
 							return (
-								<Text>{`Name: ${team.teamName}\n pic: ${team.pic}\n location: ${team.location}`}</Text>
+								<Text
+									key={team.teamName}
+								>{`Name: ${team.teamName}\n pic: ${team.pic}\n location: ${team.location}`}</Text>
 							);
 						})}
 					</Text>
