@@ -47,6 +47,7 @@ const Search = ({ navigation }: any): JSX.Element => {
 			}),
 		[]
 	);
+	//console.log(users);
 	useEffect(
 		() =>
 			ref2.onSnapshot(({ docs }) => {
@@ -308,6 +309,7 @@ const Search = ({ navigation }: any): JSX.Element => {
 											onPress={() =>
 												navigation.navigate("ExternalTeam", {
 													team: team,
+													users: users,
 												})
 											}
 										>

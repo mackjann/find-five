@@ -414,7 +414,6 @@ export const getUsersTeams = async (userId) => {
 			});
 		}
 	});
-	console.log(teamsInfo);
 	return teamsInfo;
 };
 // submitButton.addEventListener("click", () => {
