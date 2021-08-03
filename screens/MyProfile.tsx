@@ -64,11 +64,11 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 		skill: "string",
 		username: "string",
 	});
-	console.log("hi");
+
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
 		const userProfile = userData.data();
-		console.log(userProfile);
+		//console.log(userProfile);
 		return userProfile;
 	};
 

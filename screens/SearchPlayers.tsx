@@ -39,10 +39,11 @@ const Search = ({ navigation }: any): JSX.Element => {
 		() =>
 			ref.onSnapshot(({ docs }) => {
 				docs.forEach((doc) => {
-					usersFromDB.push(doc.data());
-					setUsers(usersFromDB);
-					console.log(users);
+					const userObj = { id: doc.id, ...doc.data() };
+					usersFromDB.push(userObj);
+					//console.log(users);
 				});
+				setUsers(usersFromDB);
 			}),
 		[]
 	);
@@ -51,14 +52,16 @@ const Search = ({ navigation }: any): JSX.Element => {
 			ref2.onSnapshot(({ docs }) => {
 				// console.log(docs[0].data());
 				docs.forEach((doc) => {
-					teamsFromDB.push(doc.data());
-					setTeams(teamsFromDB);
-					//console.log(teams.length);
+					const teamObj = { id: doc.id, ...doc.data() };
+					teamsFromDB.push(teamObj);
 				});
+				//console.log(teamsFromDB);
+				setTeams(teamsFromDB);
 			}),
 		[]
 	);
 
+	//console.log("teams state", teams);
 	//postcode data
 	const allOuterPostcodes = postcodeData.default;
 
@@ -184,7 +187,7 @@ const Search = ({ navigation }: any): JSX.Element => {
 						selectedItems={selectedOptions}
 						onSelectionsChange={(selectedOptions: any) => {
 							setSelectedOptions(selectedOptions);
-							console.log(selectedOptions, "<< selected options");
+							//console.log(selectedOptions, "<< selected options");
 						}}
 					/>
 				</View>
