@@ -189,14 +189,14 @@ export const getUser = async (searchQuery) => {
 // can be one or more teams
 // can search by any field/key in teams object
 export const getTeam = async (searchTerm, field) => {
-	let cleanSearchTerm = "";
-	if (searchTerm.length > 3) {
-		cleanSearchTerm = searchTerm.toLowerCase();
-	} else {
-		cleanSearchTerm = searchTerm.toUpperCase();
-	}
+	// let cleanSearchTerm = "";
+	// if (searchTerm.length > 3) {
+	// 	cleanSearchTerm = searchTerm.toLowerCase();
+	// } else {
+	// 	cleanSearchTerm = searchTerm.toUpperCase();
+	// }
 	const teamsRef = db.collection("teams");
-	const data = await teamsRef.where(field, "==", cleanSearchTerm).get();
+	const data = await teamsRef.where(field, "==", searchTerm).get();
 	if (data.empty) {
 		return null;
 	}

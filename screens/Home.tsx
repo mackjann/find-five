@@ -17,7 +17,6 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import styles from "../styles.js";
-import firebase from "../config.js";
 
 import "firebase/auth";
 import {
@@ -38,10 +37,6 @@ import {
 	getUsersTeams,
 } from "../utils.js";
 
-const ref = firebase.firestore().collection("users");
-
-const ref2 = firebase.firestore().collection("teams");
-
 // const getEmail = () =>
 // 	ref.onSnapshot(({ docs }) => {
 // 		docs.forEach((doc) => {
@@ -50,36 +45,6 @@ const ref2 = firebase.firestore().collection("teams");
 // 	});
 
 const Home = ({ navigation }: any): JSX.Element => {
-	const [users, setUsers] = useState([]);
-	const [teams, setTeams] = useState([]);
-	const usersFromDB = [];
-	const teamsFromDB = [];
-
-	useEffect(
-		() =>
-			ref.onSnapshot(({ docs }) => {
-				docs.forEach((doc) => {
-					usersFromDB.push(doc.data());
-					setUsers(usersFromDB);
-					// console.log(users);
-				});
-			}),
-		[]
-	);
-
-	useEffect(
-		() =>
-			ref2.onSnapshot(({ docs }) => {
-				// console.log(docs[0].data());
-				docs.forEach((doc) => {
-					teamsFromDB.push(doc.data());
-					setTeams(teamsFromDB);
-					//console.log(teams.length);
-				});
-			}),
-		[]
-	);
-
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
@@ -119,18 +84,14 @@ const Home = ({ navigation }: any): JSX.Element => {
 
 				<TouchableOpacity
 					style={[styles.button, { alignSelf: "center" }]}
-					onPress={() =>
-						navigation.navigate("Login", { users: users, teams: teams })
-					}
+					onPress={() => navigation.navigate("Login")}
 				>
 					<Text style={styles.button_text}>Log in</Text>
 				</TouchableOpacity>
 
 				<TouchableOpacity
 					style={[styles.button, { alignSelf: "center" }]}
-					onPress={() =>
-						navigation.navigate("Register", { users: users, teams: teams })
-					}
+					onPress={() => navigation.navigate("Register")}
 				>
 					<Text style={styles.button_text}>Register</Text>
 				</TouchableOpacity>

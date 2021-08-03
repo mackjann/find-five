@@ -18,14 +18,46 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import styles from "../styles.js";
+import firebase from "../config.js";
 
 import SelectMultiple from "react-native-select-multiple";
 
 LogBox.ignoreLogs(["componentWillReceiveProps has been renamed"]);
 
-const Search = ({ route, navigation }: any): JSX.Element => {
-	const { users } = route.params;
-	const { teams } = route.params;
+const ref = firebase.firestore().collection("users");
+
+const ref2 = firebase.firestore().collection("teams");
+
+const Search = ({ navigation }: any): JSX.Element => {
+	const [users, setUsers] = useState([]);
+	const [teams, setTeams] = useState([]);
+
+	const usersFromDB = [];
+	const teamsFromDB = [];
+
+	useEffect(
+		() =>
+			ref.onSnapshot(({ docs }) => {
+				docs.forEach((doc) => {
+					usersFromDB.push(doc.data());
+					setUsers(usersFromDB);
+					console.log(users);
+				});
+			}),
+		[]
+	);
+	useEffect(
+		() =>
+			ref2.onSnapshot(({ docs }) => {
+				// console.log(docs[0].data());
+				docs.forEach((doc) => {
+					teamsFromDB.push(doc.data());
+					setTeams(teamsFromDB);
+					//console.log(teams.length);
+				});
+			}),
+		[]
+	);
 
 	//postcode data
 	const allOuterPostcodes = postcodeData.default;
@@ -181,13 +213,13 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 				</Svg>
 
 				<View
-					style={[
-						styles.container,
-						{
-							overflow: "hidden",
-						},
-						styles.map,
-					]}
+				// style={[
+				// 	styles.container,
+				// 	{
+				// 		overflow: "hidden",
+				// 	},
+				// 	styles.map,
+				// ]}
 				>
 					<MapView style={styles.map} region={coords}>
 						{(selectedOptions[2] && selectedOptions[2].value === "Players") ||

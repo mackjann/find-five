@@ -17,9 +17,7 @@ import {
 import styles from "../styles.js";
 import firebase from "../config.js";
 
-const Login = ({ navigation, route }: any): JSX.Element => {
-	const { users } = route.params;
-	const { teams } = route.params;
+const Login = ({ navigation }: any): JSX.Element => {
 	const [email, setEmail] = React.useState("");
 	const [password, onChangePassword] = React.useState("");
 	return (
@@ -83,7 +81,7 @@ const Login = ({ navigation, route }: any): JSX.Element => {
 							// const errorCode = error.code;
 							// const errorMessage = error.message;
 						});
-					navigation.navigate("HomeScreen", { users: users, teams: teams });
+					navigation.navigate("HomeScreen");
 				}}
 			>
 				<Text

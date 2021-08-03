@@ -18,12 +18,11 @@ import styles from "../styles.js";
 import firebase from "../config";
 import "firebase/auth";
 import { useDerivedValue } from "react-native-reanimated";
+import { getTeam } from "../utils.js";
 
 const userID = firebase.auth().currentUser;
 
-const HomeScreen = ({ navigation, route }: any): JSX.Element => {
-	const { users } = route.params;
-	const { teams } = route.params;
+const HomeScreen = ({ navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
@@ -53,16 +52,14 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 					>
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() =>
-								navigation.navigate("MyProfile", { users: users, teams: teams })
-							}
+							onPress={() => navigation.navigate("MyProfile")}
 						>
 							<Text style={styles.button_text}>My Profile</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() => navigation.navigate("MyTeams", { teams: teams })}
+							onPress={() => navigation.navigate("MyTeams")}
 						>
 							<Text style={styles.button_text}>My Teams</Text>
 						</TouchableOpacity>
@@ -92,9 +89,7 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 								styles.small_button,
 								{ position: "relative", bottom: 17 },
 							]}
-							onPress={() =>
-								navigation.navigate("Search", { users: users, teams: teams })
-							}
+							onPress={() => navigation.navigate("Search")}
 						>
 							<Text style={[styles.button_text]}>Search now</Text>
 						</TouchableOpacity>
@@ -148,6 +143,15 @@ const HomeScreen = ({ navigation, route }: any): JSX.Element => {
 						</TouchableOpacity>
 					</View>
 				</View>
+
+				<Button
+					title="Button"
+					onPress={() => {
+						getTeam("Cyber Drip", "teamName");
+					}}
+				>
+					GetTeamTest
+				</Button>
 			</ScrollView>
 		</SafeAreaView>
 	);
