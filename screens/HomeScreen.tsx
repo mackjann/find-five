@@ -27,6 +27,7 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{/* <Text style={styles.appHeader}>⚽ find5 ⚽</Text> */}
+
 				<View
 					style={{
 						justifyContent: "flex-start",

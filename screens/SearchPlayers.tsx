@@ -304,8 +304,7 @@ const Search = ({ navigation }: any): JSX.Element => {
 											tooltip
 											onPress={() =>
 												navigation.navigate("ExternalTeam", {
-													teamName: team.teamName,
-													teams: teams,
+													team: team,
 												})
 											}
 										>

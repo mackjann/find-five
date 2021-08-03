@@ -66,6 +66,14 @@ const Home = ({ navigation }: any): JSX.Element => {
 						// source={require("../images/find5-2.png")}
 					/>
 				</View>
+
+				<Button
+					title="home-DEV"
+					onPress={() => navigation.navigate("HomeScreen")}
+				>
+					Login
+				</Button>
+
 				<Text
 					style={[
 						styles.button_text,
