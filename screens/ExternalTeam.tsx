@@ -15,28 +15,32 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import { useState, useEffect } from "react";
+import firebase from "../config";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
+const db = firebase.firestore();
 
 const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
-	const { teamName } = route.params;
-	const { teams } = route.params;
+	// const { teamName } = route.params;
+	const { team } = route.params;
 
-	const [team, setTeam] = useState({});
+	const eachPosition: Array<any> = [];
+	const eachDate: Array<any> = [];
 
-	useEffect(
-		() =>
-			teams.forEach((footieTeam) => {
-				if (footieTeam.teamName === teamName) {
-					setTeam(footieTeam);
-					console.log(footieTeam);
-				}
-			}),
+	const [adminState, setAdminState] = React.useState({});
 
-		[]
-	);
+	const getAdmin = async () => {
+		const adminRef = await db.collection("users").doc(team.admin).get();
+		const admin = adminRef.data();
+		setAdminState({ ...admin });
+	};
+	useEffect(() => {
+		getAdmin();
+	}, []);
+
+	console.log(adminState);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -76,25 +80,32 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 
 						{` "${team.bio}"`}
 					</Text>
+
 					<Text style={{ margin: 5 }}>
-						<Text
-							style={{ fontWeight: "bold" }}
-						>{`${team.teamName}'s pitch location:`}</Text>
-						{` ${team.venueLocation}`}
+						<Text style={{ fontWeight: "bold" }}>Location:</Text>
+						{` ${team.venue}, ${team.venueLocation}`}
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"Looking for: "}</Text>
-						{"TBC - array?"}
+						{/* {team.lookingFor[0].label} */}
+						{team.lookingFor.forEach((position: Record<string, unknown>) => {
+							eachPosition.push(`${position.label} `);
+						})}
+						{eachPosition}
 					</Text>
 
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"Playing schedule: "}</Text>
-						{"TBC - array?"}
+						{team.availability.forEach((date: Record<string, unknown>) => {
+							eachDate.push(`\n - ${date.label} `);
+						})}
+						{eachDate}
 					</Text>
 
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"Contact details:\n "}</Text>
-						{`Admin's email address? ${team.admin}`}
+						{`${adminState.firstName} ${adminState.lastName}`}
+						{`\n Email: ${adminState.email}`}
 					</Text>
 				</View>
 
