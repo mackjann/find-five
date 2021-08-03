@@ -47,9 +47,7 @@ interface User {
 	username: string;
 }
 
-const MyProfile = ({ navigation, route }: any): JSX.Element => {
-	const { users } = route.params;
-	const { teams } = route.params;
+const MyProfile = ({ navigation }: any): JSX.Element => {
 	const userID = firebase.auth().currentUser.uid;
 	const ref = firebase.firestore().collection("users");
 
@@ -70,6 +68,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
 		const userProfile = userData.data();
+		console.log(userProfile);
 		return userProfile;
 	};
 
@@ -95,7 +94,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 					source={{
 						width: 140,
 						height: 140,
-						uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
+						uri: userState.profilePic,
 					}}
 				/>
 				<View
@@ -128,7 +127,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
-						{`${userState.availability}`}
+						{`${userState.availability[0].value}`}
 					</Text>
 				</View>
 
@@ -146,9 +145,7 @@ const MyProfile = ({ navigation, route }: any): JSX.Element => {
 							bottom: -12,
 						},
 					]}
-					onPress={() =>
-						navigation.navigate("Register", { users: users, teams: teams })
-					}
+					onPress={() => navigation.navigate("Register")}
 				>
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
