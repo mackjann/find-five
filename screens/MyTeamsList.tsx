@@ -33,20 +33,17 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 		};
 	}
 	const userID: null | string = firebase.auth().currentUser.uid;
-	const [teams, setTeams] = React.useState<Teams>([
+	const [teams, setTeams] = React.useState([
 		{ id: "", pic: "", teamName: "", location: "" },
 	]);
 
-	const userTeams = async () => {
-		const teamsArr = await getUsersTeams(userID);
-		return teamsArr;
-	};
-
 	useEffect(() => {
-		userTeams().then((teams) => setTeams(teams));
+		getUsersTeams(userID).then((res) => {
+			setTeams(res);
+		});
 	}, []);
 
-	console.log(teams);
+	console.log(teams, "<---- teams");
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -67,23 +64,26 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 						// height: Dimensions.get("window").height * 0.15,
 					}}
 				>
-					{/* <Image
+					<Image
 						style={{
 							marginBottom: 0,
 							alignSelf: "center",
 						}}
 						resizeMode={"cover"}
-						source={}
-					/> */}
+						source={{
+							width: 25,
+							height: 25,
+							uri: teams[0].pic,
+						}}
+					/>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold", textTransform: "capitalize" }}>
-							{console.log(teams)}
-							{`${team.teamName}`}
+							{`Names:\n ${teams[0].teamName}`}
 						</Text>
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"Location\n"}</Text>
-						{`${team.venueLocation}`}
+						{`${teams[0].location}`}
 					</Text>
 					<View>
 						<TouchableOpacity
@@ -98,7 +98,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 							]}
 							onPress={() =>
 								navigation.navigate("ExternalTeam", {
-									teamName: team.teamName,
+									teamName: teams.teamName,
 									teams: teams,
 								})
 							}
