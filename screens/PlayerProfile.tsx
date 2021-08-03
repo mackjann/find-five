@@ -84,7 +84,31 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.button_text}>⚽ {user.username} ⚽</Text>
+				{/* <Text style={styles.button_text}>⚽ ⚽</Text> */}
+
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "center",
+						marginBottom: 10,
+						width: 280,
+						height: 55,
+					}}
+				>
+					<Image
+						style={{
+							margin: 0,
+							// alignSelf: "center",
+							width: 40,
+							top: -12,
+						}}
+						resizeMode={"contain"}
+						source={require("../images/find5-icon-no-bg.png")}
+						// source={require("../images/find5-2.png")}
+					/>
+					<Text style={styles.button_text}>{` ${user.username}`} </Text>
+				</View>
 				<Image
 					style={{
 						marginBottom: 0,

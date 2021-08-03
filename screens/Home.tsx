@@ -61,7 +61,7 @@ const Home = ({ navigation }: any): JSX.Element => {
 							top: -30,
 						}}
 						resizeMode={"contain"}
-						source={require("../images/find5-1.png")}
+						source={require("../images/find5-1-no-bg.png")}
 						// source={require("../images/find5-2.png")}
 					/>
 				</View>
