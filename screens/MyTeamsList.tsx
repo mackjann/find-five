@@ -15,67 +15,43 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import { useState, useEffect } from "react";
+import { getUsersTeams } from "../utils.js";
+import firebase from "../config";
+import "firebase/auth";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
 
-const MyTeams = ({ navigation, route }: any): JSX.Element => {
-	// const { teamName } = route.params;
-	// const { teams } = route.params;
+const MyTeams = ({ navigation }: any): JSX.Element => {
+	interface Teams {
+		[index: number]: {
+			id: string;
+			pic: string;
+			teamName: string;
+			location: string;
+		};
+	}
+	const userID: null | string = firebase.auth().currentUser.uid;
+	const [teams, setTeams] = React.useState<Teams>([
+		{ id: "", pic: "", teamName: "", location: "" },
+	]);
 
-	// const [team, setTeam] = useState({});
-
-	// useEffect(
-	// 	() =>
-	// 		teams.forEach((footieTeam) => {
-	// 			if (footieTeam.teamName === teamName) {
-	// 				setTeam(footieTeam);
-	// 				console.log(footieTeam);
-	// 			}
-	// 		}),
-
-	// 	[]
-	// );
-
-	const team = {
-		admin: "8S5DTo8rbrb2aog1kLG9",
-		availability: {
-			fridayAM: true,
-			fridayPM: true,
-			mondayAM: true,
-			mondayPM: true,
-			saturdayAM: true,
-			saturdayPM: true,
-			sundayAM: true,
-			sundayPM: true,
-			thursdayAM: true,
-			thursdayPM: true,
-			tuesdayAM: true,
-			tuesdayPM: true,
-			wednesdayAM: true,
-			wednesdayPM: true,
-		},
-		bio: "we da best!",
-		lat: 53.42521,
-		lng: -2.23027,
-		lookingFor: {
-			DEF: false,
-			FWD: true,
-			GK: true,
-			MID: false,
-		},
-		teamName: "cyber drip",
-		teamPic: true,
-		venue: "Manchester",
-		venueLocation: "M20",
+	const userTeams = async () => {
+		const teamsArr = await getUsersTeams(userID);
+		return teamsArr;
 	};
+
+	useEffect(() => {
+		userTeams().then((teams) => setTeams(teams));
+	}, []);
+
+	console.log(teams);
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.button_text}>⚽My Teams⚽</Text>
-
+				<Text style={styles.button_text}>My Teams</Text>
 				<View
 					style={{
 						flexDirection: "row",
@@ -91,22 +67,19 @@ const MyTeams = ({ navigation, route }: any): JSX.Element => {
 						// height: Dimensions.get("window").height * 0.15,
 					}}
 				>
-					<Image
+					{/* <Image
 						style={{
 							marginBottom: 0,
 							alignSelf: "center",
 						}}
 						resizeMode={"cover"}
-						source={{
-							width: 45,
-							height: 45,
-							uri: "https://logos-world.net/wp-content/uploads/2020/06/England-logo.png",
-						}}
-					/>
+						source={}
+					/> */}
 					<Text style={{ margin: 5 }}>
-						<Text
-							style={{ fontWeight: "bold", textTransform: "capitalize" }}
-						>{`${team.teamName}`}</Text>
+						<Text style={{ fontWeight: "bold", textTransform: "capitalize" }}>
+							{console.log(teams)}
+							{`${team.teamName}`}
+						</Text>
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"Location\n"}</Text>

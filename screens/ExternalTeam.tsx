@@ -48,8 +48,6 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 		getAdmin();
 	}, []);
 
-	//console.log(members);
-
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
