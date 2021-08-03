@@ -99,7 +99,29 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.button_text}>⚽Search Teams & Players⚽</Text>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "space-evenly",
+						marginBottom: 10,
+						width: 280,
+						height: 55,
+					}}
+				>
+					<Image
+						style={{
+							margin: 0,
+							// alignSelf: "center",
+							width: 40,
+							top: -12,
+						}}
+						resizeMode={"contain"}
+						source={require("../images/find5-icon.png")}
+						// source={require("../images/find5-2.png")}
+					/>
+					<Text style={styles.button_text}>Search Teams & Players</Text>
+				</View>
 				<View
 					style={{
 						flex: 1,
@@ -112,7 +134,7 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 						{"Search area postcode:"}
 					</Text>
 					<TextInput
-						style={styles.input}
+						style={[styles.input]}
 						onChangeText={(text) => {
 							setLocation(text);
 						}}
@@ -307,7 +329,7 @@ const Search = ({ route, navigation }: any): JSX.Element => {
 						{
 							alignSelf: "center",
 							borderColor: "black",
-							borderWidth: 2,
+							width: 150,
 							height: 35,
 							borderRadius: 12,
 						},
