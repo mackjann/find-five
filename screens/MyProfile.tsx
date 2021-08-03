@@ -48,7 +48,7 @@ interface User {
 }
 
 const MyProfile = ({ navigation }: any): JSX.Element => {
-	const userID = firebase.auth().currentUser.uid;
+	const userID: null | string = firebase.auth().currentUser.uid;
 	const ref = firebase.firestore().collection("users");
 
 	const [userState, setUserState] = useState({
@@ -72,9 +72,11 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 		return userProfile;
 	};
 
-	user().then((results) => {
-		setUserState(results);
-	});
+	useEffect(() => {
+		user().then((results) => {
+			setUserState(results);
+		});
+	}, []);
 	// const teamsArr = getUsersTeams(userID);
 
 	return (
