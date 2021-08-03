@@ -68,7 +68,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
 		const userProfile = userData.data();
-		console.log(userProfile);
+		//console.log(userProfile);
 		return userProfile;
 	};
 
