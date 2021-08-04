@@ -67,7 +67,7 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 		getMembersOfTeam(teamID).then((members) => setMembers(members));
 	}, []);
 
-	// console.log(searchedPlayer, "<=== search");
+	console.log(searchedPlayer, "<=== search");
 	return (
 		// <Text>Bruh</Text>
 		<SafeAreaView style={styles.container}>
@@ -165,12 +165,13 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 						<Text style={{ fontWeight: "bold" }}>{"Members:\n "}</Text>
 						{members.forEach((member: Record<string, unknown>) => {
 							const memberId = member.id;
-							console.log(member, "<=== member");
-							const status = member.data.hasAccepted;
+							const hasAccepted = member.status;
+							// console.log(member, "<=== member");
+
 							allMembers.push(
 								`\n ${member.data.firstName} ${member.data.lastName} (${
 									member.data.username
-								}) ${status ? "accepted" : "pending"} `
+								}) ${hasAccepted ? "accepted" : "pending"} `
 							);
 						})}
 						{allMembers}
@@ -214,8 +215,8 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 										{ alignSelf: "center", fontSize: 18 },
 									]}
 									onPress={() => {
-										setIsClicked(true);
 										getUser(searchTerm).then((res) => {
+											setIsClicked(true);
 											setSearchedPlayer(res);
 										});
 									}}
