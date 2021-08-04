@@ -1,188 +1,205 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import { LogBox } from "react-native";
 import "react-native-gesture-handler";
-// import BouncyCheckbox from "react-native-bouncy-checkbox";
-import {
-	Text,
-	View,
-	SafeAreaView,
-	ScrollView,
-	Button,
-	StatusBar,
-	TouchableOpacity,
-	Image,
-	FlatList,
-} from "react-native";
-import styles from "../styles.js";
-import firebase from "../config.js";
+import * as React from "react";
+import firebase from "../config";
 import "firebase/auth";
-import { useState, useEffect } from "react";
+import {
+	SafeAreaView,
+	TextInput,
+	Button,
+	Text,
+	ScrollView,
+	View,
+	TouchableOpacity,
+	Dimensions,
+	Image,
+} from "react-native";
+import styles from "../styles";
+import { Picker } from "@react-native-picker/picker";
 import SelectMultiple from "react-native-select-multiple";
-import { useCardAnimation } from "@react-navigation/stack";
-import { getUsersTeams } from "../utils";
+import { createUser, editUserInfo } from "../utils";
+import HomeScreen from "./HomeScreen";
 
-LogBox.ignoreLogs(["Setting a timer for a long period"]);
-LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
+const timeSlots = [
+	"Monday AM",
+	"Monday PM",
+	"Tuesday AM",
+	"Tuesday PM",
+	"Wednesday AM",
+	"Wednesday PM",
+	"Thursday AM",
+	"Thursday PM",
+	"Friday AM",
+	"Friday PM",
+	"Saturday AM",
+	"Saturday PM",
+	"Sunday AM",
+	"Sunday PM",
+];
 
-// const getEmail = () =>
-// 	ref.onSnapshot(({ docs }) => {
-// 		docs.forEach((doc) => {
-// 			console.log(doc.data().username);
-// 		});
-// 	});
-interface User {
-	LastName: string;
-	ageGroup: string;
-	availability: any;
-	bio: string;
-	email: string;
-	firstName: string;
-	location: string;
-	position: string;
-	profilePic: string;
-	skill: string;
-	username: string;
-	memberOf: any;
-}
-
-const MyProfile = ({ navigation }: any): JSX.Element => {
+const EditProfile = ({ navigation, route }: any): JSX.Element => {
+	const { userState } = route.params;
 	const userID: null | string = firebase.auth().currentUser.uid;
-	const ref = firebase.firestore().collection("users");
-	// console.log(userID);
 
-	const [userState, setUserState] = useState({
-		LastName: "string",
-		ageGroup: "string",
-		availability: [{ label: "day", value: "day" }],
-		bio: "string",
-		email: "string",
-		firstName: "string",
-		location: "string",
-		position: "string",
-		profilePic: "string",
-		skill: "string",
-		username: "string",
-		memberOf: [],
-	});
-
-	const [teamsList, setTeamsList] = React.useState([]);
-
-	const user = async () => {
-		const userData = await ref.doc(userID).get();
-		const userProfile = userData.data();
-		// console.log(userProfile);
-		return userProfile;
-	};
-
-	useEffect(() => {
-		user().then((results) => {
-			setUserState(results);
-
-			getUsersTeams(userID).then((res) => {
-				setTeamsList(res);
-			});
-		});
-	}, []);
-
-	// console.log(teamsList);
-
-	// const teamsArr = getUsersTeams(userID);
+	const [bio, setBio] = React.useState(userState.bio);
+	const [skill, setSkill] = React.useState(userState.skill);
+	const [location, setLocation] = React.useState(userState.location);
+	const [ageGroup, setAgeGroup] = React.useState(userState.ageGroup);
+	const [availibility, setAvailibility] = React.useState(
+		userState.availibility
+	);
+	const [position, setSelectedPosition] = React.useState(userState.position);
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				{/* <Text style={styles.button_text}>
-					{`⚽ Hi ${userState.firstName} (${userState.username}) ⚽`}{" "}
-				</Text> */}
+			<View
+				style={{
+					justifyContent: "flex-start",
 
+					height: Dimensions.get("window").height * 0.12,
+				}}
+			>
+				<Image
+					style={{
+						margin: 0,
+						width: 50,
+						top: -10,
+					}}
+					resizeMode={"contain"}
+					source={require("../images/find5-icon-no-bg.png")}
+					// source={require("../images/find5-2.png")}
+				/>
+			</View>
+			<ScrollView showsVerticalScrollIndicator={false}>
 				<View
 					style={{
 						flex: 1,
 						flexDirection: "row",
-						justifyContent: "center",
+						justifyContent: "flex-start",
 						marginBottom: 10,
-						width: 280,
-						height: 55,
 					}}
 				>
-					<Image
-						style={{
-							margin: 0,
-							// alignSelf: "center",
-							width: 40,
-							top: -12,
-						}}
-						resizeMode={"contain"}
-						source={require("../images/find5-icon-no-bg.png")}
-						// source={require("../images/find5-2.png")}
-					/>
-					<Text style={styles.button_text}>
-						{` Hi ${userState.firstName} (${userState.username}) `}{" "}
+					<Text style={[styles.button_text, { margin: 20 }]}>
+						{"Bio:         "}
 					</Text>
+					<TextInput
+						style={[styles.input]}
+						onChangeText={setBio}
+						multiline={true}
+						numberOfLines={4}
+						value={bio}
+						placeholder="  call me lionel"
+					/>
 				</View>
-
-				<Image
-					style={{
-						marginBottom: 0,
-						alignSelf: "center",
-					}}
-					fadeDuration={1500}
-					resizeMode={"cover"}
-					borderRadius={20}
-					source={{
-						width: 140,
-						height: 140,
-						uri: userState.profilePic,
-					}}
-				/>
 				<View
 					style={{
-						width: 260,
-						backgroundColor: "rgba(250,250,250, 0.5)",
-						borderRadius: 20,
-						alignSelf: "center",
-						padding: 10,
-						margin: 15,
-
-						// height: Dimensions.get("window").height * 0.15,
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "flex-start",
+						marginBottom: 10,
 					}}
 				>
+					<Text style={[styles.button_text, { margin: 20 }]}>Location:</Text>
+					<TextInput
+						style={styles.input}
+						onChangeText={setLocation}
+						value={location}
+						placeholder="e.g. L17, M15, SW1"
+					/>
+				</View>
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Position Preference"}
+				</Text>
+				<Picker
+					mode="dialog"
+					style={[
+						styles.button_text,
+						{
+							margin: 50,
+							borderWidth: 0.5,
+							borderColor: "black",
+						},
+					]}
+					selectedValue={position}
+					onValueChange={(itemValue, itemIndex) =>
+						setSelectedPosition(itemValue)
+					}
+				>
+					<Picker.Item label="No preference" value="No preference" />
+					<Picker.Item label="GK" value="GK" />
+					<Picker.Item label="DEF" value="DEF" />
+					<Picker.Item label="MID" value="MID" />
+					<Picker.Item label="FWD" value="FWD" />
+				</Picker>
+
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Skill level"}
+				</Text>
+				<Picker
+					style={[
+						styles.button_text,
+						{ margin: 50, borderWidth: 0.5, borderColor: "black" },
+					]}
+					selectedValue={skill}
+					onValueChange={(itemValue, itemIndex) => setSkill(itemValue)}
+				>
+					<Picker.Item label="Beginner" value="Beginner" />
+					<Picker.Item label="Not played in a while" value="GK" />
+					<Picker.Item label="Not bad" value="Not bad" />
+					<Picker.Item label="Semi-pro" value="Semi-pro" />
+					<Picker.Item label="Pro" value="Pro" />
+				</Picker>
+
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"    Age group:"}
+				</Text>
+				<Picker
+					style={[
+						styles.button_text,
+						{ margin: 50, borderWidth: 0.5, borderColor: "black" },
+					]}
+					selectedValue={ageGroup}
+					onValueChange={(itemValue, itemIndex) => {
+						setAgeGroup(itemValue);
+					}}
+				>
+					<Picker.Item label="18-30" value="18-30" />
+					<Picker.Item label="31-50" value="31-50" />
+					<Picker.Item label="50+" value="50+" />
+				</Picker>
+
+				<Text style={[styles.button_text, { textAlign: "left" }]}>
+					{"Please select your new availability:"}
+				</Text>
+				<View>
 					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>{"About me:\n"}</Text>
-						{`"${userState.bio}"`}
-					</Text>
-					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>My location:</Text>
-						{` ${userState.location}`}
-					</Text>
-					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>Preferred position:</Text>
-						{` ${userState.position}`}
-					</Text>
-					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>Skill level:</Text>
-						{` ${userState.skill}`}
-					</Text>
-					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
+						<Text style={{ fontWeight: "bold" }}>
+							{"Your current availibility:\n"}
+						</Text>
 						{userState.availability.map((day) => {
 							return <Text key={day.value}>{`${day.value}\n`}</Text>;
 						})}
 					</Text>
-					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>{"My teams:\n"}</Text>
-						{teamsList.map((team) => {
-							return (
-								<Text
-									key={team.teamName}
-								>{`Name: ${team.teamName}\n pic: ${team.pic}\n location: ${team.location}`}</Text>
-							);
-						})}
-					</Text>
 				</View>
+				<View>
+					<SelectMultiple
+						items={timeSlots}
+						selectedItems={availibility}
+						onSelectionsChange={(
+							availibility: React.SetStateAction<never[]>
+						) => {
+							setAvailibility(availibility);
+						}}
+					/>
+				</View>
+				{/* 
+				<Text style={styles.title}>Add a profile picture!</Text> */}
+				{/* <Button
+					title="Upload"
+					onPress={() => navigation.navigate("CreateProfile")}
+				/> */}
 
 				<TouchableOpacity
 					style={[
@@ -190,27 +207,56 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						{
 							alignSelf: "center",
 							borderColor: "black",
-							borderWidth: 0.5,
+							width: 120,
+							margin: 20,
 							height: 35,
 							borderRadius: 12,
-							position: "relative",
-							width: 140,
-							bottom: -12,
 						},
 					]}
-					onPress={() => navigation.navigate("EditProfile")}
+					onPress={() => {
+						editUserInfo(
+							userID,
+							location,
+							position,
+							skill,
+							ageGroup,
+							availibility,
+							bio
+						);
+					}}
 				>
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
 					>
-						Edit my profile
+						Submit
 					</Text>
 				</TouchableOpacity>
 
-				<StatusBar />
+				<TouchableOpacity
+					style={[
+						styles.button,
+						{
+							alignSelf: "center",
+							borderColor: "black",
+							width: 120,
+							margin: 20,
+							height: 35,
+							borderRadius: 12,
+						},
+					]}
+					onPress={() => {
+						navigation.navigate("MyProfile");
+					}}
+				>
+					<Text
+						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
+					>
+						Navigate
+					</Text>
+				</TouchableOpacity>
 			</ScrollView>
 		</SafeAreaView>
 	);
 };
 
-export default MyProfile;
+export default EditProfile;

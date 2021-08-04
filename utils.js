@@ -269,17 +269,27 @@ export const deleteTeam = (teamId) => {
 		});
 };
 
-export const editUserInfo = async (userId, field, input) => {
+export const editUserInfo = async (
+	userId,
+	location,
+	position,
+	skill,
+	ageGroup,
+	availability,
+	bio
+) => {
 	try {
-		const userData = await db
-			.collection("users")
-			.doc(userId)
-			.set(
-				{
-					[field]: input,
-				},
-				{ merge: true }
-			);
+		const userData = await db.collection("users").doc(userId).set(
+			{
+				location: location,
+				position: position,
+				skill: skill,
+				ageGroup: ageGroup,
+				availability: availability,
+				bio: bio,
+			},
+			{ merge: true }
+		);
 	} catch (err) {
 		console.log(err);
 	}
