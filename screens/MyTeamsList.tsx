@@ -67,7 +67,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 						resizeMode={"contain"}
 						source={require("../images/find5-icon-no-bg.png")}
 					/>
-					<Text style={styles.button_text}>{` My Teams`}</Text>
+					<Text style={styles.button_text}>{" My Teams"}</Text>
 				</View>
 
 				{teams.map((team) => {
@@ -170,7 +170,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												{ alignSelf: "center", fontSize: 14 },
 											]}
 										>
-											{`Team\npage`}
+											{"Team\npage"}
 										</Text>
 									</TouchableOpacity>
 
@@ -193,7 +193,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												{ alignSelf: "center", fontSize: 14 },
 											]}
 										>
-											{`Leave\nteam`}
+											{"Leave\nteam"}
 										</Text>
 									</TouchableOpacity>
 								</View>

@@ -281,7 +281,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 													{ alignSelf: "center", fontSize: 14 },
 												]}
 											>
-												{`Team\npage`}
+												{"Team\npage"}
 											</Text>
 										</TouchableOpacity>
 
