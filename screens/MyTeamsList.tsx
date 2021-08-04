@@ -3,7 +3,6 @@
 import React from "react";
 import { LogBox } from "react-native";
 import "react-native-gesture-handler";
-// import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {
 	Text,
 	SafeAreaView,
@@ -227,7 +226,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
 					>
-						Create a New Team
+						Create a New Teams
 					</Text>
 				</TouchableOpacity>
 				<StatusBar />
