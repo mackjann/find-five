@@ -70,6 +70,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 
 	const [teamsList, setTeamsList] = React.useState([]);
 
+	const [isLoading, setIsLoading] = React.useState(true);
+
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
 		const userProfile = userData.data();
@@ -80,18 +82,12 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	useEffect(() => {
 		user().then((results) => {
 			setUserState(results);
-
-			getUsersTeams(userID).then((res) => {
-				setTeamsList(res);
-			});
 		});
+		getUsersTeams(userID).then((res) => {
+			setTeamsList(res);
+		});
+		setIsLoading(!isLoading);
 	}, []);
-
-	// console.log(teamsList);
-
-	// const teamsArr = getUsersTeams(userID);
-
-	console.log(teamsList[0]);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -328,7 +324,9 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 							bottom: -2,
 						},
 					]}
-					onPress={() => navigation.navigate("Register")}
+					onPress={() =>
+						navigation.navigate("EditProfile", { userState: userState })
+					}
 				>
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
