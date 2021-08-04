@@ -91,13 +91,11 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 
 	// const teamsArr = getUsersTeams(userID);
 
+	console.log(teamsList[0]);
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				{/* <Text style={styles.button_text}>
-					{`⚽ Hi ${userState.firstName} (${userState.username}) ⚽`}{" "}
-				</Text> */}
-
 				<View
 					style={{
 						flex: 1,
@@ -117,7 +115,6 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						}}
 						resizeMode={"contain"}
 						source={require("../images/find5-icon-no-bg.png")}
-						// source={require("../images/find5-2.png")}
 					/>
 					<Text style={styles.button_text}>
 						{` Hi ${userState.firstName} (${userState.username}) `}{" "}
@@ -131,7 +128,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 					}}
 					fadeDuration={1500}
 					resizeMode={"cover"}
-					borderRadius={20}
+					borderRadius={70}
 					source={{
 						width: 140,
 						height: 140,
@@ -140,9 +137,9 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 				/>
 				<View
 					style={{
-						width: 260,
+						width: 290,
 						backgroundColor: "rgba(250,250,250, 0.5)",
-						borderRadius: 20,
+						borderRadius: 10,
 						alignSelf: "center",
 						padding: 10,
 						margin: 15,
@@ -169,19 +166,152 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
 						{userState.availability.map((day) => {
-							return <Text key={day.value}>{`${day.value}\n`}</Text>;
+							return <Text key={day.value}>{`- ${day.value}\n`}</Text>;
 						})}
 					</Text>
 					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>{"My teams:\n"}</Text>
-						{teamsList.map((team) => {
+						<Text style={{ fontWeight: "bold" }}>{"My teams:"}</Text>
+						{/* {teamsList.map((team) => {
 							return (
 								<Text
 									key={team.teamName}
 								>{`Name: ${team.teamName}\n pic: ${team.pic}\n location: ${team.location}`}</Text>
 							);
-						})}
+						})} */}
 					</Text>
+
+					<View>
+						{teamsList.map((team) => {
+							return (
+								<View
+									key={team.teamName}
+									style={{
+										flexDirection: "row",
+										justifyContent: "space-between",
+										alignItems: "flex-start",
+										width: 270,
+										height: 65,
+										backgroundColor: "rgba(250,250,250, 0.7)",
+										borderRadius: 2,
+										alignSelf: "center",
+										padding: 10,
+										margin: 10,
+									}}
+								>
+									<View
+										style={{
+											marginRight: 5,
+										}}
+									>
+										<Image
+											style={{
+												alignSelf: "center",
+												marginBottom: 6,
+											}}
+											resizeMode={"cover"}
+											source={{
+												width: 50,
+												height: 50,
+												uri: team.pic,
+											}}
+										/>
+									</View>
+									<View
+										style={{
+											justifyContent: "flex-start",
+											alignItems: "flex-start",
+											flexDirection: "column",
+										}}
+									>
+										<View
+											style={{
+												flexDirection: "column",
+												alignItems: "flex-start",
+												paddingBottom: 2,
+												margin: 1,
+												borderBottomWidth: 1,
+												borderBottomColor: "grey",
+												width: 100,
+											}}
+										>
+											<Text
+												style={{
+													fontWeight: "bold",
+													fontSize: 16,
+													textTransform: "capitalize",
+												}}
+											>{`${team.teamName}`}</Text>
+										</View>
+										<Text style={{ margin: 1 }}>
+											<Text style={{ fontWeight: "bold" }}>{"Location:"}</Text>
+											{` ${team.location}`}
+										</Text>
+									</View>
+									<View
+										style={{
+											width: 20,
+										}}
+									></View>
+
+									<View
+										style={{ flexDirection: "row", alignItems: "flex-start" }}
+									>
+										<TouchableOpacity
+											style={[
+												styles.small_button,
+												{
+													borderWidth: 0.5,
+													height: 46,
+													borderRadius: 5,
+													width: 55,
+													margin: 3,
+													marginTop: 0,
+												},
+											]}
+											onPress={() =>
+												navigation.navigate("ExternalTeam", {
+													teamName: team.teamName,
+													teams: teams,
+												})
+											}
+										>
+											<Text
+												style={[
+													styles.button_text,
+													{ alignSelf: "center", fontSize: 14 },
+												]}
+											>
+												{"Team\npage"}
+											</Text>
+										</TouchableOpacity>
+
+										{/* <TouchableOpacity
+										style={[
+											styles.small_button,
+											{
+												borderWidth: 0.5,
+												height: 46,
+												borderRadius: 5,
+												width: 55,
+												margin: 3,
+												marginTop: 0,
+											},
+										]}
+									>
+										<Text
+											style={[
+												styles.button_text,
+												{ alignSelf: "center", fontSize: 14 },
+											]}
+										>
+											{`Leave\nteam`}
+										</Text>
+									</TouchableOpacity> */}
+									</View>
+								</View>
+							);
+						})}
+					</View>
 				</View>
 
 				<TouchableOpacity
@@ -195,7 +325,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 							borderRadius: 12,
 							position: "relative",
 							width: 140,
-							bottom: -12,
+							bottom: -2,
 						},
 					]}
 					onPress={() => navigation.navigate("Register")}

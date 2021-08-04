@@ -3,7 +3,6 @@
 import React from "react";
 import { LogBox } from "react-native";
 import "react-native-gesture-handler";
-// import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {
 	Text,
 	SafeAreaView,
@@ -22,6 +21,7 @@ import "firebase/auth";
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
+LogBox.ignoreLogs(["source.uri should not be an empty string"]);
 
 const MyTeams = ({ navigation }: any): JSX.Element => {
 	interface Teams {
@@ -48,7 +48,27 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<Text style={styles.button_text}>My Teams</Text>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "center",
+						marginBottom: 10,
+						width: 280,
+						height: 55,
+					}}
+				>
+					<Image
+						style={{
+							width: 40,
+							top: -12,
+						}}
+						resizeMode={"contain"}
+						source={require("../images/find5-icon-no-bg.png")}
+					/>
+					<Text style={styles.button_text}>{" My Teams"}</Text>
+				</View>
+
 				{teams.map((team) => {
 					return (
 						<View key={team.id}>
@@ -57,53 +77,88 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 									flexDirection: "row",
 									justifyContent: "space-between",
 									alignItems: "flex-start",
-									width: 300,
-									backgroundColor: "rgba(250,250,250, 0.5)",
-									borderRadius: 20,
+									width: 320,
+									height: 65,
+									backgroundColor: "rgba(250,250,250, 0.7)",
+									borderRadius: 2,
 									alignSelf: "center",
 									padding: 10,
 									margin: 10,
-
-									// height: Dimensions.get("window").height * 0.15,
 								}}
 							>
-								<Image
+								<View
 									style={{
-										marginBottom: 0,
-										alignSelf: "center",
+										marginRight: 5,
 									}}
-									resizeMode={"cover"}
-									source={{
-										width: 25,
-										height: 25,
-										uri: team.pic,
+								>
+									<Image
+										style={{
+											alignSelf: "center",
+											marginBottom: 6,
+										}}
+										resizeMode={"cover"}
+										source={{
+											width: 50,
+											height: 50,
+											uri: team.pic,
+										}}
+									/>
+								</View>
+								<View
+									style={{
+										justifyContent: "flex-start",
+										alignItems: "flex-start",
+										flexDirection: "column",
 									}}
-								/>
-								<Text style={{ margin: 5 }}>
-									<Text
-										style={{ fontWeight: "bold", textTransform: "capitalize" }}
+								>
+									<View
+										style={{
+											flexDirection: "column",
+											alignItems: "flex-start",
+											paddingBottom: 2,
+											margin: 1,
+											borderBottomWidth: 1,
+											borderBottomColor: "grey",
+											width: 100,
+										}}
 									>
-										{`Names:\n ${team.teamName}`}
+										<Text
+											style={{
+												fontWeight: "bold",
+												fontSize: 16,
+												textTransform: "capitalize",
+											}}
+										>{`${team.teamName}`}</Text>
+									</View>
+									<Text style={{ margin: 1 }}>
+										<Text style={{ fontWeight: "bold" }}>{"Location:"}</Text>
+										{` ${team.location}`}
 									</Text>
-								</Text>
-								<Text style={{ margin: 5 }}>
-									<Text style={{ fontWeight: "bold" }}>{"Location\n"}</Text>
-									{`${team.location}`}
-								</Text>
-								<View>
+								</View>
+								<View
+									style={{
+										width: 20,
+									}}
+								></View>
+
+								<View
+									style={{ flexDirection: "row", alignItems: "flex-start" }}
+								>
 									<TouchableOpacity
 										style={[
 											styles.small_button,
 											{
-												borderWidth: 2,
-												height: 30,
-												borderRadius: 12,
-												width: 90,
+												borderWidth: 0.5,
+												height: 46,
+												borderRadius: 5,
+												width: 55,
+												margin: 3,
+												marginTop: 0,
 											},
 										]}
 										onPress={() =>
 											navigation.navigate("ExternalTeam", {
-												teamName: teams.teamName,
+												teamName: team.teamName,
 												teams: teams,
 											})
 										}
@@ -114,7 +169,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												{ alignSelf: "center", fontSize: 14 },
 											]}
 										>
-											Team Page
+											{"Team\npage"}
 										</Text>
 									</TouchableOpacity>
 
@@ -122,10 +177,12 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 										style={[
 											styles.small_button,
 											{
-												borderWidth: 2,
-												height: 30,
-												borderRadius: 12,
-												width: 90,
+												borderWidth: 0.5,
+												height: 46,
+												borderRadius: 5,
+												width: 55,
+												margin: 3,
+												marginTop: 0,
 											},
 										]}
 									>
@@ -135,7 +192,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												{ alignSelf: "center", fontSize: 14 },
 											]}
 										>
-											Leave team
+											{"Leave\nteam"}
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -158,7 +215,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 					style={[
 						styles.small_button,
 						{
-							borderWidth: 2,
+							borderWidth: 0.5,
 							height: 35,
 							borderRadius: 12,
 							width: 200,
@@ -169,7 +226,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
 					>
-						Create a New Team
+						Create a New Teams
 					</Text>
 				</TouchableOpacity>
 				<StatusBar />
