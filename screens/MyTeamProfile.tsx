@@ -216,8 +216,8 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 									]}
 									onPress={() => {
 										getUser(searchTerm).then((res) => {
-											setIsClicked(true);
 											setSearchedPlayer(res);
+											setIsClicked(true);
 										});
 									}}
 								>
