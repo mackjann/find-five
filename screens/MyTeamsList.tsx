@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import { useState, useEffect } from "react";
-import { getUsersTeams } from "../utils.js";
+import { getUsersTeams, removeTeamMember } from "../utils.js";
 import firebase from "../config";
 import "firebase/auth";
 
@@ -33,7 +33,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 		};
 	}
 	const userID: null | string = firebase.auth().currentUser.uid;
-	console.log(userID);
+
 	const [teams, setTeams] = React.useState([
 		{ id: "", pic: "", teamName: "", location: "" },
 	]);
@@ -186,6 +186,9 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												marginTop: 0,
 											},
 										]}
+										onPress={() => {
+											removeTeamMember(team.id, userID);
+										}}
 									>
 										<Text
 											style={[
@@ -193,7 +196,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												{ alignSelf: "center", fontSize: 14 },
 											]}
 										>
-											{"Leave\nteam"}
+											{"Leave"}
 										</Text>
 									</TouchableOpacity>
 								</View>

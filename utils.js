@@ -233,7 +233,9 @@ export const removeTeamMember = async (teamId, playerId) => {
 			console.log(err);
 		});
 
-	const ammendedMembers = members.filter((member) => !member[playerId]);
+	const ammendedMembers = members.filter((member) => {
+		if (member.id !== playerId) return member;
+	});
 	console.log(ammendedMembers);
 
 	db.collection(`teams/${teamId}/members`)
@@ -250,6 +252,33 @@ export const removeTeamMember = async (teamId, playerId) => {
 		.catch((err) => {
 			console.log(err);
 		});
+
+	const user = await db.collection("users").doc(playerId).get();
+	const memberOf = user.data().memberOf;
+
+	const newMemberOf = memberOf.filter((team) => {
+		if (team !== teamId) return team;
+	});
+
+	db.collection("users")
+		.doc(playerId)
+		.set(
+			{
+				memberOf: [...newMemberOf],
+			},
+			{ merge: true }
+		);
+	// db.collection("users")
+	// 	.doc(playerId)
+	// 	.get()
+	// 	.then((res) => {
+	// 		const memberOfArr = res.data();
+	// 		const teamsStillIn = memberOfArr.memberOf.filter((team) => {
+	// 			if (team !== teamId) return team;
+	// 		}).then((filteredTeams) => {
+	// 			memberOfArr
+	// 		})
+	// 	});
 };
 
 export const deleteTeam = (teamId) => {
