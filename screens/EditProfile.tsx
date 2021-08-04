@@ -223,35 +223,14 @@ const EditProfile = ({ navigation, route }: any): JSX.Element => {
 							availibility,
 							bio
 						);
+
+						navigation.navigate("HomeScreen");
 					}}
 				>
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
 					>
 						Submit
-					</Text>
-				</TouchableOpacity>
-
-				<TouchableOpacity
-					style={[
-						styles.button,
-						{
-							alignSelf: "center",
-							borderColor: "black",
-							width: 120,
-							margin: 20,
-							height: 35,
-							borderRadius: 12,
-						},
-					]}
-					onPress={() => {
-						navigation.navigate("MyProfile");
-					}}
-				>
-					<Text
-						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
-					>
-						Navigate
 					</Text>
 				</TouchableOpacity>
 			</ScrollView>
