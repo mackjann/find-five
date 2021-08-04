@@ -159,9 +159,8 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 											},
 										]}
 										onPress={() =>
-											navigation.navigate("ExternalTeam", {
-												teamName: team.teamName,
-												teams: teams,
+											navigation.navigate("MyTeamProfile", {
+												teamID: team.id,
 											})
 										}
 									>
