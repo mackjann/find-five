@@ -90,6 +90,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	}, []);
 
 	return (
+
 		<SafeAreaView style={styles.container}>
 			{isLoading ? (
 				<Text>{"Loading..."}</Text>
@@ -100,6 +101,28 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 				</Text> */}
 
 					<View
+
+	// console.log(teamsList);
+
+	// const teamsArr = getUsersTeams(userID);
+
+	console.log(teamsList[0]);
+
+	return (
+		<SafeAreaView style={styles.container}>
+			<ScrollView showsVerticalScrollIndicator={false}>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "row",
+						justifyContent: "center",
+						marginBottom: 10,
+						width: 280,
+						height: 55,
+					}}
+				>
+					<Image
+
 						style={{
 							flex: 1,
 							flexDirection: "row",
@@ -108,6 +131,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 							width: 280,
 							height: 55,
 						}}
+
 					>
 						<Image
 							style={{
@@ -125,6 +149,208 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						</Text>
 					</View>
 
+						resizeMode={"contain"}
+						source={require("../images/find5-icon-no-bg.png")}
+					/>
+					<Text style={styles.button_text}>
+						{` Hi ${userState.firstName} (${userState.username}) `}{" "}
+					</Text>
+				</View>
+
+				<Image
+					style={{
+						marginBottom: 0,
+						alignSelf: "center",
+					}}
+					fadeDuration={1500}
+					resizeMode={"cover"}
+					borderRadius={70}
+					source={{
+						width: 140,
+						height: 140,
+						uri: userState.profilePic,
+					}}
+				/>
+				<View
+					style={{
+						width: 290,
+						backgroundColor: "rgba(250,250,250, 0.5)",
+						borderRadius: 10,
+						alignSelf: "center",
+						padding: 10,
+						margin: 15,
+
+						// height: Dimensions.get("window").height * 0.15,
+					}}
+				>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"About me:\n"}</Text>
+						{`"${userState.bio}"`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>My location:</Text>
+						{` ${userState.location}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>Preferred position:</Text>
+						{` ${userState.position}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>Skill level:</Text>
+						{` ${userState.skill}`}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"My availability:\n"}</Text>
+						{userState.availability.map((day) => {
+							return <Text key={day.value}>{`- ${day.value}\n`}</Text>;
+						})}
+					</Text>
+					<Text style={{ margin: 5 }}>
+						<Text style={{ fontWeight: "bold" }}>{"My teams:"}</Text>
+						{/* {teamsList.map((team) => {
+							return (
+								<Text
+									key={team.teamName}
+								>{`Name: ${team.teamName}\n pic: ${team.pic}\n location: ${team.location}`}</Text>
+							);
+						})} */}
+					</Text>
+
+					<View>
+						{teamsList.map((team) => {
+							return (
+								<View
+									key={team.teamName}
+									style={{
+										flexDirection: "row",
+										justifyContent: "space-between",
+										alignItems: "flex-start",
+										width: 270,
+										height: 65,
+										backgroundColor: "rgba(250,250,250, 0.7)",
+										borderRadius: 2,
+										alignSelf: "center",
+										padding: 10,
+										margin: 10,
+									}}
+								>
+									<View
+										style={{
+											marginRight: 5,
+										}}
+									>
+										<Image
+											style={{
+												alignSelf: "center",
+												marginBottom: 6,
+											}}
+											resizeMode={"cover"}
+											source={{
+												width: 50,
+												height: 50,
+												uri: team.pic,
+											}}
+										/>
+									</View>
+									<View
+										style={{
+											justifyContent: "flex-start",
+											alignItems: "flex-start",
+											flexDirection: "column",
+										}}
+									>
+										<View
+											style={{
+												flexDirection: "column",
+												alignItems: "flex-start",
+												paddingBottom: 2,
+												margin: 1,
+												borderBottomWidth: 1,
+												borderBottomColor: "grey",
+												width: 100,
+											}}
+										>
+											<Text
+												style={{
+													fontWeight: "bold",
+													fontSize: 16,
+													textTransform: "capitalize",
+												}}
+											>{`${team.teamName}`}</Text>
+										</View>
+										<Text style={{ margin: 1 }}>
+											<Text style={{ fontWeight: "bold" }}>{"Location:"}</Text>
+											{` ${team.location}`}
+										</Text>
+									</View>
+									<View
+										style={{
+											width: 20,
+										}}
+									></View>
+
+									<View
+										style={{ flexDirection: "row", alignItems: "flex-start" }}
+									>
+										<TouchableOpacity
+											style={[
+												styles.small_button,
+												{
+													borderWidth: 0.5,
+													height: 46,
+													borderRadius: 5,
+													width: 55,
+													margin: 3,
+													marginTop: 0,
+												},
+											]}
+											onPress={() =>
+												navigation.navigate("ExternalTeam", {
+													teamName: team.teamName,
+													teams: teams,
+												})
+											}
+										>
+											<Text
+												style={[
+													styles.button_text,
+													{ alignSelf: "center", fontSize: 14 },
+												]}
+											>
+												{"Team\npage"}
+											</Text>
+										</TouchableOpacity>
+
+										{/* <TouchableOpacity
+										style={[
+											styles.small_button,
+											{
+												borderWidth: 0.5,
+												height: 46,
+												borderRadius: 5,
+												width: 55,
+												margin: 3,
+												marginTop: 0,
+											},
+										]}
+									>
+										<Text
+											style={[
+												styles.button_text,
+												{ alignSelf: "center", fontSize: 14 },
+											]}
+										>
+											{`Leave\nteam`}
+										</Text>
+									</TouchableOpacity> */}
+									</View>
+								</View>
+							);
+						})}
+					</View>
+				</View>
+
+
 					<Image
 						style={{
 							marginBottom: 0,
@@ -135,6 +361,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 						borderRadius={20}
 						source={{
 							width: 140,
+
 							height: 140,
 							uri: userState.profilePic,
 						}}
@@ -147,6 +374,19 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 							alignSelf: "center",
 							padding: 10,
 							margin: 15,
+
+							bottom: -2,
+						},
+					]}
+					onPress={() => navigation.navigate("Register")}
+				>
+					<Text
+						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
+					>
+						Edit my profile
+					</Text>
+				</TouchableOpacity>
+
 
 							// height: Dimensions.get("window").height * 0.15,
 						}}
