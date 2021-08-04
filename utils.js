@@ -170,7 +170,8 @@ export const getUser = async (searchQuery) => {
 	}
 	const userObj = {};
 	data.forEach((user) => {
-		userObj[user.id] = user.data();
+		userObj.id = user.id;
+		userObj.data = user.data();
 	});
 
 	return userObj;
@@ -392,13 +393,18 @@ export const getMembersOfTeam = async (teamId) => {
 	// gets members array from teams sub-collection
 	const membersArr = await membersRef.data().members;
 	const membersId = membersArr.map((member) => member.id);
-	// console.log(membersId);
 
 	const allUsers = await db.collection("users").get();
 	const membersInfo = [];
 	allUsers.forEach((user) => {
 		if (membersId.includes(user.id)) {
-			membersInfo.push(user.data());
+			const index = membersId.indexOf(user.id);
+			const userObj = {
+				id: user.id,
+				data: user.data(),
+				status: membersArr[index].hasAccepted,
+			};
+			membersInfo.push(userObj);
 		}
 	});
 	return membersInfo;
