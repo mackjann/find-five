@@ -46,7 +46,8 @@ export const createTeam = async (
 	admin,
 	availability
 ) => {
-	let teamId = "";
+	const userRef = await db.collection("users").doc(admin).get();
+	const memberOfArr = userRef.data().memberOf;
 	db.collection("teams")
 		.add({
 			admin: admin,
@@ -55,7 +56,8 @@ export const createTeam = async (
 			purpose: purpose,
 			lookingFor: lookingFor,
 			teamName: teamName,
-			teamPic: true,
+			teamPic:
+				"https://coursereport-production.imgix.net/uploads/school/logo/447/original/400x400_Profile_Picture.jpg?w=200&h=200",
 			venue: venue,
 			venueLocation: venueLocation,
 		})
@@ -64,23 +66,22 @@ export const createTeam = async (
 				members: [{ id: admin, hasAccepted: true }],
 			};
 			db.collection(`teams/${docRef.id}/members`).doc("membersArray").set(data);
-
-			teamId = docRef.id;
+			return docRef.id;
+		})
+		.then((teamId) => {
+			db.collection("users")
+				.doc(admin)
+				.set(
+					{
+						memberOf: [...memberOfArr, teamId],
+					},
+					{ merge: true }
+				);
 		})
 		.then(() => console.log("team saved to DB"))
 		.catch((err) => console.log("BRUHH:", err));
 
-	const userRef = await db.collection("users").doc(admin).get();
-	const memberOfArr = userRef.data().memberOf;
-	console.log(teamId);
-	db.collection("users")
-		.doc(admin)
-		.set(
-			{
-				memberOf: [...memberOfArr, teamId],
-			},
-			{ merge: true }
-		);
+	// console.log(teamId, "<<< teamID");
 };
 
 export const createUser = async (

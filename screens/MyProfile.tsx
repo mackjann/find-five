@@ -71,6 +71,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	const [teamsList, setTeamsList] = React.useState([]);
 
 	const [isLoading, setIsLoading] = React.useState(true);
+	const [hasRequests, setHasRequests] = React.useState(false);
 
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
@@ -88,6 +89,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 		});
 		setIsLoading(!isLoading);
 	}, []);
+
+	console.log(userState.requests);
 
 	return (
 		<SafeAreaView style={styles.container}>
