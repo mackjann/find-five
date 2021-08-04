@@ -33,17 +33,19 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 		};
 	}
 	const userID: null | string = firebase.auth().currentUser.uid;
+	console.log(userID);
 	const [teams, setTeams] = React.useState([
 		{ id: "", pic: "", teamName: "", location: "" },
 	]);
 
 	useEffect(() => {
 		getUsersTeams(userID).then((res) => {
+			console.log(res);
 			setTeams(res);
 		});
 	}, []);
 
-	console.log(teams, "<---- teams");
+	// console.log(teams, "<---- teams");
 
 	return (
 		<SafeAreaView style={styles.container}>
