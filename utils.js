@@ -170,7 +170,8 @@ export const getUser = async (searchQuery) => {
 	}
 	const userObj = {};
 	data.forEach((user) => {
-		userObj[user.id] = user.data();
+		userObj.id = user.id;
+		userObj.data = user.data();
 	});
 
 	return userObj;
@@ -398,7 +399,8 @@ export const getMembersOfTeam = async (teamId) => {
 	const membersInfo = [];
 	allUsers.forEach((user) => {
 		if (membersId.includes(user.id)) {
-			membersInfo.push(user.data());
+			const userObj = { id: user.id, data: user.data() };
+			membersInfo.push(userObj);
 		}
 	});
 	return membersInfo;
