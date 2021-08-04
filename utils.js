@@ -393,13 +393,17 @@ export const getMembersOfTeam = async (teamId) => {
 	// gets members array from teams sub-collection
 	const membersArr = await membersRef.data().members;
 	const membersId = membersArr.map((member) => member.id);
-	// console.log(membersId);
 
 	const allUsers = await db.collection("users").get();
 	const membersInfo = [];
 	allUsers.forEach((user) => {
 		if (membersId.includes(user.id)) {
-			const userObj = { id: user.id, data: user.data() };
+			const index = membersId.indexOf(user.id);
+			const userObj = {
+				id: user.id,
+				data: user.data(),
+				status: membersArr[index].hasAccepted,
+			};
 			membersInfo.push(userObj);
 		}
 	});
