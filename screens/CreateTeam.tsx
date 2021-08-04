@@ -19,7 +19,7 @@ import {
 import styles from "../styles";
 import { Picker } from "@react-native-picker/picker";
 import SelectMultiple from "react-native-select-multiple";
-import { createTeam } from "../utils";
+import { addPlayer, createTeam } from "../utils";
 import HomeScreen from "./HomeScreen";
 
 const timeSlots = [
@@ -180,9 +180,9 @@ const CreateProfile = ({ navigation }: any): JSX.Element => {
 						marginBottom: 10,
 					}}
 				>
-					<Text
-						style={[styles.button_text, { margin: 20 }]}
-					>{"Venue location:"}</Text>
+					<Text style={[styles.button_text, { margin: 20 }]}>
+						{"Venue location:"}
+					</Text>
 					<TextInput
 						style={[styles.input, { width: 105 }]}
 						onChangeText={setVenueLocation}

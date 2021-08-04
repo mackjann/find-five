@@ -36,7 +36,7 @@ const db = firebase.firestore();
 const storageRef = firebase.storage().ref();
 
 // /Users/khizariqbal/Desktop
-export const createTeam = (
+export const createTeam = async (
 	teamName,
 	bio,
 	purpose,
@@ -46,6 +46,8 @@ export const createTeam = (
 	admin,
 	availability
 ) => {
+	const userRef = await db.collection("users").doc(admin).get();
+	const memberOfArr = userRef.data().memberOf;
 	db.collection("teams")
 		.add({
 			admin: admin,
@@ -54,7 +56,8 @@ export const createTeam = (
 			purpose: purpose,
 			lookingFor: lookingFor,
 			teamName: teamName,
-			teamPic: true,
+			teamPic:
+				"https://coursereport-production.imgix.net/uploads/school/logo/447/original/400x400_Profile_Picture.jpg?w=200&h=200",
 			venue: venue,
 			venueLocation: venueLocation,
 		})
@@ -63,9 +66,22 @@ export const createTeam = (
 				members: [{ id: admin, hasAccepted: true }],
 			};
 			db.collection(`teams/${docRef.id}/members`).doc("membersArray").set(data);
+			return docRef.id;
+		})
+		.then((teamId) => {
+			db.collection("users")
+				.doc(admin)
+				.set(
+					{
+						memberOf: [...memberOfArr, teamId],
+					},
+					{ merge: true }
+				);
 		})
 		.then(() => console.log("team saved to DB"))
 		.catch((err) => console.log("BRUHH:", err));
+
+	// console.log(teamId, "<<< teamID");
 };
 
 export const createUser = async (
