@@ -49,125 +49,129 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<Text style={styles.button_text}>My Teams</Text>
-				<View
-					style={{
-						flexDirection: "row",
-						justifyContent: "space-between",
-						alignItems: "flex-start",
-						width: 300,
-						backgroundColor: "rgba(250,250,250, 0.5)",
-						borderRadius: 20,
-						alignSelf: "center",
-						padding: 10,
-						margin: 10,
+				{teams.map((team) => {
+					return (
+						<View key={team.id}>
+							<View
+								style={{
+									flexDirection: "row",
+									justifyContent: "space-between",
+									alignItems: "flex-start",
+									width: 300,
+									backgroundColor: "rgba(250,250,250, 0.5)",
+									borderRadius: 20,
+									alignSelf: "center",
+									padding: 10,
+									margin: 10,
 
-						// height: Dimensions.get("window").height * 0.15,
-					}}
-				>
-					<Image
-						style={{
-							marginBottom: 0,
-							alignSelf: "center",
-						}}
-						resizeMode={"cover"}
-						source={{
-							width: 25,
-							height: 25,
-							uri: teams[0].pic,
-						}}
-					/>
-					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold", textTransform: "capitalize" }}>
-							{`Names:\n ${teams[0].teamName}`}
-						</Text>
-					</Text>
-					<Text style={{ margin: 5 }}>
-						<Text style={{ fontWeight: "bold" }}>{"Location\n"}</Text>
-						{`${teams[0].location}`}
-					</Text>
-					<View>
-						<TouchableOpacity
-							style={[
-								styles.small_button,
-								{
-									borderWidth: 2,
-									height: 30,
-									borderRadius: 12,
-									width: 90,
-								},
-							]}
-							onPress={() =>
-								navigation.navigate("ExternalTeam", {
-									teamName: teams.teamName,
-									teams: teams,
-								})
-							}
-						>
-							<Text
-								style={[
-									styles.button_text,
-									{ alignSelf: "center", fontSize: 14 },
-								]}
+									// height: Dimensions.get("window").height * 0.15,
+								}}
 							>
-								Team Page
-							</Text>
-						</TouchableOpacity>
+								<Image
+									style={{
+										marginBottom: 0,
+										alignSelf: "center",
+									}}
+									resizeMode={"cover"}
+									source={{
+										width: 25,
+										height: 25,
+										uri: team.pic,
+									}}
+								/>
+								<Text style={{ margin: 5 }}>
+									<Text
+										style={{ fontWeight: "bold", textTransform: "capitalize" }}
+									>
+										{`Names:\n ${team.teamName}`}
+									</Text>
+								</Text>
+								<Text style={{ margin: 5 }}>
+									<Text style={{ fontWeight: "bold" }}>{"Location\n"}</Text>
+									{`${team.location}`}
+								</Text>
+								<View>
+									<TouchableOpacity
+										style={[
+											styles.small_button,
+											{
+												borderWidth: 2,
+												height: 30,
+												borderRadius: 12,
+												width: 90,
+											},
+										]}
+										onPress={() =>
+											navigation.navigate("ExternalTeam", {
+												teamName: teams.teamName,
+												teams: teams,
+											})
+										}
+									>
+										<Text
+											style={[
+												styles.button_text,
+												{ alignSelf: "center", fontSize: 14 },
+											]}
+										>
+											Team Page
+										</Text>
+									</TouchableOpacity>
 
-						<TouchableOpacity
-							style={[
-								styles.small_button,
-								{
-									borderWidth: 2,
-									height: 30,
-									borderRadius: 12,
-									width: 90,
-								},
-							]}
-						>
-							<Text
+									<TouchableOpacity
+										style={[
+											styles.small_button,
+											{
+												borderWidth: 2,
+												height: 30,
+												borderRadius: 12,
+												width: 90,
+											},
+										]}
+									>
+										<Text
+											style={[
+												styles.button_text,
+												{ alignSelf: "center", fontSize: 14 },
+											]}
+										>
+											Leave team
+										</Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+
+							<View
 								style={[
-									styles.button_text,
-									{ alignSelf: "center", fontSize: 14 },
+									styles.container,
+									{
+										flex: 1,
+										flexDirection: "row",
+										justifyContent: "space-evenly",
+									},
 								]}
-							>
-								Leave team
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
-
-				<View
+							></View>
+						</View>
+					);
+				})}
+				<TouchableOpacity
 					style={[
-						styles.container,
+						styles.small_button,
 						{
-							flex: 1,
-							flexDirection: "row",
-							justifyContent: "space-evenly",
+							borderWidth: 2,
+							height: 35,
+							borderRadius: 12,
+							width: 200,
 						},
 					]}
+					onPress={() => navigation.navigate("CreateTeam")}
 				>
-					<TouchableOpacity
-						style={[
-							styles.small_button,
-							{
-								borderWidth: 2,
-								height: 35,
-								borderRadius: 12,
-								width: 200,
-							},
-						]}
-						onPress={() => navigation.navigate("CreateTeam")}
+					<Text
+						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
 					>
-						<Text
-							style={[
-								styles.button_text,
-								{ alignSelf: "center", fontSize: 18 },
-							]}
-						>
-							Create a New Team
-						</Text>
-					</TouchableOpacity>
-				</View>
+						Create a New Team
+					</Text>
+				</TouchableOpacity>
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>
