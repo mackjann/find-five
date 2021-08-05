@@ -104,9 +104,9 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 						marginBottom: 0,
 						alignSelf: "center",
 					}}
-					fadeDuration={1500}
+					fadeDuration={1000}
 					resizeMode={"cover"}
-					borderRadius={20}
+					borderRadius={70}
 					source={{
 						width: 140,
 						height: 140,
@@ -118,7 +118,7 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 					style={{
 						width: 260,
 						backgroundColor: "rgba(250,250,250, 0.5)",
-						borderRadius: 20,
+						borderRadius: 10,
 						alignSelf: "center",
 						padding: 10,
 						margin: 10,
@@ -129,9 +129,9 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 					<Text style={{ margin: 5 }}>
 						<Text
 							style={{ fontWeight: "bold" }}
-						>{`About ${team.teamName}:`}</Text>
+						>{`About ${team.teamName}:\n`}</Text>
 
-						{` "${team.bio}"`}
+						{`"${team.bio}"`}
 					</Text>
 
 					<Text style={{ margin: 5 }}>
@@ -175,7 +175,7 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 							allMembers.push(
 								`\n - ${member.data.firstName} ${member.data.lastName} (${
 									member.data.username
-								}) ${hasAccepted ? "accepted" : "pending"}\n `
+								}) ${hasAccepted ? "- accepted" : "- pending"}\n `
 							);
 						})}
 						{allMembers}
@@ -187,13 +187,16 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 						styles.container,
 						{
 							flex: 1,
-							flexDirection: "row",
-							justifyContent: "space-evenly",
+							flexDirection: "column",
+							justifyContent: "flex-start",
+
+							height: 200,
+							alignSelf: "center",
 						},
 					]}
 				>
 					{isAdmin ? (
-						<View>
+						<View style={{ height: 90 }}>
 							<TextInput
 								style={[styles.input]}
 								onChangeText={(text) => {
@@ -230,6 +233,7 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 							</TouchableOpacity>
 						</View>
 					) : null}
+
 					{isClicked ? (
 						<View>
 							<View
@@ -237,7 +241,7 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 									flexDirection: "row",
 									justifyContent: "space-between",
 									alignItems: "flex-start",
-									width: 320,
+									width: 300,
 									height: 65,
 									backgroundColor: "rgba(250,250,250, 0.7)",
 									borderRadius: 2,
@@ -258,8 +262,8 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 										}}
 										resizeMode={"cover"}
 										source={{
-											width: 50,
-											height: 50,
+											width: 45,
+											height: 45,
 											uri: searchedPlayer.data.profilePic,
 										}}
 									/>
@@ -279,7 +283,7 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 											margin: 1,
 											borderBottomWidth: 1,
 											borderBottomColor: "grey",
-											width: 100,
+											width: 140,
 										}}
 									>
 										<Text
@@ -296,11 +300,6 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 										style={{ margin: 1 }}
 									>{`${searchedPlayer.data.firstName} ${searchedPlayer.data.lastName}`}</Text>
 								</View>
-								<View
-									style={{
-										width: 20,
-									}}
-								></View>
 
 								<View
 									style={{ flexDirection: "row", alignItems: "flex-start" }}
@@ -332,22 +331,11 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 												addPlayer(teamID, searchedPlayer.id);
 											}}
 										>
-											{"invite"}
+											{"Invite"}
 										</Text>
 									</TouchableOpacity>
 								</View>
 							</View>
-
-							<View
-								style={[
-									styles.container,
-									{
-										flex: 1,
-										flexDirection: "row",
-										justifyContent: "space-evenly",
-									},
-								]}
-							></View>
 						</View>
 					) : null}
 				</View>

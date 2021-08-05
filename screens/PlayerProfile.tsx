@@ -196,7 +196,7 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 					<Text>
 						{user.availability &&
 							user.availability.map((day) => {
-								return <Text key={day.value}>{`- ${day.value}\n`}</Text>;
+								return <Text key={Math.random()}>{`- ${day.value}\n`}</Text>;
 							})}
 						{/* <FlatList
 							data={availability}
@@ -225,7 +225,7 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 					{/* {teamState.teamName} */}
 					{/* </Text> */}
 				</View>
-				<View
+				{/* <View
 					style={[
 						styles.container,
 						{
@@ -275,7 +275,7 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 							Message
 						</Text>
 					</TouchableOpacity>
-				</View>
+				</View> */}
 
 				<StatusBar />
 			</ScrollView>
