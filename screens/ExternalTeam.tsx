@@ -51,7 +51,6 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				{/* <Text style={styles.button_text}>⚽ {team.teamName} ⚽</Text> */}
 				<View
 					style={{
 						flex: 1,
@@ -81,21 +80,21 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 						marginBottom: 0,
 						alignSelf: "center",
 					}}
-					fadeDuration={1500}
+					fadeDuration={1000}
 					resizeMode={"cover"}
-					borderRadius={20}
+					borderRadius={70}
 					source={{
 						width: 140,
 						height: 140,
-						uri: "https://logos-world.net/wp-content/uploads/2020/06/England-logo.png",
+						uri: team.teamPic,
 					}}
 				/>
 
 				<View
 					style={{
-						width: 260,
+						width: 290,
 						backgroundColor: "rgba(250,250,250, 0.5)",
-						borderRadius: 20,
+						borderRadius: 10,
 						alignSelf: "center",
 						padding: 10,
 						margin: 10,
@@ -143,7 +142,7 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 							navigation.navigate("HomeScreen");
 						}}
 					>
-						<Text style={{ fontWeight: "bold" }}>{"Members:\n "}</Text>
+						<Text style={{ fontWeight: "bold" }}>{"Members: "}</Text>
 						{members.forEach((member: Record<string, unknown>) => {
 							const memberId = member.username;
 							allMembers.push(

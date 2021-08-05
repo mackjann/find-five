@@ -31,6 +31,9 @@ import {
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
+LogBox.ignoreLogs([
+	"Can't perform a React state update on an unmounted component",
+]);
 LogBox.ignoreLogs(["Possible Unhandled Promise Rejection (id: 19):"]);
 
 // const getEmail = () =>
@@ -60,17 +63,17 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	// console.log(userID);
 
 	const [userState, setUserState] = useState({
-		LastName: "string",
-		ageGroup: "string",
+		LastName: "",
+		ageGroup: "",
 		availability: [{ label: "day", value: "day" }],
-		bio: "string",
-		email: "string",
-		firstName: "string",
-		location: "string",
-		position: "string",
-		profilePic: "string",
-		skill: "string",
-		username: "string",
+		bio: "",
+		email: "",
+		firstName: "",
+		location: "",
+		position: "",
+		profilePic: "",
+		skill: "",
+		username: "",
 		memberOf: [],
 	});
 
