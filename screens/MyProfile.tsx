@@ -230,8 +230,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 											}}
 											resizeMode={"cover"}
 											source={{
-												width: 50,
-												height: 50,
+												width: 45,
+												height: 45,
 												uri: team.pic,
 											}}
 										/>
@@ -251,7 +251,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 												margin: 1,
 												borderBottomWidth: 1,
 												borderBottomColor: "grey",
-												width: 100,
+												width: 150,
 											}}
 										>
 											<Text
@@ -267,11 +267,11 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 											{` ${team.location}`}
 										</Text>
 									</View>
-									<View
+									{/* <View
 										style={{
 											width: 20,
 										}}
-									></View>
+									></View> */}
 
 									<View
 										style={{ flexDirection: "row", alignItems: "flex-start" }}
@@ -283,7 +283,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 													borderWidth: 0.5,
 													height: 46,
 													borderRadius: 5,
-													width: 55,
+													width: 50,
 													margin: 3,
 													marginTop: 0,
 												},
@@ -366,8 +366,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 													}}
 													resizeMode={"cover"}
 													source={{
-														width: 50,
-														height: 50,
+														width: 45,
+														height: 45,
 														uri: team.pic,
 													}}
 												/>
@@ -377,6 +377,7 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 													justifyContent: "flex-start",
 													alignItems: "flex-start",
 													flexDirection: "column",
+													width: 150,
 												}}
 											>
 												<View
@@ -387,7 +388,6 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 														margin: 1,
 														borderBottomWidth: 1,
 														borderBottomColor: "grey",
-														width: 100,
 													}}
 												>
 													<Text
@@ -405,11 +405,11 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 													{` ${team.location}`}
 												</Text>
 											</View>
-											<View
+											{/* <View
 												style={{
 													width: 20,
 												}}
-											></View>
+											></View> */}
 
 											<View
 												style={{

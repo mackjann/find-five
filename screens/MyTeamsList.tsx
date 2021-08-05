@@ -85,7 +85,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 									borderRadius: 2,
 									alignSelf: "center",
 									padding: 10,
-									margin: 10,
+									margin: 0,
 								}}
 							>
 								<View
@@ -100,8 +100,8 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 										}}
 										resizeMode={"cover"}
 										source={{
-											width: 50,
-											height: 50,
+											width: 45,
+											height: 45,
 											uri: team.pic,
 										}}
 									/>
@@ -121,7 +121,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 											margin: 1,
 											borderBottomWidth: 1,
 											borderBottomColor: "grey",
-											width: 100,
+											width: 150,
 										}}
 									>
 										<Text
@@ -137,11 +137,6 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 										{` ${team.location}`}
 									</Text>
 								</View>
-								<View
-									style={{
-										width: 20,
-									}}
-								></View>
 
 								<View
 									style={{ flexDirection: "row", alignItems: "flex-start" }}
@@ -153,7 +148,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												borderWidth: 0.5,
 												height: 46,
 												borderRadius: 5,
-												width: 55,
+												width: 50,
 												margin: 3,
 												marginTop: 0,
 											},
@@ -181,7 +176,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												borderWidth: 0.5,
 												height: 46,
 												borderRadius: 5,
-												width: 55,
+												width: 45,
 												margin: 3,
 												marginTop: 0,
 											},
