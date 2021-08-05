@@ -17,11 +17,16 @@ import {
 	Dimensions,
 } from "react-native";
 import styles from "../styles.js";
+import firebase from "../config.js";
 import { useState, useEffect } from "react";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
+LogBox.ignoreLogs([
+	"Can't perform a React state update on an unmounted component",
+]);
+LogBox.ignoreLogs(["Each child in a list should have a unique 'key' prop"]);
 
 interface User {
 	LastName: string;
@@ -41,6 +46,7 @@ interface User {
 	profilePic?: boolean;
 	skill: string;
 	username: string;
+	memberOf?: [];
 }
 
 const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
@@ -50,15 +56,27 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 	const [user, setUser] = useState<User>({
 		LastName: "",
 		ageGroup: "",
-		availability: {},
+		availability: [{}],
 		bio: "",
 		email: "",
 		firstName: "",
 		location: "",
 		position: { DEF: false, GK: false, MID: false, ST: false, noPref: false },
-
+		memberOf: ["roq5OkphttPqeLDlXSUf"],
 		skill: "",
 		username: "",
+	});
+
+	const [teamState, setTeamState] = useState({
+		teamName: "",
+		availability: [{ label: "day", value: "day" }],
+		admin: "",
+		bio: "",
+		id: "",
+		lookingFor: [],
+		teamPic: "",
+		venue: "",
+		venueLocation: "",
 	});
 
 	useEffect(
@@ -73,6 +91,18 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 		[]
 	);
 
+	const team = async (docID) => {
+		const teamData = await firebase.firestore().doc(docID).get();
+		const teamProfile = teamData.data();
+		return teamProfile;
+	};
+
+	useEffect(() => {
+		team(user.memberOf[0]).then((results) => {
+			setTeamState(results);
+		});
+	}, [user]);
+
 	const availability = [];
 
 	for (const key in user.availability) {
@@ -81,11 +111,13 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 		}
 	}
 
+	console.log(user, "<<< user ");
+
+	console.log(teamState, "<<< teamState ");
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				{/* <Text style={styles.button_text}>⚽ ⚽</Text> */}
-
 				<View
 					style={{
 						flex: 1,
@@ -114,21 +146,21 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 						marginBottom: 0,
 						alignSelf: "center",
 					}}
-					fadeDuration={1500}
+					fadeDuration={1000}
 					resizeMode={"cover"}
-					borderRadius={20}
+					borderRadius={70}
 					source={{
 						width: 140,
 						height: 140,
-						uri: "https://i2-prod.manchestereveningnews.co.uk/incoming/article19885916.ece/ALTERNATES/s1200c/0_GettyImages-1231312492.jpg",
+						uri: user.profilePic,
 					}}
 				/>
 
 				<View
 					style={{
-						width: 260,
+						width: 290,
 						backgroundColor: "rgba(250,250,250, 0.5)",
-						borderRadius: 20,
+						borderRadius: 10,
 						alignSelf: "center",
 						padding: 10,
 						margin: 10,
@@ -150,19 +182,7 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>Preferred position: </Text>
-						{`${
-							user.position && user.position.DEF
-								? "Defender"
-								: user.position && user.position.GK
-								? "Goalkeeper"
-								: user.position && user.position.MID
-								? "Midfielder"
-								: user.position && user.position.ST
-								? "Striker"
-								: user.position && user.position.noPref
-								? "No preference"
-								: "any"
-						}`}
+						{` ${user.position}`}
 					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text style={{ fontWeight: "bold" }}>Skill level:</Text>
@@ -173,8 +193,12 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 							style={{ fontWeight: "bold" }}
 						>{`${user.username}'s availability:`}</Text>
 					</Text>
-					<View>
-						<FlatList
+					<Text>
+						{user.availability &&
+							user.availability.map((day) => {
+								return <Text key={day.value}>{`- ${day.value}\n`}</Text>;
+							})}
+						{/* <FlatList
 							data={availability}
 							numColumns={1}
 							renderItem={({ item }) => (
@@ -184,13 +208,21 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 									{item.slice(item.length - 1)}
 								</Text>
 							)}
-						/>
-					</View>
+						/> */}
+					</Text>
 					<Text style={{ margin: 5 }}>
 						<Text
 							style={{ fontWeight: "bold" }}
 						>{`${user.username}'s contact details:\n`}</Text>
 						{user.email}
+					</Text>
+
+					<Text style={{ margin: 5 }}>
+						<Text
+							style={{ fontWeight: "bold" }}
+						>{`${user.username}'s teams:\n`}</Text>
+						{/* {user.memberOf[0]} */}
+						{teamState.teamName}
 					</Text>
 				</View>
 				<View
