@@ -481,3 +481,25 @@ export const getUsersTeams = async (userId) => {
 // 	// createUser();
 // 	addPlayer("V3CvouPIpzo6ehGeYBF4", "4xcIcSCBpGp2v0VL606d");
 // });
+export const getUsersRequests = async (userId) => {
+	const usersRef = await db.collection("users").doc(userId).get();
+	const userData = usersRef.data();
+
+	const requestsArr = userData.requests;
+
+	const allTeams = await db.collection("teams").get();
+
+	const teamsInfo = [];
+
+	allTeams.forEach((team) => {
+		if (requestsArr.includes(team.id)) {
+			teamsInfo.push({
+				id: team.id,
+				pic: team.data().teamPic,
+				teamName: team.data().teamName,
+				location: team.data().venueLocation,
+			});
+		}
+	});
+	return teamsInfo;
+};
