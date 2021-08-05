@@ -45,19 +45,71 @@ export default function App(): any {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Screen name="Home" component={Home} />
-				<Stack.Screen name="Login" component={Login} />
-				<Stack.Screen name="Register" component={Register} />
-				<Stack.Screen name="CreateProfile" component={CreateProfile} />
-				<Stack.Screen name="CreateTeam" component={CreateTeam} />
-				<Stack.Screen name="PlayerProfile" component={PlayerProfile} />
-				<Stack.Screen name="Search" component={Search} />
-				<Stack.Screen name="ExternalTeam" component={ExternalTeam} />
-				<Stack.Screen name="MyTeams" component={MyTeams} />
-				<Stack.Screen name="HomeScreen" component={HomeScreen} />
-				<Stack.Screen name="EditProfile" component={EditProfile} />
-				<Stack.Screen name="MyProfile" component={MyProfile} />
-				<Stack.Screen name="MyTeamProfile" component={MyTeamProfile} />
+				<Stack.Screen
+					name="Home"
+					component={Home}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Login"
+					component={Login}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Register"
+					component={Register}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="CreateProfile"
+					component={CreateProfile}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="CreateTeam"
+					component={CreateTeam}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="PlayerProfile"
+					component={PlayerProfile}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Search"
+					component={Search}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="ExternalTeam"
+					component={ExternalTeam}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="MyTeams"
+					component={MyTeams}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="HomeScreen"
+					component={HomeScreen}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="EditProfile"
+					component={EditProfile}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="MyProfile"
+					component={MyProfile}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="MyTeamProfile"
+					component={MyTeamProfile}
+					options={{ headerShown: false }}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

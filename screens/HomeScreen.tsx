@@ -144,15 +144,6 @@ const HomeScreen = ({ navigation }: any): JSX.Element => {
 						</TouchableOpacity>
 					</View>
 				</View>
-
-				<Button
-					title="Button"
-					onPress={() => {
-						getTeam("Cyber Drip", "teamName");
-					}}
-				>
-					GetTeamTest
-				</Button>
 			</ScrollView>
 		</SafeAreaView>
 	);
