@@ -23,6 +23,10 @@ import { addPlayer, getMembersOfTeam, getUser } from "../utils.js";
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
+LogBox.ignoreLogs([
+	"Can't peform a React state update on an unmounted component",
+]);
+LogBox.ignoreLogs(["Possible Unhandled Promise Rejection (id: 0):"]);
 const db = firebase.firestore();
 
 const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
@@ -65,7 +69,7 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 
 	useEffect(() => {
 		getMembersOfTeam(teamID).then((members) => setMembers(members));
-	}, []);
+	}, [members]);
 
 	console.log(searchedPlayer, "<=== search");
 	return (

@@ -43,7 +43,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 			console.log(res);
 			setTeams(res);
 		});
-	}, []);
+	}, [teams]);
 
 	// console.log(teams, "<---- teams");
 
@@ -230,7 +230,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
 					>
-						Create a New Teams
+						Create a New Team
 					</Text>
 				</TouchableOpacity>
 				<StatusBar />
