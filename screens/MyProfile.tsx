@@ -34,7 +34,8 @@ LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
 LogBox.ignoreLogs([
 	"Can't perform a React state update on an unmounted component",
 ]);
-LogBox.ignoreLogs(["Possible Unhandled Promise Rejection (id: 19):"]);
+// LogBox.ignoreLogs(["Possible Unhandled Promise Rejection (id: 19):"]);
+LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
 
 // const getEmail = () =>
 // 	ref.onSnapshot(({ docs }) => {
