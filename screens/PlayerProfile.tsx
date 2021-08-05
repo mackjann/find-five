@@ -91,17 +91,17 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 		[]
 	);
 
-	const team = async (docID) => {
-		const teamData = await firebase.firestore().doc(docID).get();
-		const teamProfile = teamData.data();
-		return teamProfile;
-	};
+	// const team = async (docID) => {
+	// 	const teamData = await firebase.firestore().doc(docID).get();
+	// 	const teamProfile = teamData.data();
+	// 	return teamProfile;
+	// };
 
-	useEffect(() => {
-		team(user.memberOf[0]).then((results) => {
-			setTeamState(results);
-		});
-	}, [user]);
+	// useEffect(() => {
+	// 	team(user.memberOf[0]).then((results) => {
+	// 		setTeamState(results);
+	// 	});
+	// }, [user]);
 
 	const availability = [];
 
@@ -113,7 +113,7 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 
 	console.log(user, "<<< user ");
 
-	console.log(teamState, "<<< teamState ");
+	// console.log(teamState, "<<< teamState ");
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -217,13 +217,13 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 						{user.email}
 					</Text>
 
-					<Text style={{ margin: 5 }}>
+					{/* <Text style={{ margin: 5 }}>
 						<Text
 							style={{ fontWeight: "bold" }}
 						>{`${user.username}'s teams:\n`}</Text>
 						{/* {user.memberOf[0]} */}
-						{teamState.teamName}
-					</Text>
+					{/* {teamState.teamName} */}
+					{/* </Text> */}
 				</View>
 				<View
 					style={[

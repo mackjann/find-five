@@ -173,9 +173,9 @@ const MyTeamProfile = ({ navigation, route }: any): JSX.Element => {
 							// console.log(member, "<=== member");
 
 							allMembers.push(
-								`\n ${member.data.firstName} ${member.data.lastName} (${
+								`\n - ${member.data.firstName} ${member.data.lastName} (${
 									member.data.username
-								}) ${hasAccepted ? "accepted" : "pending"} `
+								}) ${hasAccepted ? "accepted" : "pending"}\n `
 							);
 						})}
 						{allMembers}
