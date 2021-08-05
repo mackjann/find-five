@@ -67,17 +67,17 @@ const PlayerProfile = ({ navigation, route }: any): JSX.Element => {
 		username: "",
 	});
 
-	const [teamState, setTeamState] = useState({
-		teamName: "",
-		availability: [{ label: "day", value: "day" }],
-		admin: "",
-		bio: "",
-		id: "",
-		lookingFor: [],
-		teamPic: "",
-		venue: "",
-		venueLocation: "",
-	});
+	// const [teamState, setTeamState] = useState({
+	// 	teamName: "",
+	// 	availability: [{ label: "day", value: "day" }],
+	// 	admin: "",
+	// 	bio: "",
+	// 	id: "",
+	// 	lookingFor: [],
+	// 	teamPic: "",
+	// 	venue: "",
+	// 	venueLocation: "",
+	// });
 
 	useEffect(
 		() =>
