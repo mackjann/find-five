@@ -144,9 +144,10 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 					>
 						<Text style={{ fontWeight: "bold" }}>{"Members: "}</Text>
 						{members.forEach((member: Record<string, unknown>) => {
-							const memberId = member.username;
+							// console.log(member.data.firstName, "<<<<<< member");
+							const memberId = member.data.username;
 							allMembers.push(
-								`\n ${member.firstName} ${member.lastName} (${member.username})`
+								`\n ${member.data.firstName} ${member.data.lastName} (${member.data.username})`
 							);
 						})}
 						{allMembers}
@@ -162,48 +163,7 @@ const ExternalTeam = ({ navigation, route }: any): JSX.Element => {
 							justifyContent: "space-evenly",
 						},
 					]}
-				>
-					<TouchableOpacity
-						style={[
-							styles.small_button,
-							{
-								borderWidth: 0.5,
-								height: 35,
-								borderRadius: 12,
-								width: 140,
-							},
-						]}
-					>
-						<Text
-							style={[
-								styles.button_text,
-								{ alignSelf: "center", fontSize: 18 },
-							]}
-						>
-							Request to Join
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={[
-							styles.small_button,
-							{
-								borderWidth: 0.5,
-								height: 35,
-								borderRadius: 12,
-								width: 100,
-							},
-						]}
-					>
-						<Text
-							style={[
-								styles.button_text,
-								{ alignSelf: "center", fontSize: 18 },
-							]}
-						>
-							Message
-						</Text>
-					</TouchableOpacity>
-				</View>
+				></View>
 				<StatusBar />
 			</ScrollView>
 		</SafeAreaView>
