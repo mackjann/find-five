@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import styles from "../styles.js";
 import { useState, useEffect } from "react";
-import { getUsersTeams } from "../utils.js";
+import { getUsersTeams, removeTeamMember } from "../utils.js";
 import firebase from "../config";
 import "firebase/auth";
 
@@ -33,7 +33,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 		};
 	}
 	const userID: null | string = firebase.auth().currentUser.uid;
-	console.log(userID);
+
 	const [teams, setTeams] = React.useState([
 		{ id: "", pic: "", teamName: "", location: "" },
 	]);
@@ -43,7 +43,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 			console.log(res);
 			setTeams(res);
 		});
-	}, []);
+	}, [teams]);
 
 	// console.log(teams, "<---- teams");
 
@@ -159,9 +159,8 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 											},
 										]}
 										onPress={() =>
-											navigation.navigate("ExternalTeam", {
-												teamName: team.teamName,
-												teams: teams,
+											navigation.navigate("MyTeamProfile", {
+												teamID: team.id,
 											})
 										}
 									>
@@ -187,6 +186,9 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												marginTop: 0,
 											},
 										]}
+										onPress={() => {
+											removeTeamMember(team.id, userID);
+										}}
 									>
 										<Text
 											style={[
@@ -194,7 +196,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 												{ alignSelf: "center", fontSize: 14 },
 											]}
 										>
-											{"Leave\nteam"}
+											{"Leave"}
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -228,7 +230,7 @@ const MyTeams = ({ navigation }: any): JSX.Element => {
 					<Text
 						style={[styles.button_text, { alignSelf: "center", fontSize: 18 }]}
 					>
-						Create a New Teams
+						Create a New Team
 					</Text>
 				</TouchableOpacity>
 				<StatusBar />

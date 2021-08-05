@@ -36,7 +36,7 @@ const db = firebase.firestore();
 const storageRef = firebase.storage().ref();
 
 // /Users/khizariqbal/Desktop
-export const createTeam = (
+export const createTeam = async (
 	teamName,
 	bio,
 	purpose,
@@ -46,6 +46,8 @@ export const createTeam = (
 	admin,
 	availability
 ) => {
+	const userRef = await db.collection("users").doc(admin).get();
+	const memberOfArr = userRef.data().memberOf;
 	db.collection("teams")
 		.add({
 			admin: admin,
@@ -54,7 +56,8 @@ export const createTeam = (
 			purpose: purpose,
 			lookingFor: lookingFor,
 			teamName: teamName,
-			teamPic: true,
+			teamPic:
+				"https://coursereport-production.imgix.net/uploads/school/logo/447/original/400x400_Profile_Picture.jpg?w=200&h=200",
 			venue: venue,
 			venueLocation: venueLocation,
 		})
@@ -63,9 +66,22 @@ export const createTeam = (
 				members: [{ id: admin, hasAccepted: true }],
 			};
 			db.collection(`teams/${docRef.id}/members`).doc("membersArray").set(data);
+			return docRef.id;
+		})
+		.then((teamId) => {
+			db.collection("users")
+				.doc(admin)
+				.set(
+					{
+						memberOf: [...memberOfArr, teamId],
+					},
+					{ merge: true }
+				);
 		})
 		.then(() => console.log("team saved to DB"))
 		.catch((err) => console.log("BRUHH:", err));
+
+	// console.log(teamId, "<<< teamID");
 };
 
 export const createUser = async (
@@ -170,7 +186,8 @@ export const getUser = async (searchQuery) => {
 	}
 	const userObj = {};
 	data.forEach((user) => {
-		userObj[user.id] = user.data();
+		userObj.id = user.id;
+		userObj.data = user.data();
 	});
 
 	return userObj;
@@ -232,7 +249,9 @@ export const removeTeamMember = async (teamId, playerId) => {
 			console.log(err);
 		});
 
-	const ammendedMembers = members.filter((member) => !member[playerId]);
+	const ammendedMembers = members.filter((member) => {
+		if (member.id !== playerId) return member;
+	});
 	console.log(ammendedMembers);
 
 	db.collection(`teams/${teamId}/members`)
@@ -249,6 +268,33 @@ export const removeTeamMember = async (teamId, playerId) => {
 		.catch((err) => {
 			console.log(err);
 		});
+
+	const user = await db.collection("users").doc(playerId).get();
+	const memberOf = user.data().memberOf;
+
+	const newMemberOf = memberOf.filter((team) => {
+		if (team !== teamId) return team;
+	});
+
+	db.collection("users")
+		.doc(playerId)
+		.set(
+			{
+				memberOf: [...newMemberOf],
+			},
+			{ merge: true }
+		);
+	// db.collection("users")
+	// 	.doc(playerId)
+	// 	.get()
+	// 	.then((res) => {
+	// 		const memberOfArr = res.data();
+	// 		const teamsStillIn = memberOfArr.memberOf.filter((team) => {
+	// 			if (team !== teamId) return team;
+	// 		}).then((filteredTeams) => {
+	// 			memberOfArr
+	// 		})
+	// 	});
 };
 
 export const deleteTeam = (teamId) => {
@@ -392,13 +438,18 @@ export const getMembersOfTeam = async (teamId) => {
 	// gets members array from teams sub-collection
 	const membersArr = await membersRef.data().members;
 	const membersId = membersArr.map((member) => member.id);
-	// console.log(membersId);
 
 	const allUsers = await db.collection("users").get();
 	const membersInfo = [];
 	allUsers.forEach((user) => {
 		if (membersId.includes(user.id)) {
-			membersInfo.push(user.data());
+			const index = membersId.indexOf(user.id);
+			const userObj = {
+				id: user.id,
+				data: user.data(),
+				status: membersArr[index].hasAccepted,
+			};
+			membersInfo.push(userObj);
 		}
 	});
 	return membersInfo;
@@ -430,3 +481,25 @@ export const getUsersTeams = async (userId) => {
 // 	// createUser();
 // 	addPlayer("V3CvouPIpzo6ehGeYBF4", "4xcIcSCBpGp2v0VL606d");
 // });
+export const getUsersRequests = async (userId) => {
+	const usersRef = await db.collection("users").doc(userId).get();
+	const userData = usersRef.data();
+
+	const requestsArr = userData.requests;
+
+	const allTeams = await db.collection("teams").get();
+
+	const teamsInfo = [];
+
+	allTeams.forEach((team) => {
+		if (requestsArr.includes(team.id)) {
+			teamsInfo.push({
+				id: team.id,
+				pic: team.data().teamPic,
+				teamName: team.data().teamName,
+				location: team.data().venueLocation,
+			});
+		}
+	});
+	return teamsInfo;
+};

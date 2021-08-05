@@ -21,7 +21,12 @@ import "firebase/auth";
 import { useState, useEffect } from "react";
 import SelectMultiple from "react-native-select-multiple";
 import { useCardAnimation } from "@react-navigation/stack";
-import { getUsersTeams } from "../utils";
+import {
+	acceptInvite,
+	declineInvite,
+	getUsersRequests,
+	getUsersTeams,
+} from "../utils";
 
 LogBox.ignoreLogs(["Setting a timer for a long period"]);
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -29,6 +34,7 @@ LogBox.ignoreLogs(["VirtualizedList: missing keys for items"]);
 LogBox.ignoreLogs([
 	"Can't perform a React state update on an unmounted component",
 ]);
+LogBox.ignoreLogs(["Possible Unhandled Promise Rejection (id: 19):"]);
 
 // const getEmail = () =>
 // 	ref.onSnapshot(({ docs }) => {
@@ -74,6 +80,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	const [teamsList, setTeamsList] = React.useState([]);
 
 	const [isLoading, setIsLoading] = React.useState(true);
+	const [hasRequests, setHasRequests] = React.useState(false);
+	const [requestsArr, setRequestsArr] = React.useState([]);
 
 	const user = async () => {
 		const userData = await ref.doc(userID).get();
@@ -83,14 +91,26 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 	};
 
 	useEffect(() => {
-		user().then((results) => {
-			setUserState(results);
+		getUsersRequests(userID).then((res) => {
+			setRequestsArr(res);
 		});
+		user()
+			.then((results) => {
+				setUserState(results);
+			})
+			.then(() => {
+				if (userState.requests.length > 0) {
+					setHasRequests(true);
+				}
+			});
 		getUsersTeams(userID).then((res) => {
 			setTeamsList(res);
 		});
 		setIsLoading(!isLoading);
-	}, []);
+	}, [userState.requests]);
+
+	console.log(userState.requests, "<==== requests");
+	console.log(hasRequests, "<==== hasReq?");
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -268,9 +288,8 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 												},
 											]}
 											onPress={() =>
-												navigation.navigate("ExternalTeam", {
-													teamName: team.teamName,
-													teams: teams,
+												navigation.navigate("MyTeamProfile", {
+													teamID: team.id,
 												})
 											}
 										>
@@ -311,6 +330,173 @@ const MyProfile = ({ navigation }: any): JSX.Element => {
 							);
 						})}
 					</View>
+					{hasRequests ? (
+						<View>
+							<Text style={{ margin: 5 }}>
+								<Text style={{ fontWeight: "bold" }}>{"Requests:"}</Text>
+							</Text>
+							<View>
+								{requestsArr.map((team) => {
+									return (
+										<View
+											key={team.teamName}
+											style={{
+												flexDirection: "row",
+												justifyContent: "space-between",
+												alignItems: "flex-start",
+												width: 270,
+												height: 65,
+												backgroundColor: "rgba(250,250,250, 0.7)",
+												borderRadius: 2,
+												alignSelf: "center",
+												padding: 10,
+												margin: 10,
+											}}
+										>
+											<View
+												style={{
+													marginRight: 5,
+												}}
+											>
+												<Image
+													style={{
+														alignSelf: "center",
+														marginBottom: 6,
+													}}
+													resizeMode={"cover"}
+													source={{
+														width: 50,
+														height: 50,
+														uri: team.pic,
+													}}
+												/>
+											</View>
+											<View
+												style={{
+													justifyContent: "flex-start",
+													alignItems: "flex-start",
+													flexDirection: "column",
+												}}
+											>
+												<View
+													style={{
+														flexDirection: "column",
+														alignItems: "flex-start",
+														paddingBottom: 2,
+														margin: 1,
+														borderBottomWidth: 1,
+														borderBottomColor: "grey",
+														width: 100,
+													}}
+												>
+													<Text
+														style={{
+															fontWeight: "bold",
+															fontSize: 16,
+															textTransform: "capitalize",
+														}}
+													>{`${team.teamName}`}</Text>
+												</View>
+												<Text style={{ margin: 1 }}>
+													<Text style={{ fontWeight: "bold" }}>
+														{"Location:"}
+													</Text>
+													{` ${team.location}`}
+												</Text>
+											</View>
+											<View
+												style={{
+													width: 20,
+												}}
+											></View>
+
+											<View
+												style={{
+													flexDirection: "row",
+													alignItems: "flex-start",
+												}}
+											>
+												<TouchableOpacity
+													style={[
+														styles.small_button,
+														{
+															borderWidth: 0.5,
+															height: 20,
+															borderRadius: 5,
+															width: 20,
+															margin: 3,
+															marginTop: 0,
+														},
+													]}
+													onPress={() => {
+														acceptInvite(team.id, userID);
+														console.log("accepted invite");
+													}}
+												>
+													<Text
+														style={[
+															styles.button_text,
+															{ alignSelf: "center", fontSize: 14 },
+														]}
+													>
+														{"✅"}
+													</Text>
+												</TouchableOpacity>
+												<TouchableOpacity
+													style={[
+														styles.small_button,
+														{
+															borderWidth: 0.5,
+															height: 20,
+															borderRadius: 5,
+															width: 20,
+															margin: 3,
+															marginTop: 0,
+														},
+													]}
+													onPress={() => declineInvite(team.id, userID)}
+												>
+													<Text
+														style={[
+															styles.button_text,
+															{ alignSelf: "center", fontSize: 14 },
+														]}
+													>
+														{"❌"}
+													</Text>
+												</TouchableOpacity>
+
+												{/* <TouchableOpacity
+										style={[
+											styles.small_button,
+											{
+												borderWidth: 0.5,
+												height: 46,
+												borderRadius: 5,
+												width: 55,
+												margin: 3,
+												marginTop: 0,
+											},
+										]}
+									>
+										<Text
+											style={[
+												styles.button_text,
+												{ alignSelf: "center", fontSize: 14 },
+											]}
+										>
+											{`Leave\nteam`}
+										</Text>
+									</TouchableOpacity> */}
+											</View>
+										</View>
+									);
+								})}
+							</View>
+						</View>
+					) : (
+						<Text>No requests :(</Text>
+					)}
 				</View>
 
 				<TouchableOpacity
